@@ -1,0 +1,15 @@
+image: maven:3.8.1-openjdk-17-slim
+
+stages:
+    - mvn-compile-deploy
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "homolog" || $CI_COMMIT_BRANCH == "main"
+      when: always
+
+mvn-compile-deploy:
+    stage: mvn-compile-deploy
+    script: 
+    - mvn clean compile
+    - mvn deploy -s $GITLAB_MAVEN_REPOSITORY_SETTINGS -f target/generated-sources/openapi/pom.xml -DaltDeploymentRepository=$GITLAB_MAVEN_REPOSITORY_ID_URL

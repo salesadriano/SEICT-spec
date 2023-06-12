@@ -29,6 +29,9 @@
 		<oas.spec.name>${project.artifactId}_oas3</oas.spec.name>
 		<oas.spec.extension>.yml</oas.spec.extension>
 		<oas.spec.file.location>${oas.home}/spec/${oas.spec.name}${oas.spec.extension}</oas.spec.file.location>
+		<oas.spec.project.groupId>${project.groupId}</oas.spec.project.groupId>
+		<oas.spec.project.artifactId>${project.artifactId}</oas.spec.project.artifactId>
+		<oas.spec.project.artifactVersion>${project.version}</oas.spec.project.artifactVersion>
 
 		<web.oas.codegen.be.skip>false</web.oas.codegen.be.skip>
 		<web.oas.codegen.be.output.path>${project.build.directory}/generated-sources/openapi</web.oas.codegen.be.output.path>
@@ -81,12 +84,6 @@
 
 	<dependencies>
 		<!-- OPEN API -->
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.1.0</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.openapitools</groupId>
@@ -194,6 +191,11 @@
 						</goals>
 
 						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
 							<!-- IO Options -->
 							<inputSpec>${oas.spec.file.location}</inputSpec>
 							<output>${web.oas.codegen.be.output.path}</output>
@@ -246,6 +248,11 @@
 						</goals>
 
 						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
 							<!-- IO Options -->
 							<inputSpec>${oas.spec.file.location}</inputSpec>
 							<output>${web.oas.codegen.fe.output.path}</output>
@@ -273,6 +280,11 @@
 						</goals>
 
 						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
 							<!-- IO Options -->
 							<inputSpec>${oas.spec.file.location}</inputSpec>
 							<output>${web.oas.docgen.html.output.path}</output>
@@ -292,6 +304,11 @@
 						</goals>
 
 						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+
 							<!-- IO Options -->
 							<inputSpec>${oas.spec.file.location}</inputSpec>
 							<output>${web.oas.docgen.uml.output.path}</output>
@@ -311,6 +328,11 @@
 						</goals>
 
 						<configuration>
+							<!-- Project Options -->
+							<groupId>${oas.spec.project.groupId}</groupId>
+							<artifactId>${oas.spec.project.artifactId}</artifactId>
+							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
+							
 							<!-- IO Options -->
 							<inputSpec>${oas.spec.file.location}</inputSpec>
 							<output>${web.oas.specgen.spec2json.output.path}</output>

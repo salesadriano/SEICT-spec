@@ -23,6 +23,11 @@
 		<project.build.plugin.exec.version>3.1.0</project.build.plugin.exec.version>
 		<project.build.plugin.specgen.legacy.version>1.4</project.build.plugin.specgen.legacy.version>
 
+		<project.gitlab.repo.maven.url>
+			https://cicdseictac.lampp-it.com.br/api/v4/projects/5/packages/maven</project.gitlab.repo.maven.url>
+		<project.gitlab.repo.npm.url>
+			https://cicdseictac.lampp-it.com.br/api/v4/projects/5/packages/npm</project.gitlab.repo.npm.url>
+
 		<!-- OPEN API -->
 
 		<oas.home>${project.basedir}/src/main/resources/openapi</oas.home>
@@ -40,6 +45,9 @@
 		<web.oas.codegen.fe.skip>false</web.oas.codegen.fe.skip>
 		<web.oas.codegen.fe.output.path>${oas.home}/generated/fe/lib-client</web.oas.codegen.fe.output.path>
 		<web.oas.codegen.fe.angular.version>16</web.oas.codegen.fe.angular.version>
+		<web.oas.codegen.fe.npm.name>${project.artifactId}</web.oas.codegen.fe.npm.name>
+		<web.oas.codegen.fe.npm.repository>${project.gitlab.repo.npm.url}</web.oas.codegen.fe.npm.repository>
+		<web.oas.codegen.fe.npm.version>${project.version}</web.oas.codegen.fe.npm.version>
 
 		<web.oas.docgen.postman.skip>true</web.oas.docgen.postman.skip>
 		<web.oas.docgen.postman.output.path>${oas.home}/generated/docs/postman</web.oas.docgen.postman.output.path>
@@ -67,7 +75,7 @@
 	<repositories>
 		<repository>
 			<id>gitlab-maven</id>
-			<url>https://cicdseictac.lampp-it.com.br/api/v4/projects/5/packages/maven</url>
+			<url>${project.gitlab.repo.maven.url}</url>
 		</repository>
 	</repositories>
 
@@ -215,6 +223,9 @@
 								<ngVersion>${web.oas.codegen.fe.angular.version}</ngVersion>
 								<providedIn>none</providedIn>
 								<supportsES6>true</supportsES6>
+								<npmName>${web.oas.codegen.fe.npm.name}</npmName>
+								<npmRepository>${web.oas.codegen.fe.npm.repository}</npmRepository>
+								<npmVersion>${web.oas.codegen.fe.npm.version}</npmVersion>
 							</configOptions>
 
 						</configuration>
@@ -282,7 +293,7 @@
 							<groupId>${oas.spec.project.groupId}</groupId>
 							<artifactId>${oas.spec.project.artifactId}</artifactId>
 							<artifactVersion>${oas.spec.project.artifactVersion}</artifactVersion>
-							
+
 							<!-- IO Options -->
 							<inputSpec>${oas.spec.file.location}</inputSpec>
 							<output>${web.oas.specgen.spec2json.output.path}</output>

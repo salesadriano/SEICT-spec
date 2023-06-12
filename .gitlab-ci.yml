@@ -5,6 +5,7 @@ variables:
 
 stages:
     - mvn-compile-deploy
+    - npm-publish
 
 workflow:
   rules:
@@ -20,3 +21,14 @@ mvn-compile-deploy:
       key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
       paths: 
       - .m2/repository
+    artifacts:
+      paths:
+      - src/main/resources/openapi/generated/fe/lib-client
+
+npm-publish:
+    stage: npm-publish
+    script:
+    - npm config set -- $GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN
+    - cd src/main/resources/openapi/generated/fe/lib-client
+    - npm publish
+  

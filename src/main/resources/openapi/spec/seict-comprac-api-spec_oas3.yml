@@ -1,0 +1,464 @@
+openapi: 3.0.3
+info:
+  title: SEICT - COMPRAC
+  description: |
+    API Backend para applicação SEICT - COMPRAC
+  termsOfService: https://www.lampp-it.com.br/
+  contact:
+    email: contato@lampp-it.com.br
+  license:
+    name: Lampp-it - Licensa Comercial
+    url: https://www.lampp-it.com.br/
+  version: 1.0.0
+externalDocs:
+  description: SEICT - COMPRAC - Documentação
+  url: https://comprac.ac.gov.br/
+servers:
+  - url: "{protocol}://{devServerHost}:{devServerPort}/api/seict-comprac/v1"
+    description: development instance
+    variables:
+      protocol:
+        description: a
+        default: https
+        enum:
+          - https
+          - http
+      devServerHost:
+        description: host name of the development server
+        default: localhost
+        enum:
+          - localhost
+          # add other hosts here
+      devServerPort:
+        description: host port of the api service is running
+        default: "4070"
+        enum:
+          - "4710"
+          - "8080"
+          # add other ports here
+tags:
+  - name: Security - User
+    description: Management of Users.
+  - name: Security - Permissions
+    description: Management of Permissions.
+  - name: Security - Groups
+    description: Management of Groups.
+paths:
+  /security/user/query:
+    post:
+      tags:
+        - Security - User
+      summary: todo
+      description: todo
+      operationId: queryUser
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryRequest"
+            examples:
+              queryByName:
+                $ref: "#/components/examples/UserQueryRequestByName"
+              queryByEmail:
+                $ref: "#/components/examples/UserQueryRequestByEmail"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserQueryResponse"
+              examples:
+                zeroResults:
+                  $ref: "#/components/examples/UserQueryResponseWithoutResults"
+                withResults:
+                  $ref: "#/components/examples/UserQueryResponseWithResults"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "422":
+          $ref: "#/components/responses/422UnprocessableEntity"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+  /security/user:
+    post:
+      tags:
+        - Security - User
+      summary: todo
+      description: todo
+      operationId: createUser
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "422":
+          $ref: "#/components/responses/422UnprocessableEntity"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+  /security/user/{id}:
+    put:
+      tags:
+        - Security - User
+      summary: todo
+      description: todo
+      operationId: updateUser
+      parameters:
+        - $ref: "#/components/parameters/UserIdParam"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "422":
+          $ref: "#/components/responses/422UnprocessableEntity"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+    delete:
+      tags:
+        - Security - User
+      summary: todo
+      description: todo
+      operationId: deleteUser
+      parameters:
+        - $ref: "#/components/parameters/UserIdParam"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "422":
+          $ref: "#/components/responses/422UnprocessableEntity"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+components:
+  schemas:
+    ##
+    # Problems
+    ##
+    Problem:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: |
+            An absolute URI that identifies the problem type.  When dereferenced,
+            it SHOULD provide human-readable documentation for the problem type
+            (e.g., using HTML).
+          default: "about:blank"
+          example: "https://lampp-it/problem/constraint-violation"
+        title:
+          type: string
+          description: |
+            A short, summary of the problem type. Written in english and readable
+            for engineers (usually not suited for non technical stakeholders and
+            not localized); example: Service Unavailable
+        status:
+          type: integer
+          format: int32
+          description: |
+            The HTTP status code generated by the origin server for this occurrence
+            of the problem.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          type: string
+          description: |
+            A human readable explanation specific to this occurrence of the
+            problem.
+          example: Connection to database timed out
+        instance:
+          type: string
+          format: uri
+          description: |
+            An absolute URI that identifies the specific occurrence of the problem.
+            It may or may not yield further information if dereferenced.
+    ##
+    # Query Request
+    ##
+    QueryRequest:
+      description: todo
+      properties:
+        filter:
+          type: array
+          items:
+            $ref: "#/components/schemas/QueryRequestFilterItem"
+        pagination:
+          $ref: "#/components/schemas/QueryRequestPagination"
+        sort:
+          $ref: "#/components/schemas/QueryRequestSort"
+    QueryRequestFilterItem:
+      description: todo
+      properties:
+        key:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 128
+        value:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 128
+        operator:
+          type: string
+          enum: [EQ, GT, GTE, LT, LTE, IN, NOT_IN, IN_LIKE, NOT_IN_LIKE]
+          default: "EQ"
+      required:
+        - key
+        - value
+    QueryRequestPagination:
+      description: todo
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 2147483647
+          default: 0
+        pageSize:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 2147483647
+          default: 10
+      required:
+        - pageNumber
+        - pageSize
+    QueryRequestSort:
+      description: todo
+      type: array
+      items:
+        $ref: "#/components/schemas/QueryRequestSortItem"
+    QueryRequestSortItem:
+      description: todo
+      properties:
+        key:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 128
+        value:
+          type: string
+          enum: [ASC, DESC]
+          nullable: false
+          default: "ASC"
+      required:
+        - key
+        - value
+    ##
+    # Query Response
+    ##
+    QueryResponse:
+      description: todo
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+        pagination:
+          $ref: "#/components/schemas/QueryResponsePagination"
+    QueryResponsePagination:
+      description: todo
+      allOf:
+        - $ref: "#/components/schemas/QueryRequestPagination"
+        - type: object
+          properties:
+            totalCount:
+              type: integer
+              format: int64
+              minimum: 0
+              maximum: 9223372036854775807
+              nullable: false
+            resultSize:
+              type: integer
+              format: int64
+              minimum: 0
+              maximum: 9223372036854775807
+              nullable: false
+          required:
+            - totalCount
+            - resultSize
+    ##
+    # User
+    ##
+    UserQueryResponse:
+      description: todo
+      allOf:
+        - $ref: "#/components/schemas/QueryResponse"
+    UserRequest:
+      description: todo
+      properties:
+        id:
+          $ref: "#/components/schemas/UserId"
+        name:
+          type: string
+          nullable: false
+        email:
+          type: string
+          format: email
+          nullable: false
+      required:
+        - name
+        - email
+    UserId:
+      description: todo
+      type: string
+      format: uuid
+      nullable: true
+    UserResponse:
+      description: todo
+      properties:
+        id:
+          $ref: "#/components/schemas/UserId"
+        name:
+          type: string
+          nullable: false
+        email:
+          type: string
+          format: email
+          nullable: false
+      required:
+        - id
+        - name
+        - email
+  parameters:
+    UserIdParam:
+      name: id
+      description: todo
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/UserId"
+  responses:
+    400BadRequest:
+      description: Bad Request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    401Unauthorized:
+      description: Unauthorized.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    403Forbidden:
+      description: Forbidden.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    409Conflict:
+      description: Conflict.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    422UnprocessableEntity:
+      description: Unprocessable Entity.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    500InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+  examples:
+    UserQueryRequestByName:
+      summary: Query by Name (Equal).
+      description: todo
+      value:
+        {
+          "filter": ["name:'user1,user2'"],
+          "pagination": { "pageNumber": 0, "pageSize": 10 },
+          "sort": ["name:asc"],
+        }
+    UserQueryRequestByEmail:
+      summary: Query by Email (Like).
+      description: todo
+      value:
+        {
+          "filter": ["email:'email1,email2':IN_LIKE"],
+          "pagination": { "pageNumber": 0, "pageSize": 10 },
+          "sort": ["name:asc"],
+        }
+    UserQueryResponseWithoutResults:
+      summary: Without Results.
+      description: Example of query response without any results.
+      value:
+        {
+          "results": [],
+          "pagination":
+            {
+              "pageNumber": 0,
+              "pageSize": 10,
+              "totalCount": 0,
+              "resultSize": 0,
+            },
+        }
+    UserQueryResponseWithResults:
+      summary: With Results.
+      description: Example of query response without any results.
+      value:
+        {
+          "results": [{ "id": 1, "name": "User", "email": "user@mail.com" }],
+          "pagination":
+            {
+              "pageNumber": 0,
+              "pageSize": 10,
+              "totalCount": 1,
+              "resultSize": 1,
+            },
+        }

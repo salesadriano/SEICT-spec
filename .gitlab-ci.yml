@@ -13,3 +13,7 @@ mvn-compile-deploy:
     script: 
     - mvn clean compile
     - mvn deploy -s $GITLAB_MAVEN_REPOSITORY_SETTINGS -f target/generated-sources/openapi/pom.xml -DaltDeploymentRepository=$GITLAB_MAVEN_REPOSITORY_ID_URL
+    cache:
+      key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+      paths: 
+      - .m2/repository

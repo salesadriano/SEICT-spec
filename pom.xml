@@ -47,8 +47,7 @@
 		<web.oas.codegen.fe.angular.version>16</web.oas.codegen.fe.angular.version>
 		<web.oas.codegen.fe.npm.scope>@seict</web.oas.codegen.fe.npm.scope>
 		<web.oas.codegen.fe.npm.name>${web.oas.codegen.fe.npm.scope}/${project.artifactId}</web.oas.codegen.fe.npm.name>
-		<web.oas.codegen.fe.npm.repository>
-			${web.oas.codegen.fe.npm.scope}:registry=${project.gitlab.repo.npm.url}</web.oas.codegen.fe.npm.repository>
+		<web.oas.codegen.fe.npm.repository>${web.oas.codegen.fe.npm.scope}:registry=${project.gitlab.repo.npm.url}</web.oas.codegen.fe.npm.repository>
 		<web.oas.codegen.fe.npm.version>${project.version}</web.oas.codegen.fe.npm.version>
 
 		<web.oas.docgen.postman.skip>true</web.oas.docgen.postman.skip>
@@ -226,8 +225,7 @@
 								<providedIn>none</providedIn>
 								<supportsES6>true</supportsES6>
 								<npmName>${web.oas.codegen.fe.npm.name}</npmName>
-								<!--
-								<npmRepository>${web.oas.codegen.fe.npm.repository}</npmRepository> -->
+								<npmRepository>${web.oas.codegen.fe.npm.repository}</npmRepository>
 								<npmVersion>${web.oas.codegen.fe.npm.version}</npmVersion>
 							</configOptions>
 

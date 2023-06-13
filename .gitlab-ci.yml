@@ -33,5 +33,6 @@ npm-publish:
     - cd src/main/resources/openapi/generated/fe/lib-client
     - echo "@seict:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/">.npmrc
     - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_DEPLOY_PASSWORD}">>.npmrc
+    - cat .npmrc
     - npm publish --verbose
   

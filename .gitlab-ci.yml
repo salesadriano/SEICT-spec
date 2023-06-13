@@ -29,8 +29,7 @@ npm-publish:
     image: node:16.18.0-alpine
     stage: npm-publish
     script:
-    #- npm config set -- $GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN
-    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">.npmrc
+    - npm config set -- $GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN
     - cd src/main/resources/openapi/generated/fe/lib-client
     - npm publish --verbose
   

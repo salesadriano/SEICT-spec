@@ -26,7 +26,7 @@
 		<project.gitlab.repo.maven.url>
 			https://cicdseictac.lampp-it.com.br/api/v4/projects/8/packages/maven</project.gitlab.repo.maven.url>
 		<project.gitlab.repo.npm.url>
-			https://cicdseictac.lampp-it.com.br/api/v4/projects/8/packages/npm</project.gitlab.repo.npm.url>
+			https://cicdseictac.lampp-it.com.br/api/v4/projects/8/packages/npm/</project.gitlab.repo.npm.url>
 
 		<!-- OPEN API -->
 

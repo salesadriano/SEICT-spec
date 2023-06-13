@@ -31,5 +31,5 @@ npm-publish:
     script:
     - npm config set -- $GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN
     - cd src/main/resources/openapi/generated/fe/lib-client
-    - npm publish
+    - npm publish --verbose
   

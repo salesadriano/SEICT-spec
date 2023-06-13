@@ -24,9 +24,9 @@
 		<project.build.plugin.specgen.legacy.version>1.4</project.build.plugin.specgen.legacy.version>
 
 		<project.gitlab.repo.maven.url>
-			https://cicdseictac.lampp-it.com.br/api/v4/projects/5/packages/maven</project.gitlab.repo.maven.url>
+			https://cicdseictac.lampp-it.com.br/api/v4/projects/8/packages/maven</project.gitlab.repo.maven.url>
 		<project.gitlab.repo.npm.url>
-			https://cicdseictac.lampp-it.com.br/api/v4/projects/5/packages/npm</project.gitlab.repo.npm.url>
+			https://cicdseictac.lampp-it.com.br/api/v4/projects/8/packages/npm</project.gitlab.repo.npm.url>
 
 		<!-- OPEN API -->
 
@@ -45,8 +45,10 @@
 		<web.oas.codegen.fe.skip>false</web.oas.codegen.fe.skip>
 		<web.oas.codegen.fe.output.path>${oas.home}/generated/fe/lib-client</web.oas.codegen.fe.output.path>
 		<web.oas.codegen.fe.angular.version>16</web.oas.codegen.fe.angular.version>
-		<web.oas.codegen.fe.npm.name>${project.artifactId}</web.oas.codegen.fe.npm.name>
-		<web.oas.codegen.fe.npm.repository>${project.gitlab.repo.npm.url}</web.oas.codegen.fe.npm.repository>
+		<web.oas.codegen.fe.npm.scope>@seict</web.oas.codegen.fe.npm.scope>
+		<web.oas.codegen.fe.npm.name>${web.oas.codegen.fe.npm.scope}/${project.artifactId}</web.oas.codegen.fe.npm.name>
+		<web.oas.codegen.fe.npm.repository>
+			${web.oas.codegen.fe.npm.scope}:registry=${project.gitlab.repo.npm.url}</web.oas.codegen.fe.npm.repository>
 		<web.oas.codegen.fe.npm.version>${project.version}</web.oas.codegen.fe.npm.version>
 
 		<web.oas.docgen.postman.skip>true</web.oas.docgen.postman.skip>
@@ -224,7 +226,8 @@
 								<providedIn>none</providedIn>
 								<supportsES6>true</supportsES6>
 								<npmName>${web.oas.codegen.fe.npm.name}</npmName>
-								<npmRepository>${web.oas.codegen.fe.npm.repository}</npmRepository>
+								<!--
+								<npmRepository>${web.oas.codegen.fe.npm.repository}</npmRepository> -->
 								<npmVersion>${web.oas.codegen.fe.npm.version}</npmVersion>
 							</configOptions>
 

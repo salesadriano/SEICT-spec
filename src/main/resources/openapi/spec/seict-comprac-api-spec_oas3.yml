@@ -723,6 +723,9 @@ components:
           format: double
           nullable: false
           minimum: 0
+      required:
+        - countyId
+        - proposedValue
     EditalItemProposedValueByZone:
       description: todo
       properties:
@@ -741,6 +744,9 @@ components:
           format: double
           nullable: false
           minimum: 0
+      required:
+        - zoneId
+        - proposedValue
   parameters:
     UserIdParam:
       name: id

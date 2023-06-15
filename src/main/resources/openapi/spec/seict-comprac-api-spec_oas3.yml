@@ -589,6 +589,19 @@ components:
           nullable: false 
           minItems: 1
           maxItems: 2147483647
+      required:
+        - category
+        - editalNumber
+        - publishDate
+        - officialJournalNumber
+        - officialJournalDate
+        - validityStartDate
+        - validityEndDate
+        - purpose
+        - status
+        - items 
+        - distributionCriterias
+        - accreditationCriterias
     EditalResponse: 
       description: todo
       allOf:
@@ -616,6 +629,8 @@ components:
           nullable: false
           minLength: 1
           maxLength: 128
+      required:
+        - name
     EditalItem: 
       description: todo
       type: object
@@ -637,6 +652,9 @@ components:
           maxLength: 2048
         proposedValue:
           $ref: "#/components/schemas/EditalItemProposedValue"
+      required:
+        - description
+        - technicalSpecification
     EditalDistributionCriteria:
       description: todo
       type: object
@@ -651,6 +669,8 @@ components:
           minLength: 10
           maxLength: 2048
           nullable: false
+      required:
+        - description
     EditalAccreditationCriteria:
       description: todo
       type: object

@@ -5,6 +5,8 @@
     "spectral.run": "onSave",
     "spectral.validateFiles": [
         "**/openapi/**/*.yml",
-        "**/openapi/**/*.yaml"
+        "**/openapi/**/*.yaml",
+        "!**/generated/**",
+        "!**/target/**",
     ]
 }

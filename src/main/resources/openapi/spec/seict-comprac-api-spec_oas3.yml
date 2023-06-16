@@ -360,11 +360,14 @@ components:
     ##
     QueryRequest:
       description: todo
+      type: object
       properties:
         filter:
           type: array
           items:
             $ref: "#/components/schemas/QueryRequestFilterItem"
+          minItems: 0
+          maxItems: 2147483647
         pagination:
           $ref: "#/components/schemas/QueryRequestPagination"
         sort:
@@ -412,6 +415,8 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/QueryRequestSortItem"
+      minItems: 0
+      maxItems: 2147483647
     QueryRequestSortItem:
       description: todo
       properties:
@@ -434,11 +439,14 @@ components:
     QueryResponse:
       description: todo
       type: object
+      x-parent: abstract
       properties:
         results:
           type: array
           items:
             type: object
+          minItems: 0
+          maxItems: 2147483647
         pagination:
           $ref: "#/components/schemas/QueryResponsePagination"
     QueryResponsePagination:
@@ -469,18 +477,45 @@ components:
       description: todo
       allOf:
         - $ref: "#/components/schemas/QueryResponse"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/UserQueryResult"
+              minItems: 0
+              maxItems: 2147483647
+          required:
+            - results
+            - pagination
+    UserQueryResult:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: false
+          minimum: 1
+          maximum: 9223372036854775807
     UserRequest:
       description: todo
+      type: object
       properties:
         id:
           $ref: "#/components/schemas/UserId"
         name:
           type: string
+          format: uuid
           nullable: false
+          minLength: 2
+          maxLength: 128
         email:
           type: string
           format: email
           nullable: false
+          minLength: 5
+          maxLength: 128
       required:
         - name
         - email
@@ -491,16 +526,22 @@ components:
       nullable: true
     UserResponse:
       description: todo
+      type: object
       properties:
         id:
           $ref: "#/components/schemas/UserId"
         name:
           type: string
+          format: uuid
           nullable: false
+          minLength: 2
+          maxLength: 128
         email:
           type: string
           format: email
           nullable: false
+          minLength: 5
+          maxLength: 128
       required:
         - id
         - name
@@ -512,6 +553,27 @@ components:
       description: todo
       allOf:
         - $ref: "#/components/schemas/QueryResponse"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/EditalQueryResult"
+              minItems: 0
+              maxItems: 2147483647
+          required:
+            - results
+            - pagination
+    EditalQueryResult:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: false
+          minimum: 1
+          maximum: 9223372036854775807
     EditalRequest:
       description: todo
       type: object
@@ -564,10 +626,10 @@ components:
         status:
           type: string
           enum:
-            - Ativo
-            - Suspenso
-            - Encerrado
-            - Prorrogado
+            - ATIVO
+            - SUSPENSO
+            - ENCERRADO
+            - PRORROGADO
         items:
           type: array
           items:

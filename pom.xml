@@ -7,7 +7,7 @@
 
 	<groupId>br.com.lamppit</groupId>
 	<artifactId>seict-comprac-api-spec</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 
 	<name>seict-comprac-backend-api</name>
 	<description>SEICT - COMPRAC - Backend API</description>
@@ -41,6 +41,7 @@
 		<web.oas.codegen.be.skip>false</web.oas.codegen.be.skip>
 		<web.oas.codegen.be.output.path>${project.build.directory}/generated-sources/openapi</web.oas.codegen.be.output.path>
 		<web.oas.codegen.be.package.base>${project.groupId}.${project.artifactId}.oas</web.oas.codegen.be.package.base>
+		<web.oas.codegen.be.tags.use>true</web.oas.codegen.be.tags.use>
 
 		<web.oas.codegen.fe.skip>false</web.oas.codegen.fe.skip>
 		<web.oas.codegen.fe.output.path>${oas.home}/generated/fe/lib-client</web.oas.codegen.fe.output.path>
@@ -187,6 +188,7 @@
 
 							<configOptions>
 								<useSpringBoot3>true</useSpringBoot3>
+								<useTags>${web.oas.codegen.be.tags.use}</useTags>
 								<interfaceOnly>true</interfaceOnly>
 								<skipDefaultInterface>false</skipDefaultInterface>
 								<useBeanValidation>true</useBeanValidation>

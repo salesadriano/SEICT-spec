@@ -685,6 +685,8 @@ components:
           minLength: 10
           maxLength: 2048
           nullable: false
+      required:
+        - description
     EditalItemProposedValue: 
       description: todo
       properties: 

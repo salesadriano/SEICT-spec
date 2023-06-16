@@ -1,0 +1,10 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "spectral.enable": true,
+    "spectral.rulesetFile": ".spectral.yaml",
+    "spectral.run": "onSave",
+    "spectral.validateFiles": [
+        "**/openapi/**/*.yml",
+        "**/openapi/**/*.yaml"
+    ]
+}

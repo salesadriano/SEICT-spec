@@ -85,8 +85,6 @@ paths:
           $ref: "#/components/responses/403Forbidden"
         "409":
           $ref: "#/components/responses/409Conflict"
-        "422":
-          $ref: "#/components/responses/422UnprocessableEntity"
         "500":
           $ref: "#/components/responses/500InternalServerError"
         default:
@@ -120,8 +118,6 @@ paths:
           $ref: "#/components/responses/403Forbidden"
         "409":
           $ref: "#/components/responses/409Conflict"
-        "422":
-          $ref: "#/components/responses/422UnprocessableEntity"
         "500":
           $ref: "#/components/responses/500InternalServerError"
         default:
@@ -150,8 +146,6 @@ paths:
           $ref: "#/components/responses/403Forbidden"
         "409":
           $ref: "#/components/responses/409Conflict"
-        "422":
-          $ref: "#/components/responses/422UnprocessableEntity"
         "500":
           $ref: "#/components/responses/500InternalServerError"
         default:
@@ -179,8 +173,6 @@ paths:
           $ref: "#/components/responses/403Forbidden"
         "409":
           $ref: "#/components/responses/409Conflict"
-        "422":
-          $ref: "#/components/responses/422UnprocessableEntity"
         "500":
           $ref: "#/components/responses/500InternalServerError"
         default:
@@ -217,8 +209,6 @@ paths:
           $ref: "#/components/responses/403Forbidden"
         "409":
           $ref: "#/components/responses/409Conflict"
-        "422":
-          $ref: "#/components/responses/422UnprocessableEntity"
         "500":
           $ref: "#/components/responses/500InternalServerError"
         default:
@@ -255,8 +245,6 @@ paths:
           $ref: "#/components/responses/403Forbidden"
         "409":
           $ref: "#/components/responses/409Conflict"
-        "422":
-          $ref: "#/components/responses/422UnprocessableEntity"
         "500":
           $ref: "#/components/responses/500InternalServerError"
         default:
@@ -295,8 +283,6 @@ paths:
           $ref: "#/components/responses/403Forbidden"
         "409":
           $ref: "#/components/responses/409Conflict"
-        "422":
-          $ref: "#/components/responses/422UnprocessableEntity"
         "500":
           $ref: "#/components/responses/500InternalServerError"
         default:
@@ -320,8 +306,6 @@ paths:
           $ref: "#/components/responses/403Forbidden"
         "409":
           $ref: "#/components/responses/409Conflict"
-        "422":
-          $ref: "#/components/responses/422UnprocessableEntity"
         "500":
           $ref: "#/components/responses/500InternalServerError"
         default:
@@ -805,12 +789,6 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
-    422UnprocessableEntity:
-      description: Unprocessable Entity.
-      content:
-        application/problem+json:
-          schema:
-            $ref: "#/components/schemas/Problem"
     500InternalServerError:
       description: Internal Server Error.
       content:
@@ -819,10 +797,10 @@ components:
             $ref: "#/components/schemas/Problem"
     GeneralError:
       description: Unexpected Error.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Problem"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Problem"
   examples:
     UserQueryRequestByName:
       summary: Query by Name (Equal).
@@ -873,7 +851,4 @@ components:
     EditalQueryRequestByNumber:
       summary: Query By Number.
       description: Exemple of query request by number.
-      value: 
-        {
-        
-        }
+      value: {}

@@ -363,6 +363,7 @@ components:
       properties:
         key:
           type: string
+          pattern: '^([a-zA-Z0-9_]){1,128}$'
           nullable: false
           minLength: 1
           maxLength: 128
@@ -396,14 +397,16 @@ components:
       properties:
         key:
           type: string
+          pattern: '^([a-zA-Z0-9_]){1,32}$'
           nullable: false
           minLength: 1
-          maxLength: 128
+          maxLength: 32
         value:
           type: string
+          pattern: '^[a-zA-Z0-9À-ÿ\s/\\_\,]{1,2048}$'
           nullable: false
           minLength: 1
-          maxLength: 128
+          maxLength: 2048
         operator:
           type: string
           enum: [EQ, GT, GTE, LT, LTE, IN, NOT_IN, IN_LIKE, NOT_IN_LIKE]
@@ -595,10 +598,10 @@ components:
           type: string
           nullable: false
           minLength: 6
+          maxLength: 256
           pattern: "^[0-9]{1,}/[0-9]{4}$"
         publishDate:
           type: string
-          format: date
           nullable: false
           minLength: 10
           maxLength: 10
@@ -608,29 +611,28 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         officialJournalDate:
           type: string
-          format: date
           nullable: true
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
         validityStartDate:
           type: string
-          format: date
           nullable: false
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
         validityEndDate:
           type: string
-          format: date
           nullable: false
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
         purpose:
           type: string
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,8000}$'
           nullable: false
           minLength: 10
           maxLength: 8000
@@ -685,8 +687,8 @@ components:
               $ref: "#/components/schemas/EditalId"
     EditalId:
       description: todo
-      type: integer
-      format: int64
+      type: string
+      format: uuid
       nullable: false
     EditalCategory:
       description: todo
@@ -697,9 +699,11 @@ components:
           format: int32
           nullable: false
           minimum: 1
+          maximum: 2147483647
         name:
           type: string
           nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
           minLength: 1
           maxLength: 128
       required:
@@ -713,14 +717,17 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         description:
           type: string
           nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
         technicalSpecification:
           type: string
           nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
         proposedValue:
@@ -737,11 +744,13 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         description:
           type: string
-          minLength: 10
-          maxLength: 2048
           nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
+          minLength: 10
+          maxLength: 2048          
       required:
         - description
     EditalAccreditationCriteria:
@@ -753,11 +762,13 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         description:
           type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
-          nullable: false
       required:
         - description
     EditalItemProposedValue:
@@ -768,14 +779,19 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         valueByCounty:
           type: array
           items:
             $ref: "#/components/schemas/EditalItemProposedValueByCounty"
+          minItems: 0
+          maxItems: 2147483647
         valueByZone:
           type: array
           items:
             $ref: "#/components/schemas/EditalItemProposedValueByZone"
+          minItems: 0
+          maxItems: 2147483647
         valueState:
           type: number
           format: double
@@ -788,11 +804,13 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         countyId:
           type: integer
           format: int32
           nullable: false
           minimum: 1
+          maximum: 2147483647
         proposedValue:
           type: number
           format: double
@@ -809,11 +827,13 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         zoneId:
           type: integer
           format: int32
           nullable: false
           minimum: 1
+          maximum: 2147483647
         proposedValue:
           type: number
           format: double
@@ -871,7 +891,7 @@ components:
     GeneralError:
       description: Unexpected Error.
       content:
-        application/json:
+        application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
   examples:

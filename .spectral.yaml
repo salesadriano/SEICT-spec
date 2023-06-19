@@ -20,6 +20,8 @@ rules:
   owasp:api4:2019-rate-limit: "off"
   owasp:api4:2019-rate-limit-responses-429: "off"
   must-use-snake-case-for-property-names: "off"
+  must-have-info-x-api-id: "off"
+  must-provide-api-audience: "off"
   operation-id-camel-case:
     description: Operation IDs must be camelCase since some generators do not support kebab-cases.
     message: 'Operation ID "{{value}}" must be camelCase since some generators  do not support kebab-cases.'

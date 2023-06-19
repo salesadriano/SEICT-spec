@@ -560,10 +560,52 @@ components:
         - name
         - email
     ##
+    # Itens de domínio
+    ##
+    IndustrialSector:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: false
+          minimum: 1
+          maximum: 2147483647
+        name:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 128
+      required:
+        - name
+    DistributionCriteria:
+      description: todo
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/DistributionCriteriaId"
+          nullable: true
+        description:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
+          minLength: 10
+          maxLength: 2048          
+      required:
+        - description
+    DistributionCriteriaId:
+      description: todo
+      type: string
+      format: uuid
+      nullable: false
+    ##
     # Edital
     ##
     EditalQueryResponse:
       description: todo
+      type: object
       allOf:
         - $ref: "#/components/schemas/BaseQueryResponse"
         - type: object
@@ -592,8 +634,46 @@ components:
       description: todo
       type: object
       properties:
-        category:
-          $ref: "#/components/schemas/EditalCategory"
+        generalInformation:
+          $ref: "#/components/schemas/EditalGeneralInformation"
+        lot: 
+          $ref: "#/components/schemas/EditalLotDefinition"
+        valueCriteria:
+          $ref: "#/components/schemas/EditalValueCriteriaDefinition"
+        status:
+          type: string
+          enum:
+            - ATIVO
+            - SUSPENSO
+            - ENCERRADO
+            - PRORROGADO
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItem"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+        distributionCriterias:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalDistributionCriteria"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+        accreditationCriterias:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalAccreditationCriteria"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+    EditalGeneralInformation:
+      description: todo
+      type: object
+      properties:
+        industrialSector:
+          $ref: "#/components/schemas/IndustrialSector"
         editalNumber:
           type: string
           nullable: false
@@ -636,36 +716,8 @@ components:
           nullable: false
           minLength: 10
           maxLength: 8000
-        status:
-          type: string
-          enum:
-            - ATIVO
-            - SUSPENSO
-            - ENCERRADO
-            - PRORROGADO
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItem"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
-        distributionCriterias:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalDistributionCriteria"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
-        accreditationCriterias:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalAccreditationCriteria"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
       required:
-        - category
+        - industrialSector
         - editalNumber
         - publishDate
         - officialJournalNumber
@@ -673,12 +725,89 @@ components:
         - validityStartDate
         - validityEndDate
         - purpose
-        - status
-        - items
-        - distributionCriterias
-        - accreditationCriterias
+    EditalLotDefinition:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        type: 
+         $ref: "#/components/schemas/EditalLotType"
+         nullable: false
+        lotsDescriptors:
+          type: array
+          $ref: "#/components/schemas/EditalLotDescriptor"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - type
+        - lotsDescriptors
+    EditalLotType:
+      type: string
+      enum:
+        - UNIQUE
+        - MULTIPLE 
+    EditalLotDescriptor:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        number: 
+          type: integer
+          format: int32
+          nullable: false
+          minimum: 1
+          maximum: 2147483647
+        description:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
+          minLength: 10
+          maxLength: 2048
+      required:
+        - number
+        - description
+    EditalValueCriteriaDefinition:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        descriptors:
+          type: array
+          items: 
+            $ref: "#/components/schemas/EditalValueCriteriaDescriptor"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - descriptors
+    EditalValueCriteriaDescriptor:
+      description: todo
+      type: object
+      properties:
+        id: 
+          type: string
+          format: uuid
+          nullable: true
+        description:
+          type: string
+          nullable: false 
+          minLength: 1
+          maxLength: 256
+      required:
+        - description
     EditalResponse:
       description: todo
+      type: object
       allOf:
         - $ref: "#/components/schemas/EditalRequest"
         - type: object
@@ -690,24 +819,6 @@ components:
       type: string
       format: uuid
       nullable: false
-    EditalCategory:
-      description: todo
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          nullable: false
-          minimum: 1
-          maximum: 2147483647
-        name:
-          type: string
-          nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
-          minLength: 1
-          maxLength: 128
-      required:
-        - name
     EditalItem:
       description: todo
       type: object
@@ -745,12 +856,14 @@ components:
           nullable: true
           minimum: 1
           maximum: 9223372036854775807
-        description:
-          type: string
+        order:
+          type: integer
+          format: int32
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
-          minLength: 10
-          maxLength: 2048          
+          minimum: 1
+          maximum: 2147483647
+        destributionCriteriaId:
+          $ref: "#/components/schemas/DistributionCriteriaId"         
       required:
         - description
     EditalAccreditationCriteria:
@@ -945,3 +1058,4 @@ components:
       summary: Query By Number.
       description: Exemple of query request by number.
       value: {}
+  

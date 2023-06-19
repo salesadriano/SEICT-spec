@@ -7,7 +7,7 @@
 
 	<groupId>br.com.lamppit</groupId>
 	<artifactId>seict-comprac-api-spec</artifactId>
-	<version>0.0.5</version>
+	<version>0.0.6</version>
 
 	<name>seict-comprac-backend-api</name>
 	<description>SEICT - COMPRAC - Backend API</description>
@@ -49,6 +49,8 @@
 		<web.oas.codegen.fe.npm.scope>@seict</web.oas.codegen.fe.npm.scope>
 		<web.oas.codegen.fe.npm.name>${web.oas.codegen.fe.npm.scope}/${project.artifactId}</web.oas.codegen.fe.npm.name>
 		<web.oas.codegen.fe.npm.version>${project.version}</web.oas.codegen.fe.npm.version>
+		<web.oas.codegen.fe.naming.model.sufix>ApiModel</web.oas.codegen.fe.naming.model.sufix>
+		<web.oas.codegen.fe.naming.service.sufix>ApiService</web.oas.codegen.fe.naming.service.sufix>
 
 		<web.oas.docgen.postman.skip>true</web.oas.docgen.postman.skip>
 		<web.oas.docgen.postman.output.path>${oas.home}/generated/docs/postman</web.oas.docgen.postman.output.path>
@@ -227,6 +229,8 @@
 								<supportsES6>true</supportsES6>
 								<npmName>${web.oas.codegen.fe.npm.name}</npmName>
 								<npmVersion>${web.oas.codegen.fe.npm.version}</npmVersion>
+								<modelSuffix>${web.oas.codegen.fe.naming.model.sufix}</modelSuffix>
+								<serviceSuffix>${web.oas.codegen.fe.naming.service.sufix}</serviceSuffix>
 							</configOptions>
 
 						</configuration>

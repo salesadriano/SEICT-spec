@@ -356,6 +356,25 @@ components:
             An absolute URI that identifies the specific occurrence of the problem.
             It may or may not yield further information if dereferenced.
     ##
+    # Query
+    ##
+    QuerySortItem:
+      description: todo
+      properties:
+        key:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 128
+        value:
+          type: string
+          enum: [ ASC, DESC ]
+          nullable: false
+          default: "ASC"
+      required:
+        - key
+        - value
+    ##
     # Query Request
     ##
     QueryRequest:
@@ -414,41 +433,24 @@ components:
       description: todo
       type: array
       items:
-        $ref: "#/components/schemas/QueryRequestSortItem"
+        $ref: "#/components/schemas/QuerySortItem"
       minItems: 0
       maxItems: 2147483647
-    QueryRequestSortItem:
-      description: todo
-      properties:
-        key:
-          type: string
-          nullable: false
-          minLength: 1
-          maxLength: 128
-        value:
-          type: string
-          enum: [ASC, DESC]
-          nullable: false
-          default: "ASC"
-      required:
-        - key
-        - value
     ##
     # Query Response
     ##
-    QueryResponse:
+    BaseQueryResponse:
       description: todo
       type: object
       x-parent: abstract
       properties:
-        results:
-          type: array
-          items:
-            type: object
-          minItems: 0
-          maxItems: 2147483647
         pagination:
           $ref: "#/components/schemas/QueryResponsePagination"
+        sort:
+          $ref: "#/components/schemas/QueryResponseSort"
+      required:
+        - pagination
+        - sort
     QueryResponsePagination:
       description: todo
       allOf:
@@ -470,13 +472,20 @@ components:
           required:
             - totalCount
             - resultSize
+    QueryResponseSort:
+      description: todo
+      type: array
+      items:
+        $ref: "#/components/schemas/QuerySortItem"
+      minItems: 0
+      maxItems: 2147483647
     ##
     # User
     ##
     UserQueryResponse:
       description: todo
       allOf:
-        - $ref: "#/components/schemas/QueryResponse"
+        - $ref: "#/components/schemas/BaseQueryResponse"
         - type: object
           properties:
             results:
@@ -488,6 +497,7 @@ components:
           required:
             - results
             - pagination
+            - sort
     UserQueryResult:
       description: todo
       type: object
@@ -552,7 +562,7 @@ components:
     EditalQueryResponse:
       description: todo
       allOf:
-        - $ref: "#/components/schemas/QueryResponse"
+        - $ref: "#/components/schemas/BaseQueryResponse"
         - type: object
           properties:
             results:
@@ -564,6 +574,7 @@ components:
           required:
             - results
             - pagination
+            - sort
     EditalQueryResult:
       description: todo
       type: object

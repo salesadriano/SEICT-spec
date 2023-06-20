@@ -63,10 +63,12 @@ paths:
             schema:
               $ref: "#/components/schemas/QueryRequest"
             examples:
-              queryByName:
-                $ref: "#/components/examples/UserQueryRequestByName"
-              queryByEmail:
-                $ref: "#/components/examples/UserQueryRequestByEmail"
+              queryById:
+                $ref: "#/components/examples/UserQueryRequestById"
+              # queryByName:
+              #   $ref: "#/components/examples/UserQueryRequestByName"
+              # queryByEmail:
+              #   $ref: "#/components/examples/UserQueryRequestByEmail"
       responses:
         "200":
           description: Successful operation
@@ -105,6 +107,9 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UserRequest"
+            examples:
+              userByNumber:
+                $ref: "#/components/examples/UserRequestByNumber"
       responses:
         "200":
           description: Successful operation
@@ -229,9 +234,9 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/EditalRequest"
-            # examples:
-            #   queryByNumber:
-            #     $ref: "#/components/examples/EditalRequestByNumber"
+            examples:
+              queryByNumber:
+                $ref: "#/components/examples/EditalRequestByNumber"
       responses:
         "200":
           description: Successful operation
@@ -643,6 +648,39 @@ components:
           nullable: false
           minimum: 1
           maximum: 9223372036854775807
+        editalNumber:
+          type: string
+          nullable: false
+          minLength: 6
+          maxLength: 256
+          pattern: "^[0-9]{1,}/[0-9]{4}$"
+        validityStartDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        validityEndDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        purpose:
+          type: string
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,8000}$'
+          nullable: false
+          minLength: 10
+          maxLength: 8000
+        status: 
+          $ref: "#/components/schemas/EditalStatus"
+      required:
+        - id
+        - editalNumber
+        - validityStartDate
+        - validityEndDate
+        - purpose
+        - status
     EditalRequest:
       description: todo
       type: object
@@ -1068,21 +1106,12 @@ components:
           schema:
             $ref: "#/components/schemas/Problem"
   examples:
-    UserQueryRequestByName:
-      summary: Query by Name (Equal).
-      description: todo
-      value:
+    UserQueryRequestById:
+      summary: Query By id
+      description: Exemple of query request by id.
+      value: 
         {
-          "filter": ["name:'user1,user2'"],
-          "pagination": { "pageNumber": 0, "pageSize": 10 },
-          "sort": ["name:asc"],
-        }
-    UserQueryRequestByEmail:
-      summary: Query by Email (Like).
-      description: todo
-      value:
-        {
-          "filter": ["email:'email1,email2':IN_LIKE"],
+          "filter": [{"key": "id", "value": "id1,id2", "operator": "IN"}],
           "pagination": { "pageNumber": 0, "pageSize": 10 },
           "sort": ["name:asc"],
         }
@@ -1114,7 +1143,50 @@ components:
               "resultSize": 1,
             },
         }
+    UserQueryResponseWithError500:
+      summary: Server Error.
+      description: Example of server Error.
+      value:
+        {
+          "type": "https://lampp-it/problem/internal-server-error",
+          "title": "Internal Server Error",
+          "status": 500,
+          "detail": "Internal Server Error.",
+          "instance": "string"
+        }
+    UserQueryResponseWithError400:
+      summary: Client Error.
+      description: Example of client Error.
+      value:
+        {
+          "type": "https://lampp-it/problem/client-error",
+          "title": "Client Error",
+          "status": 400,
+          "detail": "Invalid request.",
+          "instance": "string"
+        }
+    UserRequestByNumber:
+      summary: User By Number.
+      description: Exemple of user request by Number.
+      value: 
+        {
+        
+        }
     EditalQueryRequestByNumber:
       summary: Query By Number.
       description: Exemple of query request by number.
-      value: {}
+      value: 
+        {
+          "filter": ["number:'number1,number2':IN_LIKE"],
+          "pagination": { "pageNumber": 0, "pageSize": 10 },
+          "sort": ["name:asc"],
+        }
+    EditalRequestByNumber:
+      summary: Edital By Number.
+      description: Exemple of edital request by number.
+      value: 
+        {
+          "id": 1,
+          "name":"User",
+          "email": "user@mail.com"
+        }

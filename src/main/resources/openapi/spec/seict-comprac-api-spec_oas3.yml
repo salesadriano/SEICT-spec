@@ -2,9 +2,11 @@ openapi: 3.0.3
 info:
   title: SEICT - COMPRAC
   description: |
-    API Backend para applicação SEICT - COMPRAC
+    API Backend para applicação SEICT - COMPRAC.
   termsOfService: https://www.lampp-it.com.br/
   contact:
+    name: Lampp-it
+    url: https://www.lampp-it.com.br/
     email: contato@lampp-it.com.br
   license:
     name: Lampp-it - Licensa Comercial
@@ -37,14 +39,14 @@ servers:
           - "8080"
           # add other ports here
 tags:
-  - name: Security - User
-    description: Management of Users.
-  - name: Security - Permissions
-    description: Management of Permissions.
-  - name: Security - Groups
-    description: Management of Groups.
   - name: Back Office - Edital
     description: Management of Editals
+  - name: Security - Groups
+    description: Management of Groups.
+  - name: Security - Permissions
+    description: Management of Permissions.
+  - name: Security - User
+    description: Management of Users.
 paths:
   /security/user/query:
     post:
@@ -61,10 +63,12 @@ paths:
             schema:
               $ref: "#/components/schemas/QueryRequest"
             examples:
-              queryByName:
-                $ref: "#/components/examples/UserQueryRequestByName"
-              queryByEmail:
-                $ref: "#/components/examples/UserQueryRequestByEmail"
+              queryById:
+                $ref: "#/components/examples/UserQueryRequestById"
+              # queryByName:
+              #   $ref: "#/components/examples/UserQueryRequestByName"
+              # queryByEmail:
+              #   $ref: "#/components/examples/UserQueryRequestByEmail"
       responses:
         "200":
           description: Successful operation
@@ -103,6 +107,9 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UserRequest"
+            examples:
+              userByNumber:
+                $ref: "#/components/examples/UserRequestByNumber"
       responses:
         "200":
           description: Successful operation
@@ -227,9 +234,9 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/EditalRequest"
-            # examples:
-            #   queryByNumber:
-            #     $ref: "#/components/examples/EditalRequestByNumber"
+            examples:
+              queryByNumber:
+                $ref: "#/components/examples/EditalRequestByNumber"
       responses:
         "200":
           description: Successful operation
@@ -356,6 +363,15 @@ components:
             An absolute URI that identifies the specific occurrence of the problem.
             It may or may not yield further information if dereferenced.
     ##
+    # Ids
+    ##
+    IdAsUUID:
+      description: todo
+      type: string
+      pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      minLength: 36
+      maxLength: 36
+    ##
     # Query
     ##
     QuerySortItem:
@@ -363,12 +379,13 @@ components:
       properties:
         key:
           type: string
+          pattern: "^([a-zA-Z0-9_]){1,128}$"
           nullable: false
           minLength: 1
           maxLength: 128
         value:
           type: string
-          enum: [ ASC, DESC ]
+          enum: [ASC, DESC]
           nullable: false
           default: "ASC"
       required:
@@ -396,14 +413,16 @@ components:
       properties:
         key:
           type: string
+          pattern: "^([a-zA-Z0-9_]){1,32}$"
           nullable: false
           minLength: 1
-          maxLength: 128
+          maxLength: 32
         value:
           type: string
+          pattern: '^[a-zA-Z0-9À-ÿ\s/\\_\,]{1,2048}$'
           nullable: false
           minLength: 1
-          maxLength: 128
+          maxLength: 2048
         operator:
           type: string
           enum: [EQ, GT, GTE, LT, LTE, IN, NOT_IN, IN_LIKE, NOT_IN_LIKE]
@@ -482,6 +501,10 @@ components:
     ##
     # User
     ##
+    UserId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: true
     UserQueryResponse:
       description: todo
       allOf:
@@ -529,11 +552,6 @@ components:
       required:
         - name
         - email
-    UserId:
-      description: todo
-      type: string
-      format: uuid
-      nullable: true
     UserResponse:
       description: todo
       type: object
@@ -557,10 +575,55 @@ components:
         - name
         - email
     ##
+    # Itens de domínio
+    ##
+    IndustrialSector:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          nullable: false
+          minimum: 1
+          maximum: 2147483647
+        name:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
+          minLength: 1
+          maxLength: 128
+      required:
+        - name
+    DistributionCriteriaId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+    DistributionCriteria:
+      description: todo
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/DistributionCriteriaId"
+          nullable: true
+        description:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
+          minLength: 10
+          maxLength: 2048
+      required:
+        - description
+    ##
     # Edital
     ##
+    EditalId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
     EditalQueryResponse:
       description: todo
+      type: object
       allOf:
         - $ref: "#/components/schemas/BaseQueryResponse"
         - type: object
@@ -585,20 +648,83 @@ components:
           nullable: false
           minimum: 1
           maximum: 9223372036854775807
-    EditalRequest:
-      description: todo
-      type: object
-      properties:
-        category:
-          $ref: "#/components/schemas/EditalCategory"
         editalNumber:
           type: string
           nullable: false
           minLength: 6
+          maxLength: 256
+          pattern: "^[0-9]{1,}/[0-9]{4}$"
+        validityStartDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        validityEndDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        purpose:
+          type: string
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,8000}$'
+          nullable: false
+          minLength: 10
+          maxLength: 8000
+        status: 
+          $ref: "#/components/schemas/EditalStatus"
+      required:
+        - id
+        - editalNumber
+        - validityStartDate
+        - validityEndDate
+        - purpose
+        - status
+    EditalRequest:
+      description: todo
+      type: object
+      properties:
+        generalInformation:
+          $ref: "#/components/schemas/EditalGeneralInformationDefinition"
+        lot:
+          $ref: "#/components/schemas/EditalLotDefinition"
+        valueCriteria:
+          $ref: "#/components/schemas/EditalValueCriteriaDefinition"
+        items:
+          $ref: "#/components/schemas/EditalItemsDefinition"
+        distributionCriteria:
+          $ref: "#/components/schemas/EditalDistributionCriteriaDefinition"
+        accreditationCriteria:
+          $ref: "#/components/schemas/EditalAccreditationCriteriaDefinition"
+        status:
+          $ref: "#/components/schemas/EditalStatusDefinition"
+      required:
+        - generalInformation
+        - lot
+        - valueCriteria
+        - items
+        - distributionCriteria
+        - accreditationCriteria
+        - status
+    EditalGeneralInformationDefinition:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        industrialSector:
+          $ref: "#/components/schemas/IndustrialSector"
+        editalNumber:
+          type: string
+          nullable: false
+          minLength: 6
+          maxLength: 256
           pattern: "^[0-9]{1,}/[0-9]{4}$"
         publishDate:
           type: string
-          format: date
           nullable: false
           minLength: 10
           maxLength: 10
@@ -608,62 +734,33 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         officialJournalDate:
           type: string
-          format: date
           nullable: true
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
         validityStartDate:
           type: string
-          format: date
           nullable: false
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
         validityEndDate:
           type: string
-          format: date
           nullable: false
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
         purpose:
           type: string
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,8000}$'
           nullable: false
           minLength: 10
           maxLength: 8000
-        status:
-          type: string
-          enum:
-            - ATIVO
-            - SUSPENSO
-            - ENCERRADO
-            - PRORROGADO
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItem"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
-        distributionCriterias:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalDistributionCriteria"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
-        accreditationCriterias:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalAccreditationCriteria"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
       required:
-        - category
+        - industrialSector
         - editalNumber
         - publishDate
         - officialJournalNumber
@@ -671,39 +768,98 @@ components:
         - validityStartDate
         - validityEndDate
         - purpose
-        - status
-        - items
-        - distributionCriterias
-        - accreditationCriterias
-    EditalResponse:
-      description: todo
-      allOf:
-        - $ref: "#/components/schemas/EditalRequest"
-        - type: object
-          properties:
-            id:
-              $ref: "#/components/schemas/EditalId"
-    EditalId:
-      description: todo
-      type: integer
-      format: int64
-      nullable: false
-    EditalCategory:
+    EditalLotDefinition:
       description: todo
       type: object
       properties:
         id:
+          type: string
+          format: uuid
+          nullable: true
+        type:
+          $ref: "#/components/schemas/EditalLotType"
+          nullable: false
+        lotsDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalLotDescriptor"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - type
+        - lotsDescriptors
+    EditalLotType:
+      type: string
+      enum:
+        - UNIQUE
+        - MULTIPLE
+    EditalLotDescriptor:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        number:
           type: integer
           format: int32
           nullable: false
           minimum: 1
-        name:
+          maximum: 2147483647
+        description:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
+          minLength: 10
+          maxLength: 2048
+      required:
+        - number
+        - description
+    EditalValueCriteriaDefinition:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        descriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalValueCriteriaDescriptor"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - descriptors
+    EditalValueCriteriaDescriptor:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        description:
           type: string
           nullable: false
           minLength: 1
-          maxLength: 128
+          maxLength: 256
       required:
-        - name
+        - description
+    EditalItemsDefinition:
+      description: todo
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItem"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
     EditalItem:
       description: todo
       type: object
@@ -713,14 +869,17 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         description:
           type: string
           nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
         technicalSpecification:
           type: string
           nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
         proposedValue:
@@ -728,38 +887,84 @@ components:
       required:
         - description
         - technicalSpecification
-    EditalDistributionCriteria:
+    EditalDistributionCriteriaDefinition:
       description: todo
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          nullable: true
-          minimum: 1
-        description:
           type: string
-          minLength: 10
-          maxLength: 2048
+          format: uuid
+          nullable: true
+        descriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalDistributionCriteriaDescriptor"
           nullable: false
+          minItems: 1
+          maxItems: 2147483647
       required:
-        - description
-    EditalAccreditationCriteria:
+        - descriptors
+    EditalDistributionCriteriaDescriptor:
       description: todo
       type: object
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
           nullable: true
+        order:
+          type: integer
+          format: int32
+          nullable: false
           minimum: 1
+          maximum: 2147483647
+        destributionCriteriaId:
+          $ref: "#/components/schemas/DistributionCriteriaId"
+      required:
+        - order
+        - destributionCriteriaId
+    EditalAccreditationCriteriaDefinition:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        descriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalAccreditationCriteriaDescriptor"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - descriptors
+    EditalAccreditationCriteriaDescriptor:
+      description: todo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
         description:
           type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
-          nullable: false
       required:
         - description
+    EditalStatusDefinition:
+      description: todo
+      type: object
+      properties:
+        current:
+          $ref: "#/components/schemas/EditalStatus"
+          nullable: false
+      required:
+        - current
     EditalItemProposedValue:
       description: todo
       properties:
@@ -768,14 +973,19 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         valueByCounty:
           type: array
           items:
             $ref: "#/components/schemas/EditalItemProposedValueByCounty"
+          minItems: 0
+          maxItems: 2147483647
         valueByZone:
           type: array
           items:
             $ref: "#/components/schemas/EditalItemProposedValueByZone"
+          minItems: 0
+          maxItems: 2147483647
         valueState:
           type: number
           format: double
@@ -788,11 +998,13 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         countyId:
           type: integer
           format: int32
           nullable: false
           minimum: 1
+          maximum: 2147483647
         proposedValue:
           type: number
           format: double
@@ -809,11 +1021,13 @@ components:
           format: int64
           nullable: true
           minimum: 1
+          maximum: 9223372036854775807
         zoneId:
           type: integer
           format: int32
           nullable: false
           minimum: 1
+          maximum: 2147483647
         proposedValue:
           type: number
           format: double
@@ -822,6 +1036,23 @@ components:
       required:
         - zoneId
         - proposedValue
+    EditalStatus:
+      description: todo
+      type: string
+      enum:
+        - ATIVO
+        - SUSPENSO
+        - ENCERRADO
+        - PRORROGADO
+    EditalResponse:
+      description: todo
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/EditalRequest"
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/EditalId"
   parameters:
     UserIdParam:
       name: id
@@ -871,25 +1102,16 @@ components:
     GeneralError:
       description: Unexpected Error.
       content:
-        application/json:
+        application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
   examples:
-    UserQueryRequestByName:
-      summary: Query by Name (Equal).
-      description: todo
-      value:
+    UserQueryRequestById:
+      summary: Query By id
+      description: Exemple of query request by id.
+      value: 
         {
-          "filter": ["name:'user1,user2'"],
-          "pagination": { "pageNumber": 0, "pageSize": 10 },
-          "sort": ["name:asc"],
-        }
-    UserQueryRequestByEmail:
-      summary: Query by Email (Like).
-      description: todo
-      value:
-        {
-          "filter": ["email:'email1,email2':IN_LIKE"],
+          "filter": [{"key": "id", "value": "id1,id2", "operator": "IN"}],
           "pagination": { "pageNumber": 0, "pageSize": 10 },
           "sort": ["name:asc"],
         }
@@ -921,7 +1143,50 @@ components:
               "resultSize": 1,
             },
         }
+    UserQueryResponseWithError500:
+      summary: Server Error.
+      description: Example of server Error.
+      value:
+        {
+          "type": "https://lampp-it/problem/internal-server-error",
+          "title": "Internal Server Error",
+          "status": 500,
+          "detail": "Internal Server Error.",
+          "instance": "string"
+        }
+    UserQueryResponseWithError400:
+      summary: Client Error.
+      description: Example of client Error.
+      value:
+        {
+          "type": "https://lampp-it/problem/client-error",
+          "title": "Client Error",
+          "status": 400,
+          "detail": "Invalid request.",
+          "instance": "string"
+        }
+    UserRequestByNumber:
+      summary: User By Number.
+      description: Exemple of user request by Number.
+      value: 
+        {
+        
+        }
     EditalQueryRequestByNumber:
       summary: Query By Number.
       description: Exemple of query request by number.
-      value: {}
+      value: 
+        {
+          "filter": ["number:'number1,number2':IN_LIKE"],
+          "pagination": { "pageNumber": 0, "pageSize": 10 },
+          "sort": ["name:asc"],
+        }
+    EditalRequestByNumber:
+      summary: Edital By Number.
+      description: Exemple of edital request by number.
+      value: 
+        {
+          "id": 1,
+          "name":"User",
+          "email": "user@mail.com"
+        }

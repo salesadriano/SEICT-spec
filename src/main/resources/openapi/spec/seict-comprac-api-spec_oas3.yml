@@ -1063,6 +1063,7 @@ components:
         - SUSPENSO
         - ENCERRADO
         - PRORROGADO
+        - NOVO
     EditalResponse:
       description: todo
       type: object

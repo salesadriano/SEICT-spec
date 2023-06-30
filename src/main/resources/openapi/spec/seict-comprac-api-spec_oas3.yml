@@ -262,7 +262,7 @@ paths:
         - "Back Office - Edital"
       summary: todo
       description: todo
-      operationId: updateEdital
+      operationId: getEditalById
       parameters:
         - $ref: "#/components/parameters/EditalIdParam"
       responses:

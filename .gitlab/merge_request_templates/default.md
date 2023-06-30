@@ -34,6 +34,7 @@ Este PR foi testado com:
 
 # Checklist
 
+- [ ] Fiz uma build local da spec.
 - [ ] Fiz uma reflexão sobre o conteúdo deste PR.
 - [ ] Este PR segue os padrões estabelecidos pela equipe.
 - [ ] Este PR está pronto para ser revisado.

@@ -265,16 +265,6 @@ paths:
       operationId: updateEdital
       parameters:
         - $ref: "#/components/parameters/EditalIdParam"
-      requestBody:
-        description: todo
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/EditalRequest"
-            # examples:
-            #   queryByNumber:
-            #     $ref: "#/components/examples/EditalRequestByNumber"
       responses:
         "200":
           description: Successful operation

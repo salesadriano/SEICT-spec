@@ -43,6 +43,7 @@ npm-publish:
     # FE generated code requires build before publish
     - npm install
     - npm run build
+    - cd src/main/resources/openapi/generated/fe/lib-client/dist
     - echo -e "@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL\n$GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN" >> .npmrc
     - npm publish dist --verbose
   

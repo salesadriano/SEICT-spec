@@ -45,5 +45,5 @@ npm-publish:
     - npm install
     - npm run build
     - cd dist
-    - npm publish --verbose --@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL
+    - npm publish --verbose
   

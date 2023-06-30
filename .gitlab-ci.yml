@@ -32,13 +32,18 @@ npm-publish:
     - npm config set @$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL
     - npm config set -- $GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN
     - cd src/main/resources/openapi/generated/fe/lib-client
-    # Codegen do not support Angular 16 atm 
+    # Codegen do not support Angular 16 atm (see https://github.com/OpenAPITools/openapi-generator/issues/15874)
     # Workaround is to bump some libs to a new version manually
     # To be removed once the plugin fully supports it
+    - | 
+      sed -i 's#"rxjs": "\^7\.5\.5",#"rxjs": "\^7\.8\.1",#g' package.json
     - | 
       sed -i 's#"ng-packagr": "\^15\.0\.2",#"ng-packagr": "\^16\.1\.0",#g' package.json
     - | 
       sed -i 's#"zone\.js": "\^0\.11\.5",#"zone\.js": "\^0\.13\.1",#g' package.json
     - cat package.json
-    # - npm publish --verbose
+    # FE generated code requires build before publish
+    - npm install
+    - npm run build
+    - npm publish dist --verbose
   

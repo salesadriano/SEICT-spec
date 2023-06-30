@@ -41,9 +41,8 @@ npm-publish:
       sed -i 's#"zone\.js": "\^0\.11\.5"#"zone\.js": "\^0\.13\.1"#g' package.json
     - cat package.json
     # FE generated code requires build before publish
+    - echo -e "@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL\n$GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN" >> .npmrc
     - npm install
     - npm run build
-    - cd src/main/resources/openapi/generated/fe/lib-client/dist
-    - echo -e "@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL\n$GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN" >> .npmrc
     - npm publish --verbose
   

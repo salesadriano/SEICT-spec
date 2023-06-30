@@ -44,5 +44,6 @@ npm-publish:
     - echo -e "@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL\n$GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN" >> .npmrc
     - npm install
     - npm run build
-    - npm publish dist --verbose --@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL
+    - cd dist
+    - npm publish --verbose --@$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL
   

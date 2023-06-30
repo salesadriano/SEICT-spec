@@ -43,7 +43,9 @@ npm-publish:
     # FE generated code requires build before publish
     - npm install
     - npm run build
+    - echo @$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL
+    - echo $GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN
     - npm config set @$CI_PROJECT_ROOT_NAMESPACE:registry=https:$GITLAB_NPM_REPOSITORY_ID_URL
     - npm config set -- $GITLAB_NPM_REPOSITORY_ID_URL:_authToken=$GITLAB_PACKAGE_REPOSITORY_AUTH_TOKEN
-    - npm publish dist --verbose
+    #- npm publish dist --verbose
   

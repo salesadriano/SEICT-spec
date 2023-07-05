@@ -35,7 +35,7 @@ servers:
         description: host port of the api service is running
         default: "4070"
         enum:
-          - "4710"
+          - "4070"
           - "8080"
           # add other ports here
 tags:
@@ -611,6 +611,97 @@ components:
         - name
         - email
     ##
+    # Geolocation
+    ##
+    Country:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        name:
+          type: string
+          nullable: false
+          minLength: 2
+          maxLength: 64
+        states:
+          type: array
+          items:
+            $ref: "#/components/schemas/State"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - name
+        - states
+    State:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        name:
+          type: string
+          nullable: false
+          minLength: 2
+          maxLength: 128
+        country:
+          $ref: "#/components/schemas/Country"
+          nullable: false
+        regions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Region"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - name
+        - country
+        - regions
+    Region:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        name:
+          type: string
+          nullable: false
+          minLength: 2
+          maxLength: 128
+        state:
+          $ref: "#/components/schemas/State"
+          nullable: false
+        counties:
+          type: array
+          items:
+            $ref: "#/components/schemas/County"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - name
+        - state
+        - counties
+    County:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        name:
+          type: string
+          nullable: false
+          minLength: 2
+          maxLength: 128
+        region:
+          $ref: "#/components/schemas/Region"
+          nullable: false
+      required:
+        - name
+        - region
+    ##
     # Itens de domínio
     ##
     IndustrialSector:
@@ -653,10 +744,7 @@ components:
     ##
     # Edital
     ##
-    EditalId:
-      description: todo
-      $ref: "#/components/schemas/IdAsUUID"
-      nullable: false
+    # Edital - Enums
     EditalQueryKeys:
       description: todo.
       type: string
@@ -666,6 +754,33 @@ components:
         - EDITAL_VALIDITY_END
         - EDITAL_STATUS
         - EDITAL_INDUSTRIAL_SECTOR_NAME
+    EditalValueCriteriaTypes:
+      description: todo.
+      type: string
+      enum:
+        - SINGLE
+        - MULTIPLE
+    EditalLotTypes:
+      description: todo.
+      type: string
+      enum:
+        - SINGLE
+        - MULTIPLE
+    EditalStatus:
+      description: todo
+      type: string
+      enum:
+        - ATIVO
+        - SUSPENSO
+        - ENCERRADO
+        - PRORROGADO
+        - NOVO
+    # Edital - Id
+    EditalId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+    # Edital - Query
     EditalQueryResponse:
       description: todo
       type: object
@@ -726,48 +841,100 @@ components:
         - validityEndDate
         - purpose
         - status
+    # Edital - Request
     EditalRequest:
-      description: todo
+      description: todo.
       type: object
       properties:
+        header:
+          $ref: "#/components/schemas/EditalHeader"
+          nullable: false
         generalInformation:
-          $ref: "#/components/schemas/EditalGeneralInformationDefinition"
-        lot:
-          $ref: "#/components/schemas/EditalLotDefinition"
-        valueCriteria:
-          $ref: "#/components/schemas/EditalValueCriteriaDefinition"
+          $ref: "#/components/schemas/EditalGeneralInformation"
+          nullable: false
+        lotDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalLotDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        valueCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalValueCriteriaDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
         items:
-          $ref: "#/components/schemas/EditalItemsDefinition"
-        distributionCriteria:
-          $ref: "#/components/schemas/EditalDistributionCriteriaDefinition"
-        accreditationCriteria:
-          $ref: "#/components/schemas/EditalAccreditationCriteriaDefinition"
-        status:
-          $ref: "#/components/schemas/EditalStatusDefinition"
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItem"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        distributionCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalDistributionCriteriaDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        accreditationCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalAccreditationCriteriaDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
       required:
+        - header
         - generalInformation
-        - lot
-        - valueCriteria
+        - lotDescriptors
+        - valueCriteriaDescriptors
         - items
-        - distributionCriteria
-        - accreditationCriteria
-        - status
-    EditalGeneralInformationDefinition:
-      description: todo
+        - distributionCriteriaDescriptors
+        - accreditationCriteriaDescriptors
+    EditalHeader:
+      description: todo.
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          nullable: true
-        industrialSector:
-          $ref: "#/components/schemas/IndustrialSector"
+          $ref: "#/components/schemas/IdAsUUID"
         editalNumber:
           type: string
           nullable: false
           minLength: 6
           maxLength: 256
           pattern: "^[0-9]{1,}/[0-9]{4}$"
+        validityStartDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        validityEndDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        industrialSector:
+          $ref: "#/components/schemas/IndustrialSector"
+        status:
+          $ref: "#/components/schemas/EditalStatusDefinition"
+      required:
+        - editalNumber
+        - validityStartDate
+        - validityEndDate
+        - industrialSector
+        - status
+    EditalGeneralInformation:
+      description: todo
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
         publishDate:
           type: string
           nullable: false
@@ -786,18 +953,10 @@ components:
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
-        validityStartDate:
-          type: string
-          nullable: false
-          minLength: 10
-          maxLength: 10
-          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
-        validityEndDate:
-          type: string
-          nullable: false
-          minLength: 10
-          maxLength: 10
-          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        valueCriteriaType:
+          $ref: "#/components/schemas/EditalValueCriteriaTypes"
+        lotStrategy:
+          $ref: "#/components/schemas/EditalLotTypes"
         purpose:
           type: string
           pattern: '^([a-zA-ZÀ-ÿ0-9\s#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,8000}$'
@@ -805,49 +964,18 @@ components:
           minLength: 10
           maxLength: 8000
       required:
-        - industrialSector
-        - editalNumber
         - publishDate
         - officialJournalNumber
         - officialJournalDate
-        - validityStartDate
-        - validityEndDate
         - purpose
-    EditalLotDefinition:
-      description: todo
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          nullable: true
-        type:
-          $ref: "#/components/schemas/EditalLotType"
-          nullable: false
-        lotsDescriptors:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalLotDescriptor"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
-      required:
-        - type
-        - lotsDescriptors
-    EditalLotType:
-      description: todo
-      type: string
-      enum:
-        - UNIQUE
-        - MULTIPLE
+        - valueCriteriaType
+        - lotStrategy
     EditalLotDescriptor:
-      description: todo
+      description: todo.
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          nullable: true
+          $ref: "#/components/schemas/IdAsUUID"
         number:
           type: integer
           format: int32
@@ -863,49 +991,45 @@ components:
       required:
         - number
         - description
-    EditalValueCriteriaDefinition:
-      description: todo
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          nullable: true
-        descriptors:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalValueCriteriaDescriptor"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
-      required:
-        - descriptors
     EditalValueCriteriaDescriptor:
       description: todo
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          nullable: true
-        description:
-          type: string
-          nullable: false
-          minLength: 1
-          maxLength: 256
-      required:
-        - description
-    EditalItemsDefinition:
-      description: todo
-      type: object
-      properties:
-        items:
+          $ref: "#/components/schemas/IdAsUUID"
+        countries:
           type: array
           items:
-            $ref: "#/components/schemas/EditalItem"
+            $ref: "#/components/schemas/Country"
           nullable: false
-          minItems: 1
+          minItems: 0
           maxItems: 2147483647
+        states:
+          type: array
+          items:
+            $ref: "#/components/schemas/State"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        regions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Region"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        counties:
+          type: array
+          items:
+            $ref: "#/components/schemas/County"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+      required:
+        - countries
+        - states
+        - regions
+        - counties
     EditalItem:
       description: todo
       type: object
@@ -916,48 +1040,144 @@ components:
           nullable: true
           minimum: 1
           maximum: 9223372036854775807
+        number:
+          type: integer
+          format: int64
+          nullable: false
+          minimum: 1
+          maximum: 9223372036854775807
         description:
           type: string
           nullable: false
           pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
+        unit:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,32}$'
+          minLength: 1
+          maxLength: 32
         technicalSpecification:
           type: string
           nullable: false
           pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
+        lotDescriptor:
+          $ref: "#/components/schemas/EditalLotDescriptor"
+          nullable: false
         proposedValue:
           $ref: "#/components/schemas/EditalItemProposedValue"
+          nullable: false
       required:
+        - number
         - description
+        - unit
         - technicalSpecification
-    EditalDistributionCriteriaDefinition:
+        - lotDescriptor
+        - proposedValue
+    EditalItemProposedValue:
       description: todo
-      type: object
       properties:
         id:
-          type: string
-          format: uuid
-          nullable: true
-        descriptors:
+          $ref: "#/components/schemas/IdAsUUID"
+        valueByCountry:
           type: array
           items:
-            $ref: "#/components/schemas/EditalDistributionCriteriaDescriptor"
+            $ref: "#/components/schemas/EditalItemProposedValueByCountry"
           nullable: false
-          minItems: 1
+          minItems: 0
           maxItems: 2147483647
+        valueByState:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItemProposedValueByState"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        valueByRegion:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItemProposedValueByRegion"
+          minItems: 0
+          maxItems: 2147483647
+        valueByCounty:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItemProposedValueByCounty"
+          minItems: 0
+          maxItems: 2147483647
+    EditalItemProposedValueByCountry:
+      description: todo
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        country:
+          $ref: "#/components/schemas/Country"
+          nullable: false
+        proposedValue:
+          type: number
+          format: double
+          nullable: false
+          minimum: 0
       required:
-        - descriptors
+        - country
+        - proposedValue
+    EditalItemProposedValueByState:
+      description: todo
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        state:
+          $ref: "#/components/schemas/State"
+          nullable: false
+        proposedValue:
+          type: number
+          format: double
+          nullable: false
+          minimum: 0
+      required:
+        - state
+        - proposedValue
+    EditalItemProposedValueByRegion:
+      description: todo
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        region:
+          $ref: "#/components/schemas/Region"
+          nullable: false
+        proposedValue:
+          type: number
+          format: double
+          nullable: false
+          minimum: 0
+      required:
+        - region
+        - proposedValue
+    EditalItemProposedValueByCounty:
+      description: todo
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        county:
+          $ref: "#/components/schemas/County"
+          nullable: false
+        proposedValue:
+          type: number
+          format: double
+          nullable: false
+          minimum: 0
+      required:
+        - county
+        - proposedValue
     EditalDistributionCriteriaDescriptor:
       description: todo
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          nullable: true
+          $ref: "#/components/schemas/IdAsUUID"
         order:
           type: integer
           format: int32
@@ -969,31 +1189,12 @@ components:
       required:
         - order
         - destributionCriteriaId
-    EditalAccreditationCriteriaDefinition:
-      description: todo
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          nullable: true
-        descriptors:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalAccreditationCriteriaDescriptor"
-          nullable: false
-          minItems: 1
-          maxItems: 2147483647
-      required:
-        - descriptors
     EditalAccreditationCriteriaDescriptor:
       description: todo
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          nullable: true
+          $ref: "#/components/schemas/IdAsUUID"
         description:
           type: string
           nullable: false
@@ -1011,86 +1212,6 @@ components:
           nullable: false
       required:
         - current
-    EditalItemProposedValue:
-      description: todo
-      properties:
-        id:
-          type: integer
-          format: int64
-          nullable: true
-          minimum: 1
-          maximum: 9223372036854775807
-        valueByCounty:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItemProposedValueByCounty"
-          minItems: 0
-          maxItems: 2147483647
-        valueByZone:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItemProposedValueByZone"
-          minItems: 0
-          maxItems: 2147483647
-        valueState:
-          type: number
-          format: double
-          minimum: 0
-    EditalItemProposedValueByCounty:
-      description: todo
-      properties:
-        id:
-          type: integer
-          format: int64
-          nullable: true
-          minimum: 1
-          maximum: 9223372036854775807
-        countyId:
-          type: integer
-          format: int32
-          nullable: false
-          minimum: 1
-          maximum: 2147483647
-        proposedValue:
-          type: number
-          format: double
-          nullable: false
-          minimum: 0
-      required:
-        - countyId
-        - proposedValue
-    EditalItemProposedValueByZone:
-      description: todo
-      properties:
-        id:
-          type: integer
-          format: int64
-          nullable: true
-          minimum: 1
-          maximum: 9223372036854775807
-        zoneId:
-          type: integer
-          format: int32
-          nullable: false
-          minimum: 1
-          maximum: 2147483647
-        proposedValue:
-          type: number
-          format: double
-          nullable: false
-          minimum: 0
-      required:
-        - zoneId
-        - proposedValue
-    EditalStatus:
-      description: todo
-      type: string
-      enum:
-        - ATIVO
-        - SUSPENSO
-        - ENCERRADO
-        - PRORROGADO
-        - NOVO
     EditalResponse:
       description: todo
       type: object

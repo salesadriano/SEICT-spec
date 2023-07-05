@@ -7,7 +7,7 @@
 
 	<groupId>br.com.lamppit</groupId>
 	<artifactId>seict-comprac-api-spec</artifactId>
-	<version>0.0.9</version>
+	<version>0.0.10</version>
 
 	<name>seict-comprac-backend-api</name>
 	<description>SEICT - COMPRAC - Backend API</description>
@@ -62,7 +62,7 @@
 		<web.oas.docgen.html.skip>true</web.oas.docgen.html.skip>
 		<web.oas.docgen.html.output.path>${oas.home}/generated/docs/html</web.oas.docgen.html.output.path>
 
-		<web.oas.docgen.uml.skip>true</web.oas.docgen.uml.skip>
+		<web.oas.docgen.uml.skip>false</web.oas.docgen.uml.skip>
 		<web.oas.docgen.uml.output.path>${oas.home}/generated/docs/uml</web.oas.docgen.uml.output.path>
 
 		<web.oas.specgen.spec2json.skip>false</web.oas.specgen.spec2json.skip>

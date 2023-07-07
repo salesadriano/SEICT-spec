@@ -1,4 +1,6 @@
 openapi: 3.0.3
+x-json-schema-faker:
+  maxItems: 3
 info:
   title: SEICT - COMPRAC
   description: |
@@ -613,12 +615,16 @@ components:
     ##
     # Geolocation
     ##
+    CountryId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
     Country:
       description: todo.
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/IdAsUUID"
+          $ref: "#/components/schemas/CountryId"
         name:
           type: string
           nullable: false
@@ -634,19 +640,23 @@ components:
       required:
         - name
         - states
+    StateId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
     State:
       description: todo.
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/IdAsUUID"
+          $ref: "#/components/schemas/StateId"
         name:
           type: string
           nullable: false
           minLength: 2
           maxLength: 128
-        country:
-          $ref: "#/components/schemas/Country"
+        countryId:
+          $ref: "#/components/schemas/CountryId"
           nullable: false
         regions:
           type: array
@@ -659,19 +669,23 @@ components:
         - name
         - country
         - regions
+    RegionId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
     Region:
       description: todo.
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/IdAsUUID"
+          $ref: "#/components/schemas/RegionId"
         name:
           type: string
           nullable: false
           minLength: 2
           maxLength: 128
-        state:
-          $ref: "#/components/schemas/State"
+        stateId:
+          $ref: "#/components/schemas/StateId"
           nullable: false
         counties:
           type: array
@@ -684,19 +698,23 @@ components:
         - name
         - state
         - counties
+    CountyId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
     County:
       description: todo.
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/IdAsUUID"
+          $ref: "#/components/schemas/CountyId"
         name:
           type: string
           nullable: false
           minLength: 2
           maxLength: 128
-        region:
-          $ref: "#/components/schemas/Region"
+        regionId:
+          $ref: "#/components/schemas/RegionId"
           nullable: false
       required:
         - name
@@ -704,16 +722,17 @@ components:
     ##
     # Itens de domínio
     ##
+    IndustrialSectorId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
     IndustrialSector:
       description: todo
       type: object
       properties:
         id:
-          type: integer
-          format: int32
+          $ref: "#/components/schemas/IndustrialSectorId"
           nullable: false
-          minimum: 1
-          maximum: 2147483647
         name:
           type: string
           nullable: false
@@ -721,6 +740,7 @@ components:
           minLength: 1
           maxLength: 128
       required:
+        - id
         - name
     DistributionCriteriaId:
       description: todo
@@ -1113,8 +1133,8 @@ components:
       properties:
         id:
           $ref: "#/components/schemas/IdAsUUID"
-        country:
-          $ref: "#/components/schemas/Country"
+        countryId:
+          $ref: "#/components/schemas/CountryId"
           nullable: false
         proposedValue:
           type: number
@@ -1129,8 +1149,8 @@ components:
       properties:
         id:
           $ref: "#/components/schemas/IdAsUUID"
-        state:
-          $ref: "#/components/schemas/State"
+        stateId:
+          $ref: "#/components/schemas/StateId"
           nullable: false
         proposedValue:
           type: number
@@ -1145,8 +1165,8 @@ components:
       properties:
         id:
           $ref: "#/components/schemas/IdAsUUID"
-        region:
-          $ref: "#/components/schemas/Region"
+        regionId:
+          $ref: "#/components/schemas/RegionId"
           nullable: false
         proposedValue:
           type: number
@@ -1161,8 +1181,8 @@ components:
       properties:
         id:
           $ref: "#/components/schemas/IdAsUUID"
-        county:
-          $ref: "#/components/schemas/County"
+        countyId:
+          $ref: "#/components/schemas/CountyId"
           nullable: false
         proposedValue:
           type: number
@@ -1207,10 +1227,14 @@ components:
       description: todo
       type: object
       properties:
+        previous:
+          $ref: "#/components/schemas/EditalStatus"
+          nullable: true
         current:
           $ref: "#/components/schemas/EditalStatus"
           nullable: false
       required:
+        - previous
         - current
     EditalResponse:
       description: todo

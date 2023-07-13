@@ -1,92 +1,70 @@
-# comprac-api-spec
-
-
+# SEICT - COMPRAC - Open Api Spec
 
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Tooling
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- VS Code - [Download](https://code.visualstudio.com/sha/download?build=stable&os=win32-x64)
+- Java 17+ - [Download Page](https://www.oracle.com/java/technologies/downloads/)
+- Maven - [Download Page](https://maven.apache.org/download.cgi)
+- Prism - [Installation Page](https://docs.stoplight.io/docs/prism/f51bcc80a02db-installation)
 
-## Add your files
+> Remember to set environment vars JAVA_HOME and MVN_HOME 
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+> Remember to add JAVA_HOME and MVN_HOME to 
 
-```
-cd existing_repo
-git remote add origin https://cicdseictac.lampp-it.com.br/seict/spec/comprac-api-spec.git
-git branch -M main
-git push -uf origin main
-```
+### Plugins
 
-## Integrate with your tools
+- [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph)
+- [Open Api Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
+- [Open Api Linter](https://marketplace.visualstudio.com/items?itemName=stoplight.spectral)
+- [SonarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
 
-- [ ] [Set up project integrations](https://cicdseictac.lampp-it.com.br/seict/spec/comprac-api-spec/-/settings/integrations)
+## Open API - Dev Flow
 
-## Collaborate with your team
+- [OAS Dev Docs](https://swagger.io/docs/specification/about/) - Bookmark it. now. do it.
+- Develop spec file on:
+    > src\main\resources\openapi\spec\specFile_oas3.yml
+- Run the codegen on local
+    > mvn clean compile
+- Check Back End files generated at:
+    > target\generated-sources\openapi\src
+    - api: Contains the Endpoints Services classes.
+    - model: Contains the Api classes (request|response|etc).
+- Check Front End files generated 
+    > src\main\resources\openapi\generated\fe\lib-client
+    - api: Contains the Endpoints Services classes.
+    - model: Contains the Api classes (request|response|etc).
+    - README.md: Contains Instructions on how to setup the Api module.
+- If files are ok and maven returns a sucess => OK.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Modify the Codegen
 
-## Test and Deploy
+- [Open Api Generators - List](https://openapi-generator.tech/docs/generators)
+- [Backend - Spring Generator](https://openapi-generator.tech/docs/generators/spring)
+- [Frontend - Typescript Angular Generator](https://openapi-generator.tech/docs/generators/typescript-angular)
+- Codegen is configured to run by Maven, so check the `pom.xml` file.
+- Edit section `<properties>` - properties have prefixes that help understanding them, form example: `.*codegen.be.*` relates to backend.
+- Plug the edited properties in the respective `<execution>` that generates the type of artefact you edited.
+- Run codegen again.
 
-Use the built-in continuous integration in GitLab.
+## Open Api - Mock Server
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- [Prism](https://stoplight.io/open-source/prism) allows us to start a server locally that can serve responses and examples based on the spec file, faking a backend server.
+- Install prism 
+    > npm install -g @stoplight/prism-cli
+- Open a terminal and go to the root of project
+- Start mock server
+    > prism mock -d .\src\main\resources\openapi\spec\${spec_file_name_here}.yml
+- Customize your app environment to use the api url
+    > http://localhost:4010
 
-***
+### Dynamic Mocked Responses
 
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- [Open Api How to Add Examples](https://swagger.io/docs/specification/adding-examples/)
+- [Prism Dynamic Mocks](https://docs.stoplight.io/docs/prism/83dbbd75532cf-http-mocking)
+- [Prism Dynamic Response Generation](https://docs.stoplight.io/docs/prism/9528b5a8272c0-dynamic-response-generation-with-faker)
+- Add example and alias on the spec (read above on how to)
+- Add the example alias as a preference of your request to the mock server
+    > Prefer:example=${yourExampleAlias}
+    

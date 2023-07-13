@@ -800,6 +800,10 @@ components:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
+    EditalLotDescriptorId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
     # Edital - Query
     EditalQueryResponse:
       description: todo
@@ -995,7 +999,7 @@ components:
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/IdAsUUID"
+          $ref: "#/components/schemas/EditalLotDescriptorId"
         number:
           type: integer
           format: int32
@@ -1084,8 +1088,8 @@ components:
           pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
-        lotDescriptor:
-          $ref: "#/components/schemas/EditalLotDescriptor"
+        lotDescriptorId:
+          $ref: "#/components/schemas/EditalLotDescriptorId"
           nullable: false
         proposedValue:
           $ref: "#/components/schemas/EditalItemProposedValue"

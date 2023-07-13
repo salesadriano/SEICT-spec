@@ -1104,7 +1104,7 @@ components:
         - description
         - unit
         - technicalSpecification
-        - lotDescriptor
+        - lotDescriptorId
         - proposedValue
     EditalItemProposedValue:
       description: todo
@@ -1386,7 +1386,7 @@ components:
     EditalQueryResponseWithoutResults:
       summary: Without Results.
       description: Exemple of edital query response without any Results.
-      value: 
+      value:
         {
           "results": [],
           "pagination":
@@ -1396,31 +1396,32 @@ components:
               "totalCount": 0,
               "resultSize": 0,
             },
-          "sort": []
+          "sort": [],
         }
     EditalQueryResponseWithResults:
       summary: With Results.
       description: Exemple of edital query response with Results.
-      value: 
+      value:
         {
-          "results": [
-            { 
-              "id": 1,
-              "editalNumber": "1/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "ATIVO"
-            },
-             { 
-              "id": 2,
-              "editalNumber": "2/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "ATIVO"
-            }
-          ],
+          "results":
+            [
+              {
+                "id": 1,
+                "editalNumber": "1/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "ATIVO",
+              },
+              {
+                "id": 2,
+                "editalNumber": "2/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "ATIVO",
+              },
+            ],
           "pagination":
             {
               "pageNumber": 0,
@@ -1428,5 +1429,5 @@ components:
               "totalCount": 1,
               "resultSize": 1,
             },
-          "sort": ["name:asc"]
+          "sort": ["name:asc"],
         }

@@ -1386,11 +1386,7 @@ components:
     EditalQueryResponseWithoutResults:
       summary: Without Results.
       description: Exemple of edital query response without any Results.
-<<<<<<< HEAD
-      value: 
-=======
       value:
->>>>>>> main
         {
           "results": [],
           "pagination":
@@ -1400,16 +1396,11 @@ components:
               "totalCount": 0,
               "resultSize": 0,
             },
-<<<<<<< HEAD
-          "sort": []
-=======
           "sort": [],
->>>>>>> main
         }
     EditalQueryResponseWithResults:
       summary: With Results.
       description: Exemple of edital query response with Results.
-<<<<<<< HEAD
       value: 
         {
           "results": [
@@ -1494,29 +1485,6 @@ components:
               "status": "SUSPENSO"
             },
           ],
-=======
-      value:
-        {
-          "results":
-            [
-              {
-                "id": 1,
-                "editalNumber": "1/2023",
-                "validityStartDate": "01/01/2024",
-                "validityEndDate": "01/01/2024",
-                "purpose": "exemplo",
-                "status": "ATIVO",
-              },
-              {
-                "id": 2,
-                "editalNumber": "2/2023",
-                "validityStartDate": "01/01/2024",
-                "validityEndDate": "01/01/2024",
-                "purpose": "exemplo",
-                "status": "ATIVO",
-              },
-            ],
->>>>>>> main
           "pagination":
             {
               "pageNumber": 0,
@@ -1524,9 +1492,5 @@ components:
               "totalCount": 1,
               "resultSize": 1,
             },
-<<<<<<< HEAD
-          "sort": ["name:asc"]
-=======
           "sort": ["name:asc"],
->>>>>>> main
         }

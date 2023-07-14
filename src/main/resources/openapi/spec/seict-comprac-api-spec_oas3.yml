@@ -832,11 +832,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          nullable: false
-          minimum: 1
-          maximum: 9223372036854775807
+          $ref: "#/components/schemas/EditalId"
         editalNumber:
           type: string
           nullable: false
@@ -1064,11 +1060,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          nullable: true
-          minimum: 1
-          maximum: 9223372036854775807
+          $ref: "#/components/schemas/IdAsUUID"
         number:
           type: integer
           format: int64

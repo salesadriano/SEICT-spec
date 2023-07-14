@@ -67,4 +67,4 @@
 - Add example and alias on the spec (read above on how to)
 - Add the example alias as a preference of your request to the mock server
     > Prefer:example=${yourExampleAlias}
-    
+     

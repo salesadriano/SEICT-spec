@@ -351,6 +351,36 @@ paths:
           $ref: "#/components/responses/500InternalServerError"
         default:
           $ref: "#/components/responses/GeneralError"
+    patch:
+      tags:
+        - "Back Office - Edital"
+      summary: todo
+      description: todo
+      operationId: patchEdital
+      parameters:
+        - $ref: "#/components/parameters/EditalIdParam"
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditalPatchRequest"
+      responses:
+        "204":
+          description: Successful operation. No Content.
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
 components:
   schemas:
     ##
@@ -800,7 +830,18 @@ components:
         - ENCERRADO
         - PRORROGADO
         - NOVO
-    # Edital - Id
+    EditalEntityKeys:
+      description: todo.
+      type: string
+      enum:
+        - EDITAL_HEADER
+        - EDITAL_GENERAL_INFO
+        - EDITAL_LOTS
+        - EDITAL_VALUE_CRITERIA
+        - EDITAL_DISTRIBUTION_CRITERIA
+        - EDITAL_ACCREDITATION_CRITERIA
+        - EDITAL_ITEMS
+    # Edital - Ids
     EditalId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
@@ -809,117 +850,7 @@ components:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
-    # Edital - Query
-    EditalQueryResponse:
-      description: todo
-      type: object
-      allOf:
-        - $ref: "#/components/schemas/BaseQueryResponse"
-        - type: object
-          properties:
-            results:
-              type: array
-              items:
-                $ref: "#/components/schemas/EditalQueryResult"
-              minItems: 0
-              maxItems: 2147483647
-          required:
-            - results
-            - pagination
-            - sort
-    EditalQueryResult:
-      description: todo
-      type: object
-      properties:
-        id:
-          $ref: "#/components/schemas/EditalId"
-        editalNumber:
-          type: string
-          nullable: false
-          minLength: 6
-          maxLength: 256
-          pattern: "^[0-9]{1,}/[0-9]{4}$"
-        validityStartDate:
-          type: string
-          nullable: false
-          minLength: 10
-          maxLength: 10
-          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
-        validityEndDate:
-          type: string
-          nullable: false
-          minLength: 10
-          maxLength: 10
-          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
-        purpose:
-          type: string
-          pattern: '^([a-zA-ZÀ-ÿ0-9\s#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,8000}$'
-          nullable: false
-          minLength: 10
-          maxLength: 8000
-        status:
-          $ref: "#/components/schemas/EditalStatus"
-      required:
-        - id
-        - editalNumber
-        - validityStartDate
-        - validityEndDate
-        - purpose
-        - status
-    # Edital - Request
-    EditalRequest:
-      description: todo.
-      type: object
-      properties:
-        header:
-          $ref: "#/components/schemas/EditalHeader"
-          nullable: false
-        generalInformation:
-          $ref: "#/components/schemas/EditalGeneralInformation"
-          nullable: false
-        lotDescriptors:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalLotDescriptor"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        valueCriteriaDescriptors:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalValueCriteriaDescriptor"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItem"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        distributionCriteriaDescriptors:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalDistributionCriteriaDescriptor"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        accreditationCriteriaDescriptors:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalAccreditationCriteriaDescriptor"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-      required:
-        - header
-        - generalInformation
-        - lotDescriptors
-        - valueCriteriaDescriptors
-        - items
-        - distributionCriteriaDescriptors
-        - accreditationCriteriaDescriptors
+    # Edital - Schemas
     EditalHeader:
       description: todo.
       type: object
@@ -1237,6 +1168,117 @@ components:
       required:
         - previous
         - current
+    # Edital - Request - Query
+    EditalQueryResponse:
+      description: todo
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/BaseQueryResponse"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/EditalQueryResult"
+              minItems: 0
+              maxItems: 2147483647
+          required:
+            - results
+            - pagination
+            - sort
+    EditalQueryResult:
+      description: todo
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/EditalId"
+        editalNumber:
+          type: string
+          nullable: false
+          minLength: 6
+          maxLength: 256
+          pattern: "^[0-9]{1,}/[0-9]{4}$"
+        validityStartDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        validityEndDate:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 10
+          pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
+        purpose:
+          type: string
+          pattern: '^([a-zA-ZÀ-ÿ0-9\s#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,8000}$'
+          nullable: false
+          minLength: 10
+          maxLength: 8000
+        status:
+          $ref: "#/components/schemas/EditalStatus"
+      required:
+        - id
+        - editalNumber
+        - validityStartDate
+        - validityEndDate
+        - purpose
+        - status
+    # Edital - Request - Post and Put
+    EditalRequest:
+      description: todo.
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/EditalHeader"
+          nullable: false
+        generalInformation:
+          $ref: "#/components/schemas/EditalGeneralInformation"
+          nullable: false
+        lotDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalLotDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        valueCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalValueCriteriaDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItem"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        distributionCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalDistributionCriteriaDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        accreditationCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalAccreditationCriteriaDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+      required:
+        - header
+        - generalInformation
+        - lotDescriptors
+        - valueCriteriaDescriptors
+        - items
+        - distributionCriteriaDescriptors
+        - accreditationCriteriaDescriptors
     EditalResponse:
       description: todo
       type: object
@@ -1246,6 +1288,69 @@ components:
           properties:
             id:
               $ref: "#/components/schemas/EditalId"
+    # Edital - Request - Patch
+    EditalPatchRequest:
+      description: todo
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalEntityKeys"
+          nullable: false
+          minItems: 1
+          maxItems: 10 #Remember to increase this if there is more keys in the enum
+        payload:
+          $ref: "#/components/schemas/EditalPatchRequestPayload"
+          nullable: false
+      required:
+        - keys
+        - payload
+    EditalPatchRequestPayload:
+      description: todo.
+      type: object
+      properties:
+        header:
+          $ref: "#/components/schemas/EditalHeader"
+          nullable: true
+        generalInformation:
+          $ref: "#/components/schemas/EditalGeneralInformation"
+          nullable: true
+        lotDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalLotDescriptor"
+          nullable: true
+          minItems: 0
+          maxItems: 2147483647
+        valueCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalValueCriteriaDescriptor"
+          nullable: true
+          minItems: 0
+          maxItems: 2147483647
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItem"
+          nullable: true
+          minItems: 0
+          maxItems: 2147483647
+        distributionCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalDistributionCriteriaDescriptor"
+          nullable: true
+          minItems: 0
+          maxItems: 2147483647
+        accreditationCriteriaDescriptors:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalAccreditationCriteriaDescriptor"
+          nullable: true
+          minItems: 0
+          maxItems: 2147483647
   parameters:
     UserIdParam:
       name: id

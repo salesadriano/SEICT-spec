@@ -279,6 +279,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EditalResponse"
+              examples:
+                queryByNumber:
+                  $ref: "#/components/examples/EditalResponseById"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -1370,6 +1373,13 @@ components:
           "filter": ["number:'number1,number2':IN_LIKE"],
           "pagination": { "pageNumber": 0, "pageSize": 10 },
           "sort": ["name:asc"],
+        }
+    EditalResponseById:
+      summary: Edital By id.
+      description: Exemple of edital request by id.
+      value: 
+        {
+          
         }
     EditalRequestByNumber:
       summary: Edital By Number.

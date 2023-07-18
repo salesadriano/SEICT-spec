@@ -13,7 +13,7 @@ info:
   license:
     name: Lampp-it - Licensa Comercial
     url: https://www.lampp-it.com.br/
-  version: 0.0.14
+  version: 0.0.15
 externalDocs:
   description: SEICT - COMPRAC - Documentação
   url: https://comprac.ac.gov.br/
@@ -279,6 +279,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EditalResponse"
+              examples:
+                queryByNumber:
+                  $ref: "#/components/examples/EditalResponseById"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -675,6 +678,25 @@ components:
       required:
         - name
         - states
+    Geolocation: 
+      description: todo.
+      type: object
+      properties:
+        id: 
+          $ref: "#/components/schemas/IdAsUUID"
+        type: 
+          $ref: "#/components/schemas/GeolocationType"
+      required:
+        - id
+        - type
+    GeolocationType: 
+      description: todo.
+      type: string
+      enum:
+        - COUNTRY
+        - STATE
+        - REGION
+        - COUNTY
     StateId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
@@ -953,39 +975,10 @@ components:
       properties:
         id:
           $ref: "#/components/schemas/IdAsUUID"
-        countries:
+        geolocations:
           type: array
           items:
-            $ref: "#/components/schemas/Country"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        states:
-          type: array
-          items:
-            $ref: "#/components/schemas/State"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        regions:
-          type: array
-          items:
-            $ref: "#/components/schemas/Region"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        counties:
-          type: array
-          items:
-            $ref: "#/components/schemas/County"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-      required:
-        - countries
-        - states
-        - regions
-        - counties
+            $ref: "#/components/schemas/Geolocation"
     EditalItem:
       description: todo
       type: object
@@ -1019,54 +1012,28 @@ components:
         lotDescriptorId:
           $ref: "#/components/schemas/EditalLotDescriptorId"
           nullable: false
-        proposedValue:
-          $ref: "#/components/schemas/EditalItemProposedValue"
+        valueByGeolocation:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalItemProposedValueByGeolocation"
           nullable: false
+          minItems: 0
+          maxItems: 2147483647
       required:
         - number
         - description
         - unit
         - technicalSpecification
         - lotDescriptorId
-        - proposedValue
-    EditalItemProposedValue:
+        - valueByGeolocation
+    EditalItemProposedValueByGeolocation:
       description: todo
+      type: object
       properties:
         id:
           $ref: "#/components/schemas/IdAsUUID"
-        valueByCountry:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItemProposedValueByCountry"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        valueByState:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItemProposedValueByState"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-        valueByRegion:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItemProposedValueByRegion"
-          minItems: 0
-          maxItems: 2147483647
-        valueByCounty:
-          type: array
-          items:
-            $ref: "#/components/schemas/EditalItemProposedValueByCounty"
-          minItems: 0
-          maxItems: 2147483647
-    EditalItemProposedValueByCountry:
-      description: todo
-      properties:
-        id:
-          $ref: "#/components/schemas/IdAsUUID"
-        countryId:
-          $ref: "#/components/schemas/CountryId"
+        geolocation:
+          $ref: "#/components/schemas/Geolocation"
           nullable: false
         proposedValue:
           type: number
@@ -1074,55 +1041,7 @@ components:
           nullable: false
           minimum: 0
       required:
-        - country
-        - proposedValue
-    EditalItemProposedValueByState:
-      description: todo
-      properties:
-        id:
-          $ref: "#/components/schemas/IdAsUUID"
-        stateId:
-          $ref: "#/components/schemas/StateId"
-          nullable: false
-        proposedValue:
-          type: number
-          format: double
-          nullable: false
-          minimum: 0
-      required:
-        - state
-        - proposedValue
-    EditalItemProposedValueByRegion:
-      description: todo
-      properties:
-        id:
-          $ref: "#/components/schemas/IdAsUUID"
-        regionId:
-          $ref: "#/components/schemas/RegionId"
-          nullable: false
-        proposedValue:
-          type: number
-          format: double
-          nullable: false
-          minimum: 0
-      required:
-        - region
-        - proposedValue
-    EditalItemProposedValueByCounty:
-      description: todo
-      properties:
-        id:
-          $ref: "#/components/schemas/IdAsUUID"
-        countyId:
-          $ref: "#/components/schemas/CountyId"
-          nullable: false
-        proposedValue:
-          type: number
-          format: double
-          nullable: false
-          minimum: 0
-      required:
-        - county
+        - geolocation
         - proposedValue
     EditalDistributionCriteriaDescriptor:
       description: todo
@@ -1476,6 +1395,78 @@ components:
           "pagination": { "pageNumber": 0, "pageSize": 10 },
           "sort": ["name:asc"],
         }
+    EditalResponseById:
+      summary: Edital By id.
+      description: Exemple of edital request by id.
+      value: 
+        {
+          "header": 
+            {
+              "id": "6d9c833f-af5c-4d40-b91f-dcf32b5901cd", 
+              "editalNumber": 1,
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "industrialSector": {"id": "04d6bbe9-89e9-44b9-9e8c-76503e7bc7c1", "name": "exemplo"}, 
+              "status": "current"
+            },
+          "generalInformation":
+            {
+              "id": "895b42cb-5e3b-4857-84eb-62ca6ed94398",
+              "publishDate": "01/01/2024",
+              "officialJournalNumber": 1,
+              "officialJournalDate": "1/2024",
+              "valueCriteriaType": "SINGLE",
+              "lotStrategy": "MULTIPLE",
+              "purpose": "exemplo"
+            },
+            "lotDescriptors": 
+              [
+                "id": "c4b2345a-4d24-426c-b299-921543b67152",
+                "number": 10,
+                "description": "texto"
+              ],
+            "valueCriteriaDescriptors":
+              [
+                "id": "4db4c350-4ded-4ea3-bc6c-ede416ed358e",
+                "geolocations": 
+                  [
+                    {
+                      "id": "18b19421-4577-422b-90dd-2d4ab669e1ea",
+                      "type": "COUNTRY"
+                    },
+                    {
+                      "id": "a4722e58-8e76-40c4-9711-420308682b89",
+                      "type": "STATE"
+                    },
+                  ],
+              ],
+            "items":
+              [
+                "id": "d868a0b7-388b-43aa-b930-21859f720493",
+                "number": 3,
+                "description": "exemplo",
+                "unit": "exemplo",
+                "technicalSpecification": "exemplo",
+                "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
+                "proposedValue": 
+                  [
+                    {
+                      "geolocation": {"id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9", "type": "COUNTRY"},
+                      "value": 2.2
+                    }
+                  ],
+              ],
+            "distributionCriteriaDescriptors":
+              [
+              
+              ],
+            "accreditationCriteriaDescriptors":
+              [
+              
+              ],
+
+
+        }
     EditalRequestByNumber:
       summary: Edital By Number.
       description: Exemple of edital request by number.
@@ -1498,27 +1489,90 @@ components:
     EditalQueryResponseWithResults:
       summary: With Results.
       description: Exemple of edital query response with Results.
-      value:
+      value: 
         {
-          "results":
-            [
-              {
-                "id": 1,
-                "editalNumber": "1/2023",
-                "validityStartDate": "01/01/2024",
-                "validityEndDate": "01/01/2024",
-                "purpose": "exemplo",
-                "status": "ATIVO",
-              },
-              {
-                "id": 2,
-                "editalNumber": "2/2023",
-                "validityStartDate": "01/01/2024",
-                "validityEndDate": "01/01/2024",
-                "purpose": "exemplo",
-                "status": "ATIVO",
-              },
-            ],
+          "results": [
+            { 
+              "id": 1,
+              "editalNumber": "1/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "ATIVO"
+            },
+             { 
+              "id": 2,
+              "editalNumber": "2/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "ATIVO"
+            },
+            { 
+              "id": 4,
+              "editalNumber": "3/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "SUSPENSO"
+            },
+             { 
+              "id": 5,
+              "editalNumber": "4/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "SUSPENSO"
+            },
+             { 
+              "id": 6,
+              "editalNumber": "5/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "SUSPENSO"
+            },
+             { 
+              "id": 7,
+              "editalNumber": "6/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "SUSPENSO"
+            },
+             { 
+              "id": 8,
+              "editalNumber": "7/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "SUSPENSO"
+            },
+             { 
+              "id": 9,
+              "editalNumber": "8/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "SUSPENSO"
+            },
+             { 
+              "id": 10,
+              "editalNumber": "9/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "SUSPENSO"
+            },
+             { 
+              "id": 11,
+              "editalNumber": "10/2023",
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024", 
+              "purpose": "exemplo", 
+              "status": "SUSPENSO"
+            },
+          ],
           "pagination":
             {
               "pageNumber": 0,

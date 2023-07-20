@@ -975,10 +975,11 @@ components:
       properties:
         id:
           $ref: "#/components/schemas/IdAsUUID"
-        geolocations:
-          type: array
-          items:
-            $ref: "#/components/schemas/Geolocation"
+        geolocation:
+          $ref: "#/components/schemas/Geolocation"
+          nullable: false
+      required:
+        - "geolocation"
     EditalItem:
       description: todo
       type: object

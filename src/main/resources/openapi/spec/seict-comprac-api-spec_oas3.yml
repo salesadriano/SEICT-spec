@@ -1292,12 +1292,18 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
+          examples:
+            withError400: 
+              $ref: "#/components/examples/ResponseWithError400"
     401Unauthorized:
       description: Unauthorized.
       content:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
+          examples:
+            withError401:
+              $ref: "#/components/examples/ResponseWithError401"
     403Forbidden:
       description: Forbidden.
       content:
@@ -1371,7 +1377,7 @@ components:
           "detail": "Internal Server Error.",
           "instance": "string",
         }
-    UserQueryResponseWithError400:
+    ResponseWithError400:
       summary: Client Error.
       description: Example of client Error.
       value:
@@ -1380,6 +1386,28 @@ components:
           "title": "Client Error",
           "status": 400,
           "detail": "Invalid request.",
+          "instance": "string",
+        }
+    ResponseWithError401:
+      summary: Client Error
+      description: todo
+      value: 
+        {
+          "type": "https://www.lampp-it.com.br/api/problem/security/user-not-authenticated",
+          "title": "Not Authenticated",
+          "status": 401,
+          "detail": "User is not Authenticated.",
+          "instance": "string",
+        }
+    ResponseWithError500:
+      summary: Server Error.
+      description: Example of server Error.
+      value:
+        {
+          "type": "https://lampp-it/problem/internal-server-error",
+          "title": "Internal Server Error",
+          "status": 500,
+          "detail": "Internal Server Error.",
           "instance": "string",
         }
     UserRequestByNumber:
@@ -1493,7 +1521,7 @@ components:
         {
           "results": [
             { 
-              "id": 1,
+              "id": "6d9c833f-af5c-4d40-b91f-dcf32b5901cd",
               "editalNumber": "1/2023",
               "validityStartDate": "01/01/2024",
               "validityEndDate": "01/01/2024", 
@@ -1501,7 +1529,7 @@ components:
               "status": "ATIVO"
             },
              { 
-              "id": 2,
+              "id": "18b19421-4577-422b-90dd-2d4ab669e1ea",
               "editalNumber": "2/2023",
               "validityStartDate": "01/01/2024",
               "validityEndDate": "01/01/2024", 
@@ -1509,7 +1537,7 @@ components:
               "status": "ATIVO"
             },
             { 
-              "id": 4,
+              "id": "a0298cfa-e183-4391-a1ce-83d1f92242a1",
               "editalNumber": "3/2023",
               "validityStartDate": "01/01/2024",
               "validityEndDate": "01/01/2024", 
@@ -1517,7 +1545,7 @@ components:
               "status": "SUSPENSO"
             },
              { 
-              "id": 5,
+              "id": "bf0d25b0-2a69-4d03-9e53-3eb4988a18b2",
               "editalNumber": "4/2023",
               "validityStartDate": "01/01/2024",
               "validityEndDate": "01/01/2024", 
@@ -1525,7 +1553,7 @@ components:
               "status": "SUSPENSO"
             },
              { 
-              "id": 6,
+              "id": "da1069a8-119e-43fe-be7e-3cecb24ee9c4",
               "editalNumber": "5/2023",
               "validityStartDate": "01/01/2024",
               "validityEndDate": "01/01/2024", 
@@ -1533,7 +1561,7 @@ components:
               "status": "SUSPENSO"
             },
              { 
-              "id": 7,
+              "id": "6f82a974-0bff-4c8b-b2c5-8f2733ca2d15",
               "editalNumber": "6/2023",
               "validityStartDate": "01/01/2024",
               "validityEndDate": "01/01/2024", 
@@ -1541,7 +1569,7 @@ components:
               "status": "SUSPENSO"
             },
              { 
-              "id": 8,
+              "id": "1cbea7f5-9e7a-437a-9446-39dd06c281cb",
               "editalNumber": "7/2023",
               "validityStartDate": "01/01/2024",
               "validityEndDate": "01/01/2024", 

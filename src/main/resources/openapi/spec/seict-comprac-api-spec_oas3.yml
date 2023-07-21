@@ -887,15 +887,15 @@ components:
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
-        industrialSector:
-          $ref: "#/components/schemas/IndustrialSector"
+        industrialSectorId:
+          $ref: "#/components/schemas/IndustrialSectorId"
         status:
           $ref: "#/components/schemas/EditalStatusDefinition"
       required:
         - editalNumber
         - validityStartDate
         - validityEndDate
-        - industrialSector
+        - industrialSectorId
         - status
     EditalGeneralInformation:
       description: todo

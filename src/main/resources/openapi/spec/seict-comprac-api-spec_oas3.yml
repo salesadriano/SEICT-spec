@@ -541,11 +541,8 @@ components:
       properties:
         pagination:
           $ref: "#/components/schemas/QueryResponsePagination"
-        sort:
-          $ref: "#/components/schemas/QueryResponseSort"
       required:
         - pagination
-        - sort
     QueryResponsePagination:
       description: todo
       allOf:
@@ -560,20 +557,13 @@ components:
               nullable: false
             resultSize:
               type: integer
-              format: int64
+              format: int32
               minimum: 0
-              maximum: 9223372036854775807
+              maximum: 2147483647
               nullable: false
           required:
             - totalCount
             - resultSize
-    QueryResponseSort:
-      description: todo
-      type: array
-      items:
-        $ref: "#/components/schemas/QuerySortItem"
-      minItems: 0
-      maxItems: 2147483647
     ##
     # User
     ##

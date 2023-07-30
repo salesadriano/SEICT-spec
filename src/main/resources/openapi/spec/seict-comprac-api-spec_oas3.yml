@@ -866,8 +866,6 @@ components:
       description: todo
       type: object
       properties:
-        id:
-          $ref: "#/components/schemas/IdAsUUID"
         editalNumber:
           type: string
           nullable: false

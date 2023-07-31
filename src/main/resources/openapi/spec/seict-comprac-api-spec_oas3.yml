@@ -1608,6 +1608,5 @@ components:
               "pageSize": 10,
               "totalCount": 1,
               "resultSize": 1,
-            },
-          "sort": ["name:asc"],
+            }
         }

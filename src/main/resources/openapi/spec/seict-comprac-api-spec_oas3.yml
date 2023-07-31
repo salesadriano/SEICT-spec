@@ -541,11 +541,8 @@ components:
       properties:
         pagination:
           $ref: "#/components/schemas/QueryResponsePagination"
-        sort:
-          $ref: "#/components/schemas/QueryResponseSort"
       required:
         - pagination
-        - sort
     QueryResponsePagination:
       description: todo
       allOf:
@@ -560,20 +557,13 @@ components:
               nullable: false
             resultSize:
               type: integer
-              format: int64
+              format: int32
               minimum: 0
-              maximum: 9223372036854775807
+              maximum: 2147483647
               nullable: false
           required:
             - totalCount
             - resultSize
-    QueryResponseSort:
-      description: todo
-      type: array
-      items:
-        $ref: "#/components/schemas/QuerySortItem"
-      minItems: 0
-      maxItems: 2147483647
     ##
     # User
     ##
@@ -678,18 +668,18 @@ components:
       required:
         - name
         - states
-    Geolocation: 
+    Geolocation:
       description: todo.
       type: object
       properties:
-        id: 
+        id:
           $ref: "#/components/schemas/IdAsUUID"
-        type: 
+        type:
           $ref: "#/components/schemas/GeolocationType"
       required:
         - id
         - type
-    GeolocationType: 
+    GeolocationType:
       description: todo.
       type: string
       enum:
@@ -856,7 +846,6 @@ components:
       description: todo.
       type: string
       enum:
-        - EDITAL_HEADER
         - EDITAL_GENERAL_INFO
         - EDITAL_LOTS
         - EDITAL_VALUE_CRITERIA
@@ -873,12 +862,10 @@ components:
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     # Edital - Schemas
-    EditalHeader:
-      description: todo.
+    EditalGeneralInformation:
+      description: todo
       type: object
       properties:
-        id:
-          $ref: "#/components/schemas/IdAsUUID"
         editalNumber:
           type: string
           nullable: false
@@ -897,22 +884,8 @@ components:
           minLength: 10
           maxLength: 10
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
-        industrialSector:
-          $ref: "#/components/schemas/IndustrialSector"
-        status:
-          $ref: "#/components/schemas/EditalStatusDefinition"
-      required:
-        - editalNumber
-        - validityStartDate
-        - validityEndDate
-        - industrialSector
-        - status
-    EditalGeneralInformation:
-      description: todo
-      type: object
-      properties:
-        id:
-          $ref: "#/components/schemas/IdAsUUID"
+        industrialSectorId:
+          $ref: "#/components/schemas/IndustrialSectorId"
         publishDate:
           type: string
           nullable: false
@@ -941,7 +914,14 @@ components:
           nullable: false
           minLength: 10
           maxLength: 8000
+        status:
+          $ref: "#/components/schemas/EditalStatusDefinition"
       required:
+        - editalNumber
+        - validityStartDate
+        - validityEndDate
+        - industrialSectorId
+        - status
         - publishDate
         - officialJournalNumber
         - officialJournalDate
@@ -1150,9 +1130,6 @@ components:
       description: todo.
       type: object
       properties:
-        header:
-          $ref: "#/components/schemas/EditalHeader"
-          nullable: false
         generalInformation:
           $ref: "#/components/schemas/EditalGeneralInformation"
           nullable: false
@@ -1192,7 +1169,6 @@ components:
           minItems: 0
           maxItems: 2147483647
       required:
-        - header
         - generalInformation
         - lotDescriptors
         - valueCriteriaDescriptors
@@ -1230,9 +1206,6 @@ components:
       description: todo.
       type: object
       properties:
-        header:
-          $ref: "#/components/schemas/EditalHeader"
-          nullable: true
         generalInformation:
           $ref: "#/components/schemas/EditalGeneralInformation"
           nullable: true
@@ -1294,7 +1267,7 @@ components:
           schema:
             $ref: "#/components/schemas/Problem"
           examples:
-            withError400: 
+            withError400:
               $ref: "#/components/examples/ResponseWithError400"
     401Unauthorized:
       description: Unauthorized.
@@ -1392,7 +1365,7 @@ components:
     ResponseWithError401:
       summary: Client Error
       description: todo
-      value: 
+      value:
         {
           "type": "https://www.lampp-it.com.br/api/problem/security/user-not-authenticated",
           "title": "Not Authenticated",
@@ -1427,74 +1400,70 @@ components:
     EditalResponseById:
       summary: Edital By id.
       description: Exemple of edital request by id.
-      value: 
+      value:
         {
-          "header": 
-            {
-              "id": "6d9c833f-af5c-4d40-b91f-dcf32b5901cd", 
-              "editalNumber": 1,
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "industrialSector": {"id": "04d6bbe9-89e9-44b9-9e8c-76503e7bc7c1", "name": "exemplo"}, 
-              "status": "current"
-            },
           "generalInformation":
             {
               "id": "895b42cb-5e3b-4857-84eb-62ca6ed94398",
+              "editalNumber": 1,
+              "validityStartDate": "01/01/2024",
+              "validityEndDate": "01/01/2024",
               "publishDate": "01/01/2024",
               "officialJournalNumber": 1,
               "officialJournalDate": "1/2024",
+              "industrialSector":
+                {
+                  "id": "04d6bbe9-89e9-44b9-9e8c-76503e7bc7c1",
+                  "name": "exemplo",
+                },
               "valueCriteriaType": "SINGLE",
               "lotStrategy": "MULTIPLE",
-              "purpose": "exemplo"
+              "purpose": "exemplo",
+              "status": "current",
             },
-            "lotDescriptors": 
-              [
-                "id": "c4b2345a-4d24-426c-b299-921543b67152",
-                "number": 10,
-                "description": "texto"
-              ],
-            "valueCriteriaDescriptors":
-              [
-                "id": "4db4c350-4ded-4ea3-bc6c-ede416ed358e",
-                "geolocations": 
-                  [
-                    {
-                      "id": "18b19421-4577-422b-90dd-2d4ab669e1ea",
-                      "type": "COUNTRY"
-                    },
-                    {
-                      "id": "a4722e58-8e76-40c4-9711-420308682b89",
-                      "type": "STATE"
-                    },
-                  ],
-              ],
-            "items":
-              [
-                "id": "d868a0b7-388b-43aa-b930-21859f720493",
-                "number": 3,
-                "description": "exemplo",
-                "unit": "exemplo",
-                "technicalSpecification": "exemplo",
-                "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
-                "proposedValue": 
-                  [
-                    {
-                      "geolocation": {"id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9", "type": "COUNTRY"},
-                      "value": 2.2
-                    }
-                  ],
-              ],
-            "distributionCriteriaDescriptors":
-              [
-              
-              ],
-            "accreditationCriteriaDescriptors":
-              [
-              
-              ],
-
-
+          "lotDescriptors":
+            [
+              "id": "c4b2345a-4d24-426c-b299-921543b67152",
+              "number": 10,
+              "description": "texto",
+            ],
+          "valueCriteriaDescriptors":
+            [
+              "id": "4db4c350-4ded-4ea3-bc6c-ede416ed358e",
+              "geolocations":
+                [
+                  {
+                    "id": "18b19421-4577-422b-90dd-2d4ab669e1ea",
+                    "type": "COUNTRY",
+                  },
+                  {
+                    "id": "a4722e58-8e76-40c4-9711-420308682b89",
+                    "type": "STATE",
+                  },
+                ],
+            ],
+          "items":
+            [
+              "id": "d868a0b7-388b-43aa-b930-21859f720493",
+              "number": 3,
+              "description": "exemplo",
+              "unit": "exemplo",
+              "technicalSpecification": "exemplo",
+              "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
+              "proposedValue":
+                [
+                  {
+                    "geolocation":
+                      {
+                        "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
+                        "type": "COUNTRY",
+                      },
+                    "value": 2.2,
+                  },
+                ],
+            ],
+          "distributionCriteriaDescriptors": [],
+          "accreditationCriteriaDescriptors": [],
         }
     EditalRequestByNumber:
       summary: Edital By Number.
@@ -1518,90 +1487,91 @@ components:
     EditalQueryResponseWithResults:
       summary: With Results.
       description: Exemple of edital query response with Results.
-      value: 
+      value:
         {
-          "results": [
-            { 
-              "id": "6d9c833f-af5c-4d40-b91f-dcf32b5901cd",
-              "editalNumber": "1/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "ATIVO"
-            },
-             { 
-              "id": "18b19421-4577-422b-90dd-2d4ab669e1ea",
-              "editalNumber": "2/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "ATIVO"
-            },
-            { 
-              "id": "a0298cfa-e183-4391-a1ce-83d1f92242a1",
-              "editalNumber": "3/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "SUSPENSO"
-            },
-             { 
-              "id": "bf0d25b0-2a69-4d03-9e53-3eb4988a18b2",
-              "editalNumber": "4/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "SUSPENSO"
-            },
-             { 
-              "id": "da1069a8-119e-43fe-be7e-3cecb24ee9c4",
-              "editalNumber": "5/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "SUSPENSO"
-            },
-             { 
-              "id": "6f82a974-0bff-4c8b-b2c5-8f2733ca2d15",
-              "editalNumber": "6/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "SUSPENSO"
-            },
-             { 
-              "id": "1cbea7f5-9e7a-437a-9446-39dd06c281cb",
-              "editalNumber": "7/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "SUSPENSO"
-            },
-             { 
-              "id": 9,
-              "editalNumber": "8/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "SUSPENSO"
-            },
-             { 
-              "id": 10,
-              "editalNumber": "9/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "SUSPENSO"
-            },
-             { 
-              "id": 11,
-              "editalNumber": "10/2023",
-              "validityStartDate": "01/01/2024",
-              "validityEndDate": "01/01/2024", 
-              "purpose": "exemplo", 
-              "status": "SUSPENSO"
-            },
-          ],
+          "results":
+            [
+              {
+                "id": "6d9c833f-af5c-4d40-b91f-dcf32b5901cd",
+                "editalNumber": "1/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "ATIVO",
+              },
+              {
+                "id": "18b19421-4577-422b-90dd-2d4ab669e1ea",
+                "editalNumber": "2/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "ATIVO",
+              },
+              {
+                "id": "a0298cfa-e183-4391-a1ce-83d1f92242a1",
+                "editalNumber": "3/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "SUSPENSO",
+              },
+              {
+                "id": "bf0d25b0-2a69-4d03-9e53-3eb4988a18b2",
+                "editalNumber": "4/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "SUSPENSO",
+              },
+              {
+                "id": "da1069a8-119e-43fe-be7e-3cecb24ee9c4",
+                "editalNumber": "5/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "SUSPENSO",
+              },
+              {
+                "id": "6f82a974-0bff-4c8b-b2c5-8f2733ca2d15",
+                "editalNumber": "6/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "SUSPENSO",
+              },
+              {
+                "id": "1cbea7f5-9e7a-437a-9446-39dd06c281cb",
+                "editalNumber": "7/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "SUSPENSO",
+              },
+              {
+                "id": 9,
+                "editalNumber": "8/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "SUSPENSO",
+              },
+              {
+                "id": 10,
+                "editalNumber": "9/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "SUSPENSO",
+              },
+              {
+                "id": 11,
+                "editalNumber": "10/2023",
+                "validityStartDate": "01/01/2024",
+                "validityEndDate": "01/01/2024",
+                "purpose": "exemplo",
+                "status": "SUSPENSO",
+              },
+            ],
           "pagination":
             {
               "pageNumber": 0,

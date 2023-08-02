@@ -1057,7 +1057,7 @@ components:
           type: string
           nullable: false
           pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
-          minLength: 10
+          minLength: 1
           maxLength: 2048
       required:
         - name

@@ -1053,7 +1053,14 @@ components:
           pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
           minLength: 10
           maxLength: 2048
+        name:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
+          minLength: 10
+          maxLength: 2048
       required:
+        - name
         - description
     EditalStatusDefinition:
       description: todo
@@ -1578,5 +1585,6 @@ components:
               "pageSize": 10,
               "totalCount": 1,
               "resultSize": 1,
-            }
+            },
+          "sort": ["name:asc"],
         }

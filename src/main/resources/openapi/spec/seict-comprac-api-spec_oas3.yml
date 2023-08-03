@@ -251,6 +251,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EditalResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/EditalResponseById"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":

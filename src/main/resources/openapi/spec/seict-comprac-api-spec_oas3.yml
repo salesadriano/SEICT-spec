@@ -13,7 +13,7 @@ info:
   license:
     name: Lampp-it - Licensa Comercial
     url: https://www.lampp-it.com.br/
-  version: 0.0.16
+  version: 0.0.21
 externalDocs:
   description: SEICT - COMPRAC - Documentação
   url: https://comprac.ac.gov.br/
@@ -372,6 +372,37 @@ paths:
       responses:
         "204":
           description: Successful operation. No Content.
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  
+  #DomainItens#
+  /domainitems/industrialsector/all:
+    get:
+      tags:
+        - "Domain Items - Edital"
+      summary: todo
+      description: todo
+      operationId: getIndustrialSector
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IndustrialSectorResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/IndustrialSectorResponseAll"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -789,6 +820,17 @@ components:
       required:
         - id
         - name
+    IndustrialSectorResponse:
+      description: todo
+      type: object
+      properties:
+        results: 
+          type: array
+          items: 
+            $ref: "#/components/schemas/IndustrialSector"
+          nullable: false 
+          minItems: 0
+          maxItems: 2147483647
     DistributionCriteriaId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
@@ -1588,3 +1630,12 @@ components:
             },
           "sort": ["name:asc"],
         }
+    IndustrialSectorResponseAll: 
+      summary: With Results.
+      description: Exemple of industrial sector with results.
+      value: 
+        [
+          { "id": "4660a343-540e-44fc-9175-93eb83d21695", "name": "tecidos"},
+          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "moveleiro"},
+        ]
+

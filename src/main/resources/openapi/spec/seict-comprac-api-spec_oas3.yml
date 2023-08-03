@@ -1137,7 +1137,6 @@ components:
           required:
             - results
             - pagination
-            - sort
     EditalQueryResult:
       description: todo
       type: object
@@ -1534,7 +1533,6 @@ components:
               "totalCount": 0,
               "resultSize": 0,
             },
-          "sort": [],
         }
     EditalQueryResponseWithResults:
       summary: With Results.
@@ -1631,14 +1629,16 @@ components:
               "totalCount": 1,
               "resultSize": 1,
             },
-          "sort": ["name:asc"],
         }
     IndustrialSectorResponseAll: 
       summary: With Results.
       description: Exemple of industrial sector with results.
       value: 
         [
-          { "id": "4660a343-540e-44fc-9175-93eb83d21695", "name": "tecidos"},
-          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "moveleiro"},
+          { "id": "4660a343-540e-44fc-9175-93eb83d21695", "name": "Construção"},
+          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "Moveleiro"},
+          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "Gráfico"},
+          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "Alimentos"},
+          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "Confecções"},
         ]
 

@@ -1469,14 +1469,26 @@ components:
                 },
               "valueCriteriaType": "SINGLE",
               "lotStrategy": "MULTIPLE",
-              "purpose": "exemplo",
+              "purpose": "exemplo de objeto de edital para visualização",
               "status": "current",
             },
           "lotDescriptors":
             [
-              "id": "c4b2345a-4d24-426c-b299-921543b67152",
-              "number": 10,
-              "description": "texto",
+              {
+                "id": "c4b2345a-4d24-426c-b299-921543b67152",
+                "number": 10,
+                "description": "descrição do lote 10",
+              },
+              {
+                "id": "298cd7ae-3786-4f27-b0da-5be19e514f57",
+                "number": 20,
+                "description": "descrição do lote 20",
+              },
+                {
+                "id": "b0e90b83-0858-40bb-bf53-e6622c710849",
+                "number": 30,
+                "description": "descrição do lote 30",
+              },
             ],
           "valueCriteriaDescriptors":
             [
@@ -1495,26 +1507,78 @@ components:
             ],
           "items":
             [
-              "id": "d868a0b7-388b-43aa-b930-21859f720493",
-              "number": 3,
-              "description": "exemplo",
-              "unit": "exemplo",
-              "technicalSpecification": "exemplo",
-              "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
-              "proposedValue":
-                [
-                  {
-                    "geolocation":
-                      {
-                        "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
-                        "type": "COUNTRY",
-                      },
-                    "value": 2.2,
-                  },
-                ],
+              {
+                "id": "d868a0b7-388b-43aa-b930-21859f720493",
+                "number": 3,
+                "description": "móveis",
+                "unit": "exemplo",
+                "technicalSpecification": "exemplo",
+                "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
+                "proposedValue":
+                  [
+                    {
+                      "geolocation":
+                        {
+                          "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
+                          "type": "COUNTRY",
+                        },
+                      "value": 2.2,
+                    },
+                  ],
+              },
+              {
+                "id": "cf2b4202-5116-4754-b7a2-0ee9d0f18690",
+                "number": 150,
+                "description": "tecidos",
+                "unit": "exemplo",
+                "technicalSpecification": "exemplo",
+                "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
+                "proposedValue":
+                  [
+                    {
+                      "geolocation":
+                        {
+                          "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
+                          "type": "COUNTRY",
+                        },
+                      "value": 3.2,
+                    },
+                  ],
+              },
+              {
+                "id": "5edaafd5-bc0b-447e-8590-4ecf47b51730",
+                "number": 600,
+                "description": "alimentos",
+                "unit": "exemplo",
+                "technicalSpecification": "exemplo",
+                "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
+                "proposedValue":
+                  [
+                    {
+                      "geolocation":
+                        {
+                          "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
+                          "type": "COUNTRY",
+                        },
+                      "value": 1.2,
+                    },
+                  ],
+              },
             ],
-          "distributionCriteriaDescriptors": [],
-          "accreditationCriteriaDescriptors": [],
+          "distributionCriteriaDescriptors": [
+              {
+                "id": "9657e70b-170e-436b-9276-3a4c8749593c",
+                "order": 1,
+                "destributionCriteriaId": "afb14424-70ce-420e-9d15-1e6ca3a41df3"
+              }
+            ],
+          "accreditationCriteriaDescriptors": [
+              {
+                "id": "20ffd041-6c12-4a63-8441-f044ff80bc1d",
+                "description": "descrição de algum critério",
+                "name": "algum critério"
+              }
+            ],
         }
     EditalRequestByNumber:
       summary: Edital By Number.

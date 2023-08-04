@@ -13,7 +13,7 @@ info:
   license:
     name: Lampp-it - Licensa Comercial
     url: https://www.lampp-it.com.br/
-  version: 0.0.16
+  version: 0.0.21
 externalDocs:
   description: SEICT - COMPRAC - Documentação
   url: https://comprac.ac.gov.br/
@@ -251,6 +251,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EditalResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/EditalResponseById"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -372,6 +375,37 @@ paths:
       responses:
         "204":
           description: Successful operation. No Content.
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  
+  #DomainItens#
+  /domainitems/industrialsector/all:
+    get:
+      tags:
+        - "Domain Items - Edital"
+      summary: todo
+      description: todo
+      operationId: getIndustrialSector
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IndustrialSectorResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/IndustrialSectorResponseAll"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -789,6 +823,19 @@ components:
       required:
         - id
         - name
+    IndustrialSectorResponse:
+      description: todo
+      type: object
+      properties:
+        results: 
+          type: array
+          items: 
+            $ref: "#/components/schemas/IndustrialSector"
+          nullable: false 
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - results
     DistributionCriteriaId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
@@ -1092,7 +1139,6 @@ components:
           required:
             - results
             - pagination
-            - sort
     EditalQueryResult:
       description: todo
       type: object
@@ -1418,21 +1464,29 @@ components:
               "publishDate": "01/01/2024",
               "officialJournalNumber": 1,
               "officialJournalDate": "1/2024",
-              "industrialSector":
-                {
-                  "id": "04d6bbe9-89e9-44b9-9e8c-76503e7bc7c1",
-                  "name": "exemplo",
-                },
+              "industrialSectorId": "6d9c833f-af5c-4d40-b91f-dcf32b5901cd",
               "valueCriteriaType": "SINGLE",
               "lotStrategy": "MULTIPLE",
-              "purpose": "exemplo",
+              "purpose": "exemplo de objeto de edital para visualização",
               "status": "current",
             },
           "lotDescriptors":
             [
-              "id": "c4b2345a-4d24-426c-b299-921543b67152",
-              "number": 10,
-              "description": "texto",
+              {
+                "id": "c4b2345a-4d24-426c-b299-921543b67152",
+                "number": 10,
+                "description": "descrição do lote 10",
+              },
+              {
+                "id": "298cd7ae-3786-4f27-b0da-5be19e514f57",
+                "number": 20,
+                "description": "descrição do lote 20",
+              },
+                {
+                "id": "b0e90b83-0858-40bb-bf53-e6622c710849",
+                "number": 30,
+                "description": "descrição do lote 30",
+              },
             ],
           "valueCriteriaDescriptors":
             [
@@ -1451,26 +1505,78 @@ components:
             ],
           "items":
             [
-              "id": "d868a0b7-388b-43aa-b930-21859f720493",
-              "number": 3,
-              "description": "exemplo",
-              "unit": "exemplo",
-              "technicalSpecification": "exemplo",
-              "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
-              "proposedValue":
-                [
-                  {
-                    "geolocation":
-                      {
-                        "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
-                        "type": "COUNTRY",
-                      },
-                    "value": 2.2,
-                  },
-                ],
+              {
+                "id": "d868a0b7-388b-43aa-b930-21859f720493",
+                "number": 3,
+                "description": "móveis",
+                "unit": "exemplo",
+                "technicalSpecification": "exemplo",
+                "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
+                "proposedValue":
+                  [
+                    {
+                      "geolocation":
+                        {
+                          "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
+                          "type": "COUNTRY",
+                        },
+                      "value": 2.2,
+                    },
+                  ],
+              },
+              {
+                "id": "cf2b4202-5116-4754-b7a2-0ee9d0f18690",
+                "number": 150,
+                "description": "tecidos",
+                "unit": "exemplo",
+                "technicalSpecification": "exemplo",
+                "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
+                "proposedValue":
+                  [
+                    {
+                      "geolocation":
+                        {
+                          "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
+                          "type": "COUNTRY",
+                        },
+                      "value": 3.2,
+                    },
+                  ],
+              },
+              {
+                "id": "5edaafd5-bc0b-447e-8590-4ecf47b51730",
+                "number": 600,
+                "description": "alimentos",
+                "unit": "exemplo",
+                "technicalSpecification": "exemplo",
+                "lotDescriptorId": "faca061a-91da-4e4f-874a-90c6967acdfb",
+                "proposedValue":
+                  [
+                    {
+                      "geolocation":
+                        {
+                          "id": "6ca0464d-9a4a-4564-ae09-b0ea85c4e7e9",
+                          "type": "COUNTRY",
+                        },
+                      "value": 1.2,
+                    },
+                  ],
+              },
             ],
-          "distributionCriteriaDescriptors": [],
-          "accreditationCriteriaDescriptors": [],
+          "distributionCriteriaDescriptors": [
+              {
+                "id": "9657e70b-170e-436b-9276-3a4c8749593c",
+                "order": 1,
+                "destributionCriteriaId": "afb14424-70ce-420e-9d15-1e6ca3a41df3"
+              }
+            ],
+          "accreditationCriteriaDescriptors": [
+              {
+                "id": "20ffd041-6c12-4a63-8441-f044ff80bc1d",
+                "description": "descrição de algum critério",
+                "name": "algum critério"
+              }
+            ],
         }
     EditalRequestByNumber:
       summary: Edital By Number.
@@ -1489,7 +1595,6 @@ components:
               "totalCount": 0,
               "resultSize": 0,
             },
-          "sort": [],
         }
     EditalQueryResponseWithResults:
       summary: With Results.
@@ -1586,5 +1691,16 @@ components:
               "totalCount": 1,
               "resultSize": 1,
             },
-          "sort": ["name:asc"],
         }
+    IndustrialSectorResponseAll: 
+      summary: With Results.
+      description: Exemple of industrial sector with results.
+      value: 
+        [
+          { "id": "4660a343-540e-44fc-9175-93eb83d21695", "name": "Construção"},
+          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "Moveleiro"},
+          { "id": "89932028-1e07-40f5-b967-a8feebd43dc5", "name": "Gráfico"},
+          { "id": "62b740af-f9ac-404b-9ef4-0a44c3d79c62", "name": "Alimentos"},
+          { "id": "f20ca776-293d-4346-889b-39cdc8082381", "name": "Confecções"},
+        ]
+

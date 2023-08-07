@@ -387,7 +387,6 @@ paths:
           $ref: "#/components/responses/500InternalServerError"
         default:
           $ref: "#/components/responses/GeneralError"
-  
   #DomainItens#
   /domainitems/industrialsector/all:
     get:
@@ -827,11 +826,11 @@ components:
       description: todo
       type: object
       properties:
-        results: 
+        results:
           type: array
-          items: 
+          items:
             $ref: "#/components/schemas/IndustrialSector"
-          nullable: false 
+          nullable: false
           minItems: 1
           maxItems: 2147483647
       required:
@@ -1083,11 +1082,11 @@ components:
           nullable: false
           minimum: 1
           maximum: 2147483647
-        destributionCriteriaId:
+        distributionCriteriaId:
           $ref: "#/components/schemas/DistributionCriteriaId"
       required:
         - order
-        - destributionCriteriaId
+        - distributionCriteriaId
     EditalAccreditationCriteriaDescriptor:
       description: todo
       type: object
@@ -1261,40 +1260,40 @@ components:
       properties:
         generalInformation:
           $ref: "#/components/schemas/EditalGeneralInformation"
-          nullable: true
+          nullable: false
         lotDescriptors:
           type: array
           items:
             $ref: "#/components/schemas/EditalLotDescriptor"
-          nullable: true
+          nullable: false
           minItems: 0
           maxItems: 2147483647
         valueCriteriaDescriptors:
           type: array
           items:
             $ref: "#/components/schemas/EditalValueCriteriaDescriptor"
-          nullable: true
+          nullable: false
           minItems: 0
           maxItems: 2147483647
         items:
           type: array
           items:
             $ref: "#/components/schemas/EditalItem"
-          nullable: true
+          nullable: false
           minItems: 0
           maxItems: 2147483647
         distributionCriteriaDescriptors:
           type: array
           items:
             $ref: "#/components/schemas/EditalDistributionCriteriaDescriptor"
-          nullable: true
+          nullable: false
           minItems: 0
           maxItems: 2147483647
         accreditationCriteriaDescriptors:
           type: array
           items:
             $ref: "#/components/schemas/EditalAccreditationCriteriaDescriptor"
-          nullable: true
+          nullable: false
           minItems: 0
           maxItems: 2147483647
   parameters:
@@ -1482,7 +1481,7 @@ components:
                 "number": 20,
                 "description": "descrição do lote 20",
               },
-                {
+              {
                 "id": "b0e90b83-0858-40bb-bf53-e6622c710849",
                 "number": 30,
                 "description": "descrição do lote 30",
@@ -1563,19 +1562,21 @@ components:
                   ],
               },
             ],
-          "distributionCriteriaDescriptors": [
+          "distributionCriteriaDescriptors":
+            [
               {
                 "id": "9657e70b-170e-436b-9276-3a4c8749593c",
                 "order": 1,
-                "destributionCriteriaId": "afb14424-70ce-420e-9d15-1e6ca3a41df3"
-              }
+                "distributionCriteriaId": "afb14424-70ce-420e-9d15-1e6ca3a41df3",
+              },
             ],
-          "accreditationCriteriaDescriptors": [
+          "accreditationCriteriaDescriptors":
+            [
               {
                 "id": "20ffd041-6c12-4a63-8441-f044ff80bc1d",
                 "description": "descrição de algum critério",
-                "name": "algum critério"
-              }
+                "name": "algum critério",
+              },
             ],
         }
     EditalRequestByNumber:
@@ -1692,15 +1693,20 @@ components:
               "resultSize": 1,
             },
         }
-    IndustrialSectorResponseAll: 
+    IndustrialSectorResponseAll:
       summary: With Results.
       description: Exemple of industrial sector with results.
-      value: 
+      value:
         [
-          { "id": "4660a343-540e-44fc-9175-93eb83d21695", "name": "Construção"},
-          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "Moveleiro"},
-          { "id": "89932028-1e07-40f5-b967-a8feebd43dc5", "name": "Gráfico"},
-          { "id": "62b740af-f9ac-404b-9ef4-0a44c3d79c62", "name": "Alimentos"},
-          { "id": "f20ca776-293d-4346-889b-39cdc8082381", "name": "Confecções"},
+          {
+            "id": "4660a343-540e-44fc-9175-93eb83d21695",
+            "name": "Construção",
+          },
+          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "Moveleiro" },
+          { "id": "89932028-1e07-40f5-b967-a8feebd43dc5", "name": "Gráfico" },
+          { "id": "62b740af-f9ac-404b-9ef4-0a44c3d79c62", "name": "Alimentos" },
+          {
+            "id": "f20ca776-293d-4346-889b-39cdc8082381",
+            "name": "Confecções",
+          },
         ]
-

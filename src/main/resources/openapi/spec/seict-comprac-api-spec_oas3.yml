@@ -1697,7 +1697,9 @@ components:
       summary: With Results.
       description: Exemple of industrial sector with results.
       value:
-        [
+        {
+        "results":
+          [
           {
             "id": "4660a343-540e-44fc-9175-93eb83d21695",
             "name": "Construção",
@@ -1709,4 +1711,5 @@ components:
             "id": "f20ca776-293d-4346-889b-39cdc8082381",
             "name": "Confecções",
           },
-        ]
+          ]
+        }

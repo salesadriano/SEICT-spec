@@ -850,8 +850,8 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
-          minLength: 10
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){1,2048}$'
+          minLength: 1
           maxLength: 2048
       required:
         - description
@@ -959,7 +959,7 @@ components:
           type: string
           pattern: '^([a-zA-ZÀ-ÿ0-9\s#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,8000}$'
           nullable: false
-          minLength: 10
+          minLength: 3
           maxLength: 8000
         status:
           $ref: "#/components/schemas/EditalStatusDefinition"
@@ -990,8 +990,8 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
-          minLength: 10
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){1,2048}$'
+          minLength: 3
           maxLength: 2048
       required:
         - number
@@ -1022,8 +1022,8 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
-          minLength: 10
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){1,2048}$'
+          minLength: 3
           maxLength: 2048
         unit:
           type: string
@@ -1034,8 +1034,8 @@ components:
         technicalSpecification:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
-          minLength: 10
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){1,2048}$'
+          minLength: 3
           maxLength: 2048
         lotDescriptorId:
           $ref: "#/components/schemas/EditalLotDescriptorId"
@@ -1097,13 +1097,13 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
-          minLength: 10
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){1,2048}$'
+          minLength: 3
           maxLength: 2048
         name:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){1,2048}$'
           minLength: 1
           maxLength: 2048
       required:

@@ -50,6 +50,7 @@ tags:
   - name: Security - User
     description: Management of Users.
 paths:
+  #Security#
   /security/user/query:
     post:
       tags:
@@ -186,6 +187,8 @@ paths:
           $ref: "#/components/responses/500InternalServerError"
         default:
           $ref: "#/components/responses/GeneralError"
+
+  #BackOfficeEdital#
   /backoffice/edital/query:
     post:
       tags:
@@ -406,6 +409,151 @@ paths:
               examples:
                 withResults:
                   $ref: "#/components/examples/IndustrialSectorResponseAll"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  /domainitems/country/all:
+    get:
+      tags:
+        - "Domain Items - Edital"
+      summary: todo
+      description: todo
+      operationId: getAllCountry
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/CountryResponseAll"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  /domainitems/state/all:
+    get:
+      tags:
+        - "Domain Items - Edital"
+      summary: todo
+      description: todo
+      operationId: getAllState
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StateResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/StateResponseAll"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  /domainitems/region/all:
+    get:
+      tags:
+        - "Domain Items - Edital"
+      summary: todo
+      description: todo
+      operationId: getAllRegion
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegionResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/RegionResponseAll"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  /domainitems/county/all:
+    get:
+      tags:
+        - "Domain Items - Edital"
+      summary: todo
+      description: todo
+      operationId: getAllCounty
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountyResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/CountyResponseAll"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  /domainitems/distributioncriteria/all:
+    get:
+      tags:
+        - "Domain Items - Edital"
+      summary: todo
+      description: todo
+      operationId: getAllDistributionCriteria
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DistributionCriteriaResponse"
+              examples:
+                withResults:
+                  $ref: "#/components/examples/DistributionCriteriaResponseAll"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -677,6 +825,25 @@ components:
     ##
     # Geolocation
     ##
+    Geolocation:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        type:
+          $ref: "#/components/schemas/GeolocationType"
+      required:
+        - id
+        - type
+    GeolocationType:
+      description: todo.
+      type: string
+      enum:
+        - COUNTRY
+        - STATE
+        - REGION
+        - COUNTY
     CountryId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
@@ -702,25 +869,6 @@ components:
       required:
         - name
         - states
-    Geolocation:
-      description: todo.
-      type: object
-      properties:
-        id:
-          $ref: "#/components/schemas/IdAsUUID"
-        type:
-          $ref: "#/components/schemas/GeolocationType"
-      required:
-        - id
-        - type
-    GeolocationType:
-      description: todo.
-      type: string
-      enum:
-        - COUNTRY
-        - STATE
-        - REGION
-        - COUNTY
     StateId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
@@ -748,7 +896,7 @@ components:
           maxItems: 2147483647
       required:
         - name
-        - country
+        - countryId
         - regions
     RegionId:
       description: todo
@@ -777,7 +925,7 @@ components:
           maxItems: 2147483647
       required:
         - name
-        - state
+        - stateId
         - counties
     CountyId:
       description: todo
@@ -799,7 +947,59 @@ components:
           nullable: false
       required:
         - name
-        - region
+        - regionId
+    CountryResponse:
+      description: todo
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Country"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - results
+    StateResponse:
+      description: todo
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/State"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - results
+    RegionResponse:
+      description: todo
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Region"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - results
+    CountyResponse:
+      description: todo
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/County"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - results
     ##
     # Itens de domínio
     ##
@@ -855,6 +1055,19 @@ components:
           maxLength: 2048
       required:
         - description
+    DistributionCriteriaResponse:
+      description: todo
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/DistributionCriteria"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - results
     ##
     # Edital
     ##
@@ -1698,16 +1911,99 @@ components:
       summary: With Results.
       description: Exemple of industrial sector with results.
       value:
-        [
-          {
-            "id": "4660a343-540e-44fc-9175-93eb83d21695",
-            "name": "Construção",
-          },
-          { "id": "d89191bd-ae88-45af-af24-1a7728ed620f", "name": "Moveleiro" },
-          { "id": "89932028-1e07-40f5-b967-a8feebd43dc5", "name": "Gráfico" },
-          { "id": "62b740af-f9ac-404b-9ef4-0a44c3d79c62", "name": "Alimentos" },
-          {
-            "id": "f20ca776-293d-4346-889b-39cdc8082381",
-            "name": "Confecções",
-          },
-        ]
+        {
+          "results":
+            [
+              {
+                "id": "4660a343-540e-44fc-9175-93eb83d21695",
+                "name": "Construção",
+              },
+              {
+                "id": "d89191bd-ae88-45af-af24-1a7728ed620f",
+                "name": "Moveleiro",
+              },
+              {
+                "id": "89932028-1e07-40f5-b967-a8feebd43dc5",
+                "name": "Gráfico",
+              },
+              {
+                "id": "62b740af-f9ac-404b-9ef4-0a44c3d79c62",
+                "name": "Alimentos",
+              },
+              {
+                "id": "f20ca776-293d-4346-889b-39cdc8082381",
+                "name": "Confecções",
+              },
+            ],
+        }
+    CountryResponseAll:
+      summary: With Results.
+      description: Example of Country with results.
+      value:
+        {
+          "results":
+            [
+              {
+                "id": "f6fca553-b0a6-4875-b043-ce5449617445",
+                "name": "Brasil",
+                "states": [],
+              },
+            ],
+        }
+    StateResponseAll:
+      summary: With Results.
+      description: Example of State with results.
+      value:
+        {
+          "results":
+            [
+              {
+                "id": "17331082-2822-4178-885d-79ed2c72c973",
+                "name": "Acre",
+                "countryId": "f6fca553-b0a6-4875-b043-ce5449617445",
+                "regions": [],
+              },
+            ],
+        }
+    RegionResponseAll:
+      summary: With Results.
+      description: Example of Region with results.
+      value:
+        {
+          "results":
+            [
+              {
+                "id": "87415525-b430-485d-85ae-c95c70f034df",
+                "name": "Alto Acre",
+                "stateId": "17331082-2822-4178-885d-79ed2c72c973",
+                "counties": [],
+              },
+            ],
+        }
+    CountyResponseAll:
+      summary: With Results.
+      description: Example of County with results.
+      value:
+        {
+          "results":
+            [
+              {
+                "id": "ba5c70bf-7ab4-4053-906d-6f67a97083c8",
+                "name": "Assis Brasil",
+                "regionId": "87415525-b430-485d-85ae-c95c70f034df",
+              },
+            ],
+        }
+    DistributionCriteriaResponseAll:
+      summary: With Results.
+      description: Example of Distribution Criteria with results.
+      value:
+        {
+          "results":
+            [
+              {
+                "id": "498a8b85-c466-4d2a-a827-0f7cc1b0d4c6",
+                "description": "Distribution Criteria Test",
+              },
+            ],
+        }

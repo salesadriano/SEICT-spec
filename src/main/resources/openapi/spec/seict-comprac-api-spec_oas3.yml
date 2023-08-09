@@ -13,7 +13,7 @@ info:
   license:
     name: Lampp-it - Licensa Comercial
     url: https://www.lampp-it.com.br/
-  version: 0.0.21
+  version: 0.0.25
 externalDocs:
   description: SEICT - COMPRAC - Documentação
   url: https://comprac.ac.gov.br/
@@ -376,8 +376,12 @@ paths:
             schema:
               $ref: "#/components/schemas/EditalPatchRequest"
       responses:
-        "204":
-          description: Successful operation. No Content.
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditalPatchResponse"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -1463,12 +1467,29 @@ components:
           minItems: 1
           maxItems: 10 #Remember to increase this if there is more keys in the enum
         payload:
-          $ref: "#/components/schemas/EditalPatchRequestPayload"
+          $ref: "#/components/schemas/EditalPatchTransportPayload"
           nullable: false
       required:
         - keys
         - payload
-    EditalPatchRequestPayload:
+    EditalPatchResponse:
+      description: todo
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditalEntityKeys"
+          nullable: false
+          minItems: 1
+          maxItems: 10 #Remember to increase this if there is more keys in the enum
+        payload:
+          $ref: "#/components/schemas/EditalPatchTransportPayload"
+          nullable: false
+      required:
+        - keys
+        - payload
+    EditalPatchTransportPayload:
       description: todo.
       type: object
       properties:

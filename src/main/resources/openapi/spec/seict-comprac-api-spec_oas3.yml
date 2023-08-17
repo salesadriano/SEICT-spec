@@ -1302,9 +1302,16 @@ components:
           maximum: 2147483647
         distributionCriteriaId:
           $ref: "#/components/schemas/DistributionCriteriaId"
+        description:
+          type: string
+          nullable: false
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){1,2048}$'
+          minLength: 3
+          maxLength: 20487
       required:
         - order
         - distributionCriteriaId
+        - description
     EditalAccreditationCriteriaDescriptor:
       description: todo
       type: object

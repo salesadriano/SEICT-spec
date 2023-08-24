@@ -1313,9 +1313,10 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){1,2048}$'
-          minLength: 3
-          maxLength: 2048
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s]){0,8000}$'
+          minLength: 0
+          maxLength: 8000
+          default: ""
         name:
           type: string
           nullable: false
@@ -1324,7 +1325,6 @@ components:
           maxLength: 2048
       required:
         - name
-        - description
     EditalStatusDefinition:
       description: todo
       type: object

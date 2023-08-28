@@ -1054,7 +1054,7 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
           minLength: 1
           maxLength: 2048
       required:
@@ -1174,7 +1174,7 @@ components:
           $ref: "#/components/schemas/EditalLotTypes"
         purpose:
           type: string
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
           nullable: false
           minLength: 3
           maxLength: 8000
@@ -1239,7 +1239,7 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
           minLength: 3
           maxLength: 2048
         unit:
@@ -1251,7 +1251,7 @@ components:
         technicalSpecification:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
           minLength: 3
           maxLength: 2048
         lotDescriptorId:
@@ -1314,14 +1314,14 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){0,8000}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){0,8000}$'
           minLength: 0
           maxLength: 8000
           default: ""
         name:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
           minLength: 1
           maxLength: 2048
       required:
@@ -1382,7 +1382,7 @@ components:
           pattern: '^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$'
         purpose:
           type: string
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
           nullable: false
           minLength: 10
           maxLength: 8000

@@ -49,6 +49,8 @@ tags:
     description: Management of Permissions.
   - name: Security - User
     description: Management of Users.
+  - name: Back Office - Company
+    description: Management of Company.
 paths:
   #Security#
   /security/user/query:
@@ -382,6 +384,163 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EditalPatchResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+
+  #BackOfficeCompany#
+  /backoffice/company/{id}:
+    get:
+      tags:
+        - Back Office - Company
+      summary: TODO
+      description: | 
+        sldfksdlkfjsldkjflsdkjfslkdjfls
+      operationId: getCompanyById
+      parameters:
+        - $ref: "#/components/parameters/CompanyIdParam"
+      responses:
+        "200":
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyResponse"
+              examples:
+                queryById:
+                  $ref: "#/components/examples/CompanyResponseById"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+    put:
+      tags:
+        - Back Office - Company
+      summary: TODO
+      description: TODO
+      operationId: updateCompany
+      parameters:
+        - $ref: "#/components/parameters/CompanyIdParam"
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyRequest"
+      responses:
+        "200":
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+    delete:
+      tags:
+        - Back Office - Company
+      summary: TODO
+      description: TODO
+      operationId: deleteCompany
+      parameters:
+        - $ref: "#/components/parameters/CompanyIdParam"
+      responses:
+        "204":
+          description: TODO
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  /backoffice/company:
+    post:
+      tags:
+        - Back Office - Company
+      summary: TODO
+      description: TODO
+      operationId: createCompany
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyRequest"
+      responses:
+        "200":
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+  /backoffice/company/query:
+    post:
+      tags:
+        - Back Office - Company
+      summary: TODO
+      description: TODO
+      operationId: queryCompany
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryRequest"
+      responses:
+        "200":
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyQueryResponse"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -1531,6 +1690,65 @@ components:
           nullable: false
           minItems: 0
           maxItems: 2147483647
+    #
+    # BackOffice - Company
+    #
+    CompanyId:
+      description: TODO
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+    CompanyResponse:
+      description: TODO
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/CompanyRequest"
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/CompanyId"
+    CompanyRequest:
+      description: TODO
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          minLength: 2
+          maxLength: 64
+      required:
+        - name
+    CompanyQueryResponse:
+      description: TODO
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/BaseQueryResponse"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/CompanyQueryResult"
+              minItems: 0
+              maxItems: 2147483647
+          required:
+            - results
+            - pagination
+    CompanyQueryResult:
+      description:  TODO
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/CompanyId"
+        name:
+          type: string
+      required:
+        - id
+        - name
+    CompanyQueryKeys:
+      description:  TODO
+      type: string
+      enum:
+        - COMPANY_NAME
   parameters:
     UserIdParam:
       name: id
@@ -1546,6 +1764,13 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/EditalId"
+    CompanyIdParam:
+      name: id
+      description: TODO
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/CompanyId"
   responses:
     400BadRequest:
       description: Bad Request.
@@ -2028,3 +2253,14 @@ components:
               },
             ],
         }
+    #
+    # BackOffice - Campany
+    #
+    CompanyResponseById:
+      summary: TODO
+      description: TODO
+      value:
+        {
+          "name": "Lampp-it"
+        }
+

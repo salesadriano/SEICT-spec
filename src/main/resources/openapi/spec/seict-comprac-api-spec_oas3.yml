@@ -1715,8 +1715,20 @@ components:
           nullable: false
           minLength: 2
           maxLength: 64
+        email:
+          type: string
+          nullable: false
+          minLength: 10
+          maxLength: 64
+        sex:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 1
       required:
         - name
+        - email
+        - sex
     CompanyQueryResponse:
       description: TODO
       type: object
@@ -1744,11 +1756,15 @@ components:
       required:
         - id
         - name
+        - email
+        - sex
     CompanyQueryKeys:
       description:  TODO
       type: string
       enum:
         - COMPANY_NAME
+        - COMPANY_EMAIL
+        - COMPANY_SEX
   parameters:
     UserIdParam:
       name: id

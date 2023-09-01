@@ -487,6 +487,43 @@ paths:
           $ref: "#/components/responses/500InternalServerError"
         default:
           $ref: "#/components/responses/GeneralError"
+    patch:
+      tags:
+        - Back Office - Company
+      summary: TODO
+      description: |
+        ####
+      operationId: patchCompany
+      parameters:
+        - $ref: "#/components/parameters/CompanyIdParam"
+      requestBody:
+        description: TODO
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyPatchRequest"
+      responses:
+        "200":
+          description: TODO
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyPatchResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+
+
   /backoffice/company:
     post:
       tags:
@@ -1765,6 +1802,39 @@ components:
         - COMPANY_NAME
         - COMPANY_EMAIL
         - COMPANY_SEX
+    CompanyPatchRequest:
+      description: TODO
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: "#/components/schemas/CompanyEntityKeys"
+          nullable: false
+          minItems: 1
+          maxItems: 10
+        payload:
+          $ref: "#/components/schemas/CompanyPatchTransportPayload"
+          nullable: false
+      required:
+        - keys
+        - payload
+    CompanyPatchResponse:
+      description: TODO
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/CompanyPatchRequest"
+    CompanyEntityKeys:
+      description: TODO
+      type: string
+      enum:
+        - COMPANY_NAME
+    CompanyPatchTransportPayload:
+      description: TODO
+      type: object
+      properties:
+        companyName:
+          type: string
   parameters:
     UserIdParam:
       name: id

@@ -1743,7 +1743,8 @@ components:
           properties:
             id:
               $ref: "#/components/schemas/CompanyId"
-    CompanyRequest:
+
+    CompanyGeneralInformation:
       description: TODO
       type: object
       properties:
@@ -1757,15 +1758,54 @@ components:
           nullable: false
           minLength: 10
           maxLength: 64
-        sex:
+        phoneNumber:
           type: string
           nullable: false
-          minLength: 1
-          maxLength: 1
+          minLength: 11
+          maxLength: 11
       required:
         - name
         - email
-        - sex
+        - phoneNumber
+    CompanyAddressDescriptor:
+      description: TODO
+      type: object
+      properties:
+        cep:
+          type: string
+          nullable: false
+          minLength: 8
+          maxLength: 8
+        streetNumber:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 10
+        complement:
+          type: string
+          nullable: true
+          minLength: 2
+          maxLength: 256
+      required:
+        - cep
+        - streetNumber
+    CompanyRequest:
+      description: TODO
+      type: object
+      properties:
+        CompanyGeneralInformation:
+          $ref: "#/components/schemas/CompanyGeneralInformation"
+          nullable: false
+        CompanyAddressDescriptor:
+          type: array
+          items:
+            $ref: "#/components/schemas/CompanyAddressDescriptor"
+          nullable: true
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - CompanyGeneralInformation
+        - CompanyAddressDescriptor
     CompanyQueryResponse:
       description: TODO
       type: object
@@ -1801,7 +1841,7 @@ components:
       enum:
         - COMPANY_NAME
         - COMPANY_EMAIL
-        - COMPANY_SEX
+        - COMPANY_PHONENUMBER
     CompanyPatchRequest:
       description: TODO
       type: object
@@ -1828,13 +1868,22 @@ components:
       description: TODO
       type: string
       enum:
-        - COMPANY_NAME
+        - COMPANY_GENERAL_INFO
+        - COMPANY_ADDRESS
     CompanyPatchTransportPayload:
       description: TODO
       type: object
       properties:
-        companyName:
-          type: string
+        CompanyGeneralInformation:
+          $ref: "#/components/schemas/CompanyGeneralInformation"
+          nullable: false
+        CompanyAddressDescriptor:
+          type: array
+          items:
+            $ref: "#/components/schemas/CompanyAddressDescriptor"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
   parameters:
     UserIdParam:
       name: id

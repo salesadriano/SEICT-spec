@@ -1763,14 +1763,22 @@ components:
           nullable: false
           minLength: 11
           maxLength: 11
+        cnpj:
+          type: string
+          nullable: false
+          minLength: 14
+          maxLength: 14
       required:
         - name
         - email
         - phoneNumber
-    CompanyAddressDescriptor:
+        - cnpj
+    CompanyAddress:
       description: TODO
       type: object
       properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
         cep:
           type: string
           nullable: false
@@ -1789,6 +1797,35 @@ components:
       required:
         - cep
         - streetNumber
+    CompanyEmployee:
+      description: TODO
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IdAsUUID"
+        name:
+          type: string
+          nullable: false
+          minLength: 2
+          maxLength: 256
+        cpf:
+          type: string
+          nullable: false
+          minLength: 11
+          maxLength: 11
+        valueEmployeeLevelType:
+          $ref: "#/components/schemas/CompanyEmployeeLevelTypes"
+      required:
+        - name
+        - cpf
+        - valueEmployeeLevelType
+    CompanyEmployeeLevelTypes:
+      description: TODO
+      type: string
+      enum:
+        - JUNIOR
+        - MIDDLE
+        - SENIOR
     CompanyRequest:
       description: TODO
       type: object
@@ -1796,16 +1833,24 @@ components:
         CompanyGeneralInformation:
           $ref: "#/components/schemas/CompanyGeneralInformation"
           nullable: false
-        CompanyAddressDescriptor:
+        CompanyAddress:
           type: array
           items:
-            $ref: "#/components/schemas/CompanyAddressDescriptor"
+            $ref: "#/components/schemas/CompanyAddress"
+          nullable: true
+          minItems: 1
+          maxItems: 2147483647
+        CompanyEmployee:
+          type: array
+          items:
+            $ref: "#/components/schemas/CompanyEmployee"
           nullable: true
           minItems: 1
           maxItems: 2147483647
       required:
         - CompanyGeneralInformation
-        - CompanyAddressDescriptor
+        - CompanyAddress
+        - CompanyEmployee
     CompanyQueryResponse:
       description: TODO
       type: object
@@ -1830,11 +1875,22 @@ components:
           $ref: "#/components/schemas/CompanyId"
         name:
           type: string
+          nullable: false
+        email:
+          type: string
+          nullable: false
+        phoneNumber:
+          type: string
+          nullable: false
+        cnpj:
+          type: string
+          nullable: false
       required:
         - id
         - name
         - email
-        - sex
+        - phoneNumber
+        - cnpj
     CompanyQueryKeys:
       description:  TODO
       type: string
@@ -1842,6 +1898,7 @@ components:
         - COMPANY_NAME
         - COMPANY_EMAIL
         - COMPANY_PHONENUMBER
+        - COMPANY_CNPJ
     CompanyPatchRequest:
       description: TODO
       type: object
@@ -1870,6 +1927,7 @@ components:
       enum:
         - COMPANY_GENERAL_INFO
         - COMPANY_ADDRESS
+        - COMPANY_EMPLOYEE
     CompanyPatchTransportPayload:
       description: TODO
       type: object
@@ -1880,7 +1938,14 @@ components:
         CompanyAddressDescriptor:
           type: array
           items:
-            $ref: "#/components/schemas/CompanyAddressDescriptor"
+            $ref: "#/components/schemas/CompanyAddress"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+        CompanyEmployee:
+          type: array
+          items:
+            $ref: "#/components/schemas/CompanyEmployee"
           nullable: false
           minItems: 0
           maxItems: 2147483647

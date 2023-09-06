@@ -143,6 +143,13 @@ paths:
       operationId: updateUser
       parameters:
         - $ref: "#/components/parameters/UserIdParam"
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateRequest"
       responses:
         "200":
           description: Successful operation
@@ -189,6 +196,77 @@ paths:
           $ref: "#/components/responses/500InternalServerError"
         default:
           $ref: "#/components/responses/GeneralError"
+    patch:
+      tags:
+        - "Back Office - User"
+      summary: todo
+      description: todo
+      operationId: patchUser
+      parameters:
+        - $ref: "#/components/parameters/UserIdParam"
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditalPatchRequest"
+      responses:
+        "200":
+          description: Successful operation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EditalPatchResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+
+#  /security/profile:
+#    post:
+#      tags:
+#        - Security - User
+#      summary: todo
+#      description: todo
+#      operationId: createUser
+#      requestBody:
+#        description: todo
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/UserRequest"
+#            examples:
+#              userByNumber:
+#                $ref: "#/components/examples/UserRequestByNumber"
+#      responses:
+#        "200":
+#          description: Successful operation
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/UserResponse"
+#        "400":
+#          $ref: "#/components/responses/400BadRequest"
+#        "401":
+#          $ref: "#/components/responses/401Unauthorized"
+#        "403":
+#          $ref: "#/components/responses/403Forbidden"
+#        "409":
+#          $ref: "#/components/responses/409Conflict"
+#        "500":
+#          $ref: "#/components/responses/500InternalServerError"
+#        default:
+#          $ref: "#/components/responses/GeneralError"
 
   #BackOfficeEdital#
   /backoffice/edital/query:
@@ -953,6 +1031,46 @@ components:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
       nullable: true
+
+    UserEntityKeys:
+      description: todo.
+      type: string
+      enum:
+        - USER_INFO
+        - USER_PROFILES
+
+    Profile:
+      description: todo.
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          minLength: 2
+          maxLength: 128
+        permissions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Permission"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+
+    Permission:
+      description: todo.
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          minLength: 3
+          maxLength: 128
+        code:
+          type: string
+          nullable: false
+          minLength: 3
+          maxLength: 64
+
     UserQueryResponse:
       description: todo
       allOf:
@@ -983,8 +1101,6 @@ components:
       description: todo
       type: object
       properties:
-        id:
-          $ref: "#/components/schemas/UserId"
         name:
           type: string
           format: uuid
@@ -997,9 +1113,41 @@ components:
           nullable: false
           minLength: 5
           maxLength: 128
+        password:
+          type: string
+          format: email
+          nullable: false
+          minLength: 6
+          maxLength: 128
       required:
         - name
         - email
+        - password
+    UserUpdateRequest:
+      description: todo
+      type: object
+      properties:
+        name:
+          type: string
+          format: uuid
+          nullable: false
+          minLength: 2
+          maxLength: 128
+        email:
+          type: string
+          format: email
+          nullable: false
+          minLength: 5
+          maxLength: 128
+        profiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/Profile"
+          nullable: false
+          minItems: 0
+          maxItems: 2147483647
+      required:
+        - profiles
     UserResponse:
       description: todo
       type: object

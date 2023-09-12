@@ -143,13 +143,6 @@ paths:
       operationId: updateUser
       parameters:
         - $ref: "#/components/parameters/UserIdParam"
-      requestBody:
-        description: todo
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserUpdateRequest"
       responses:
         "200":
           description: Successful operation
@@ -184,40 +177,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserResponse"
-        "400":
-          $ref: "#/components/responses/400BadRequest"
-        "401":
-          $ref: "#/components/responses/401Unauthorized"
-        "403":
-          $ref: "#/components/responses/403Forbidden"
-        "409":
-          $ref: "#/components/responses/409Conflict"
-        "500":
-          $ref: "#/components/responses/500InternalServerError"
-        default:
-          $ref: "#/components/responses/GeneralError"
-    patch:
-      tags:
-        - "Back Office - User"
-      summary: todo
-      description: todo
-      operationId: patchUser
-      parameters:
-        - $ref: "#/components/parameters/UserIdParam"
-      requestBody:
-        description: todo
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/EditalPatchRequest"
-      responses:
-        "200":
-          description: Successful operation.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/EditalPatchResponse"
         "400":
           $ref: "#/components/responses/400BadRequest"
         "401":
@@ -817,13 +776,6 @@ components:
       $ref: "#/components/schemas/IdAsUUID"
       nullable: true
 
-    UserEntityKeys:
-      description: todo.
-      type: string
-      enum:
-        - USER_INFO
-        - USER_PROFILES
-
     Profile:
       description: todo.
       type: object
@@ -901,31 +853,7 @@ components:
       required:
         - name
         - email
-    UserUpdateRequest:
-      description: todo
-      type: object
-      properties:
-        name:
-          type: string
-          format: uuid
-          nullable: false
-          minLength: 2
-          maxLength: 128
-        email:
-          type: string
-          format: email
-          nullable: false
-          minLength: 5
-          maxLength: 128
-        profiles:
-          type: array
-          items:
-            $ref: "#/components/schemas/Profile"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
-      required:
-        - profiles
+
     UserResponse:
       description: todo
       type: object

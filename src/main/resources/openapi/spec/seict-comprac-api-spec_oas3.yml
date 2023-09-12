@@ -1232,10 +1232,10 @@ components:
           $ref: "#/components/schemas/IdAsUUID"
         number:
           type: integer
-          format: int64
+          format: int32
           nullable: false
           minimum: 1
-          maximum: 9223372036854775807
+          maximum: 2147483647
         description:
           type: string
           nullable: false
@@ -1251,9 +1251,9 @@ components:
         technicalSpecification:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
           minLength: 3
-          maxLength: 2048
+          maxLength: 8000
         lotDescriptorId:
           $ref: "#/components/schemas/EditalLotDescriptorId"
           nullable: false
@@ -1262,8 +1262,8 @@ components:
           items:
             $ref: "#/components/schemas/EditalItemProposedValueByGeolocation"
           nullable: false
-          minItems: 0
-          maxItems: 2147483647
+          minItems: 1
+          maxItems: 100
       required:
         - number
         - description

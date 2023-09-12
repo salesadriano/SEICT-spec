@@ -1134,7 +1134,7 @@ components:
           type: string
           nullable: false
           minLength: 6
-          maxLength: 256
+          maxLength: 12
           pattern: "^[0-9]{1,}/[0-9]{4}$"
         validityStartDate:
           type: string

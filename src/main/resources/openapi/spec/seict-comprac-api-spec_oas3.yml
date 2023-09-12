@@ -1023,7 +1023,7 @@ components:
           nullable: false
           pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
           minLength: 1
-          maxLength: 128
+          maxLength: 120
       required:
         - id
         - name

@@ -862,14 +862,14 @@ components:
           type: string
           nullable: false
           minLength: 2
-          maxLength: 64
+          maxLength: 120
         states:
           type: array
           items:
             $ref: "#/components/schemas/State"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 500
       required:
         - name
         - states
@@ -887,7 +887,7 @@ components:
           type: string
           nullable: false
           minLength: 2
-          maxLength: 128
+          maxLength: 120
         countryId:
           $ref: "#/components/schemas/CountryId"
           nullable: false
@@ -897,7 +897,7 @@ components:
             $ref: "#/components/schemas/Region"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 50
       required:
         - name
         - countryId
@@ -916,7 +916,7 @@ components:
           type: string
           nullable: false
           minLength: 2
-          maxLength: 128
+          maxLength: 120
         stateId:
           $ref: "#/components/schemas/StateId"
           nullable: false
@@ -926,7 +926,7 @@ components:
             $ref: "#/components/schemas/County"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 500
       required:
         - name
         - stateId
@@ -945,7 +945,7 @@ components:
           type: string
           nullable: false
           minLength: 2
-          maxLength: 128
+          maxLength: 120
         regionId:
           $ref: "#/components/schemas/RegionId"
           nullable: false
@@ -962,7 +962,7 @@ components:
             $ref: "#/components/schemas/Country"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 10000
       required:
         - results
     StateResponse:
@@ -975,7 +975,7 @@ components:
             $ref: "#/components/schemas/State"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 10000
       required:
         - results
     RegionResponse:
@@ -988,7 +988,7 @@ components:
             $ref: "#/components/schemas/Region"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 10000
       required:
         - results
     CountyResponse:
@@ -1001,7 +1001,7 @@ components:
             $ref: "#/components/schemas/County"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 100000
       required:
         - results
     ##

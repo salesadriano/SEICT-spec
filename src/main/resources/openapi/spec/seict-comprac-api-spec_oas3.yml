@@ -991,14 +991,14 @@ components:
           type: string
           nullable: false
           minLength: 2
-          maxLength: 64
+          maxLength: 120
         states:
           type: array
           items:
             $ref: "#/components/schemas/State"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 500
       required:
         - name
         - states
@@ -1016,7 +1016,7 @@ components:
           type: string
           nullable: false
           minLength: 2
-          maxLength: 128
+          maxLength: 120
         countryId:
           $ref: "#/components/schemas/CountryId"
           nullable: false
@@ -1026,7 +1026,7 @@ components:
             $ref: "#/components/schemas/Region"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 50
       required:
         - name
         - countryId
@@ -1045,7 +1045,7 @@ components:
           type: string
           nullable: false
           minLength: 2
-          maxLength: 128
+          maxLength: 120
         stateId:
           $ref: "#/components/schemas/StateId"
           nullable: false
@@ -1055,7 +1055,7 @@ components:
             $ref: "#/components/schemas/County"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 500
       required:
         - name
         - stateId
@@ -1074,7 +1074,7 @@ components:
           type: string
           nullable: false
           minLength: 2
-          maxLength: 128
+          maxLength: 120
         regionId:
           $ref: "#/components/schemas/RegionId"
           nullable: false
@@ -1091,7 +1091,7 @@ components:
             $ref: "#/components/schemas/Country"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 10000
       required:
         - results
     StateResponse:
@@ -1104,7 +1104,7 @@ components:
             $ref: "#/components/schemas/State"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 10000
       required:
         - results
     RegionResponse:
@@ -1117,7 +1117,7 @@ components:
             $ref: "#/components/schemas/Region"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 10000
       required:
         - results
     CountyResponse:
@@ -1130,7 +1130,7 @@ components:
             $ref: "#/components/schemas/County"
           nullable: false
           minItems: 1
-          maxItems: 2147483647
+          maxItems: 100000
       required:
         - results
     ##
@@ -1152,7 +1152,7 @@ components:
           nullable: false
           pattern: '^([a-zA-ZÀ-ÿ0-9\s]){1,128}$'
           minLength: 1
-          maxLength: 128
+          maxLength: 120
       required:
         - id
         - name
@@ -1185,7 +1185,7 @@ components:
           nullable: false
           pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
           minLength: 1
-          maxLength: 2048
+          maxLength: 400
       required:
         - description
     DistributionCriteriaResponse:
@@ -1263,7 +1263,7 @@ components:
           type: string
           nullable: false
           minLength: 6
-          maxLength: 256
+          maxLength: 12
           pattern: "^[0-9]{1,}/[0-9]{4}$"
         validityStartDate:
           type: string
@@ -1336,9 +1336,9 @@ components:
         description:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,400}$'
           minLength: 3
-          maxLength: 2048
+          maxLength: 400
       required:
         - number
         - description
@@ -1361,10 +1361,10 @@ components:
           $ref: "#/components/schemas/IdAsUUID"
         number:
           type: integer
-          format: int64
+          format: int32
           nullable: false
           minimum: 1
-          maximum: 9223372036854775807
+          maximum: 2147483647
         description:
           type: string
           nullable: false
@@ -1380,9 +1380,9 @@ components:
         technicalSpecification:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,8000}$'
           minLength: 3
-          maxLength: 2048
+          maxLength: 8000
         lotDescriptorId:
           $ref: "#/components/schemas/EditalLotDescriptorId"
           nullable: false
@@ -1391,8 +1391,8 @@ components:
           items:
             $ref: "#/components/schemas/EditalItemProposedValueByGeolocation"
           nullable: false
-          minItems: 0
-          maxItems: 2147483647
+          minItems: 1
+          maxItems: 100
       required:
         - number
         - description
@@ -1450,9 +1450,9 @@ components:
         name:
           type: string
           nullable: false
-          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
+          pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,120}$'
           minLength: 1
-          maxLength: 2048
+          maxLength: 120
       required:
         - name
     EditalStatusDefinition:
@@ -1495,7 +1495,7 @@ components:
           type: string
           nullable: false
           minLength: 6
-          maxLength: 256
+          maxLength: 12
           pattern: "^[0-9]{1,}/[0-9]{4}$"
         validityStartDate:
           type: string

@@ -1199,12 +1199,6 @@ components:
       enum:
         - EDITAL
 
-    ApplicationEntityTest:
-      description: todo
-      type: string
-      enum:
-        - EDITAL
-
     ApplicationOperation:
       description: todo
       type: string

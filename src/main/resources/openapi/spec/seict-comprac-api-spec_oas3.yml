@@ -49,6 +49,8 @@ tags:
     description: Management of Permissions.
   - name: Security - User
     description: Management of Users.
+  - name: Security - Manifest
+    description: Management of Manifest.
   - name: Back Office - Company
     description: Management of Company.
 paths:
@@ -230,6 +232,22 @@ paths:
           $ref: "#/components/responses/500InternalServerError"
         default:
           $ref: "#/components/responses/GeneralError"
+
+  /security/manifest:
+    get:
+      tags:
+        - Security - Manifest
+      summary: todo
+      description: todo
+      operationId: getManifest
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManifestResponse"
+
 
 #  /security/profile:
 #    post:
@@ -1170,6 +1188,85 @@ components:
         - id
         - name
         - email
+
+    #
+    # Security - Manifest
+    #
+
+    ApplicationEntity:
+      description: todo
+      type: string
+      enum:
+        - EDITAL
+
+    ApplicationOperation:
+      description: todo
+      type: string
+      enum:
+        - CREATE
+        - READ
+        - GET
+        - QUERY
+        - UPDATE
+        - PATCH
+        - DELETE
+        - APPROVE
+        - UPDATE_STATUS
+
+    ManifestPermissionSection:
+      description: todo
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+        entity:
+          $ref: "#/components/schemas/ApplicationEntity"
+          nullable: false
+        permissions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ManifestPermission"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - name
+        - entity
+        - permissions
+
+    ManifestPermission:
+      description: todo
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+        operation:
+          $ref: "#/components/schemas/ApplicationOperation"
+          nullable: false
+        code:
+          type: string
+          nullable: false
+      required:
+        - name
+        - operation
+        - code
+
+    ManifestResponse:
+      description: todo
+      type: object
+      properties:
+        permissionSections:
+          type: array
+          items:
+            $ref: "#/components/schemas/ManifestPermissionSection"
+          nullable: false
+          minItems: 1
+          maxItems: 2147483647
+      required:
+        - permissionSections
+
     ##
     # Geolocation
     ##
@@ -2097,6 +2194,8 @@ components:
           nullable: false
           minItems: 0
           maxItems: 2147483647
+
+
   parameters:
     UserIdParam:
       name: id

@@ -1056,7 +1056,7 @@ components:
           nullable: false
           pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){1,2048}$'
           minLength: 1
-          maxLength: 2048
+          maxLength: 400
       required:
         - description
     DistributionCriteriaResponse:

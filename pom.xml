@@ -7,7 +7,7 @@
 
 	<groupId>br.com.lamppit</groupId>
 	<artifactId>seict-comprac-api-spec</artifactId>
-	<version>0.0.29</version>
+	<version>0.0.30</version>
 
 	<name>seict-comprac-backend-api</name>
 	<description>SEICT - COMPRAC - Backend API</description>

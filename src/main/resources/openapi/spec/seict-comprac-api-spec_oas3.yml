@@ -898,16 +898,9 @@ components:
           nullable: false
           minLength: 5
           maxLength: 128
-        password:
-          type: string
-          format: email
-          nullable: false
-          minLength: 6
-          maxLength: 128
       required:
         - name
         - email
-        - password
     UserUpdateRequest:
       description: todo
       type: object

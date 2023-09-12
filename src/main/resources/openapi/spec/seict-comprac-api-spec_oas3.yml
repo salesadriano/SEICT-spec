@@ -1197,13 +1197,13 @@ components:
       description: todo
       type: string
       enum:
-        - edital
+        - EDITAL
 
     ApplicationEntityTest:
       description: todo
       type: string
       enum:
-        enumgroup: { type-code, type-display, type-definition, { subtype-code, subtype-display, subtype-definition } }
+        - EDITAL
 
     ApplicationOperation:
       description: todo

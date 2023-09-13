@@ -206,6 +206,39 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ManifestResponse"
+  /security/profile/query:
+    post:
+      tags:
+        - Security - Profile
+      summary: todo
+      description: todo
+      operationId: queryProfile
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileQueryResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
   /security/profile:
     post:
       tags:
@@ -326,7 +359,7 @@ paths:
         default:
           $ref: "#/components/responses/GeneralError"
 
-  /security/profile/{id}/permitions:
+  /security/profile/{id}/permissions:
     get:
       tags:
         - Security - Permissions
@@ -1019,7 +1052,56 @@ components:
           properties:
             id:
               $ref: "#/components/schemas/ProfileId"
+    ProfileQueryResponse:
+      description: todo
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/BaseQueryResponse"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/ProfileQueryResult"
+              minItems: 0
+              maxItems: 2147483647
+          required:
+            - results
+            - pagination
+    ProfileQueryResult:
+      description: todo
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ProfileId"
+        profileName:
+          type: string
+          nullable: false
+          minLength: 3
+          maxLength: 80
+        profilePermission:
+          type: array
+          nullable: false
+          minLength: 3
+          maxLength: 80
+        profileUser:
+          type: string
+          nullable: false
+          minLength: 3
+          maxLength: 80
+      required:
+        - id
+        - profileName
+        - profilePermission
+        - profileUser
 
+    ProfileQueryKeys:
+      description: todo.
+      type: string
+      enum:
+        - PROFILE_NAME
+        - PROFILE_PERMISSION
+        - PROFILE_USER
     PermissionId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"

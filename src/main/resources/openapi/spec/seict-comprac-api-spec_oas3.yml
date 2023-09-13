@@ -47,6 +47,8 @@ tags:
     description: Management of Groups.
   - name: Security - Permissions
     description: Management of Permissions.
+  - name: Security - Profile
+    description: Management of Profiles.
   - name: Security - User
     description: Management of Users.
   - name: Security - Manifest
@@ -204,8 +206,188 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ManifestResponse"
+  /security/profile:
+    post:
+      tags:
+        - Security - Profile
+      summary: todo
+      description: todo
+      operationId: postProfile
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
 
+  /security/profile/{id}:
+    get:
+      tags:
+        - Security - Profile
+      summary: todo
+      description: todo
+      operationId: getProfileById
+      parameters:
+        - $ref: "#/components/parameters/ProfileIdParam"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+    put:
+      tags:
+        - Security - Profile
+      summary: todo
+      description: todo
+      operationId: updateProfile
+      parameters:
+        - $ref: "#/components/parameters/ProfileIdParam"
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+    delete:
+      tags:
+        - Security - Profile
+      summary: todo
+      description: todo
+      operationId: deleteProfile
+      parameters:
+        - $ref: "#/components/parameters/ProfileIdParam"
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
 
+  /security/profile/{id}/permitions:
+    get:
+      tags:
+        - Security - Permissions
+      summary: todo
+      description: todo
+      operationId: getProfilePermissionsById
+      parameters:
+        - $ref: "#/components/parameters/ProfileIdParam"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
+    put:
+      tags:
+        - Security - Permissions
+      summary: todo
+      description: todo
+      operationId: updateProfilePermissions
+      parameters:
+        - $ref: "#/components/parameters/ProfileIdParam"
+      requestBody:
+        description: todo
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PermissionRequest"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequest"
+        "401":
+          $ref: "#/components/responses/401Unauthorized"
+        "403":
+          $ref: "#/components/responses/403Forbidden"
+        "409":
+          $ref: "#/components/responses/409Conflict"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+        default:
+          $ref: "#/components/responses/GeneralError"
   #BackOfficeEdital#
   /backoffice/edital/query:
     post:
@@ -776,7 +958,42 @@ components:
       $ref: "#/components/schemas/IdAsUUID"
       nullable: true
 
+    ProfileId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+
     Profile:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ProfileId"
+        name:
+          type: string
+          nullable: false
+          minLength: 2
+          maxLength: 128
+        permissions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Permission"
+          nullable: true
+          minItems: 0
+          maxItems: 2147483647
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+          nullable: true
+          minItems: 0
+          maxItems: 2147483647
+      required:
+        - id
+        - name
+        - permissions
+        - users
+    ProfileRequest:
       description: todo.
       type: object
       properties:
@@ -793,7 +1010,39 @@ components:
           minItems: 0
           maxItems: 2147483647
 
+    ProfileResponse:
+      description: todo
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/ProfileRequest"
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/ProfileId"
+
+    PermissionId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: false
+
     Permission:
+      description: todo.
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/PermissionId"
+        name:
+          type: string
+          nullable: false
+          minLength: 3
+          maxLength: 128
+        code:
+          type: string
+          nullable: false
+          minLength: 3
+          maxLength: 64
+
+    PermissionRequest:
       description: todo.
       type: object
       properties:
@@ -807,6 +1056,16 @@ components:
           nullable: false
           minLength: 3
           maxLength: 64
+
+    PermissionResponse:
+      description: todo
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PermissionRequest"
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/PermissionId"
 
     UserQueryResponse:
       description: todo
@@ -834,27 +1093,8 @@ components:
           nullable: false
           minimum: 1
           maximum: 9223372036854775807
-    UserRequest:
-      description: todo
-      type: object
-      properties:
-        name:
-          type: string
-          format: uuid
-          nullable: false
-          minLength: 2
-          maxLength: 128
-        email:
-          type: string
-          format: email
-          nullable: false
-          minLength: 5
-          maxLength: 128
-      required:
-        - name
-        - email
 
-    UserResponse:
+    User:
       description: todo
       type: object
       properties:
@@ -872,10 +1112,48 @@ components:
           nullable: false
           minLength: 5
           maxLength: 128
+        profile:
+          type: array
+          items:
+            $ref: "#/components/schemas/Profile"
+          minItems: 0
+          maxItems: 2147483647
       required:
         - id
         - name
         - email
+        - profile
+    UserRequest:
+      description: todo
+      type: object
+      properties:
+        name:
+          type: string
+          format: uuid
+          nullable: false
+          minLength: 2
+          maxLength: 128
+        email:
+          type: string
+          format: email
+          nullable: false
+          minLength: 5
+          maxLength: 128
+        profile:
+          type: array
+          items:
+            $ref: "#/components/schemas/Profile"
+          minItems: 0
+          maxItems: 2147483647
+
+    UserResponse:
+      description: todo
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/UserRequest"
+      properties:
+        id:
+          $ref: "#/components/schemas/UserId"
 
     #
     # Security - Manifest
@@ -1676,6 +1954,13 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/EditalId"
+    ProfileIdParam:
+      name: id
+      description: todo
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/ProfileId"
   responses:
     400BadRequest:
       description: Bad Request.

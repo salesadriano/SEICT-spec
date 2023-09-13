@@ -326,7 +326,7 @@ paths:
         default:
           $ref: "#/components/responses/GeneralError"
 
-  /security/profile/{id}/permitions:
+  /security/profile/{id}/permissions:
     get:
       tags:
         - Security - Permissions
@@ -1066,6 +1066,37 @@ components:
           properties:
             id:
               $ref: "#/components/schemas/PermissionId"
+
+    PermissionQueryKeys:
+      description: todo.
+      type: string
+      enum:
+        - PERMISSION_NAME
+        - PERMISSION_CODE
+
+    PermissionQueryResponse:
+      description: todo
+      allOf:
+        - $ref: "#/components/schemas/BaseQueryResponse"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/PermissionQueryResult"
+              minItems: 0
+              maxItems: 2147483647
+          required:
+            - results
+            - pagination
+            - sort
+
+    PermissionQueryResult:
+      description: todo
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/PermissionId"
 
     UserQueryResponse:
       description: todo

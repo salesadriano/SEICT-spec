@@ -362,7 +362,7 @@ paths:
   /security/profile/{id}/permissions:
     get:
       tags:
-        - Security - Permissions
+        - Security - Profile
       summary: todo
       description: todo
       operationId: getProfilePermissionsById
@@ -389,7 +389,7 @@ paths:
           $ref: "#/components/responses/GeneralError"
     put:
       tags:
-        - Security - Permissions
+        - Security - Profile
       summary: todo
       description: todo
       operationId: updateProfilePermissions
@@ -983,14 +983,9 @@ components:
           required:
             - totalCount
             - resultSize
-    ##
-    # User
-    ##
-    UserId:
-      description: todo
-      $ref: "#/components/schemas/IdAsUUID"
-      nullable: true
-
+    #
+    # Profile
+    #
     ProfileId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"
@@ -1000,8 +995,6 @@ components:
       description: todo.
       type: object
       properties:
-        id:
-          $ref: "#/components/schemas/ProfileId"
         name:
           type: string
           nullable: false
@@ -1011,37 +1004,26 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Permission"
-          nullable: true
+          nullable: false
           minItems: 0
           maxItems: 2147483647
         users:
           type: array
           items:
             $ref: "#/components/schemas/User"
-          nullable: true
+          nullable: false
           minItems: 0
           maxItems: 2147483647
       required:
-        - id
         - name
         - permissions
         - users
     ProfileRequest:
       description: todo.
       type: object
-      properties:
-        name:
-          type: string
-          nullable: false
-          minLength: 2
-          maxLength: 128
-        permissions:
-          type: array
-          items:
-            $ref: "#/components/schemas/Permission"
-          nullable: false
-          minItems: 0
-          maxItems: 2147483647
+      allOf:
+        - $ref: "#/components/schemas/Profile"
+        - type: object
 
     ProfileResponse:
       description: todo
@@ -1052,6 +1034,7 @@ components:
           properties:
             id:
               $ref: "#/components/schemas/ProfileId"
+
     ProfileQueryResponse:
       description: todo
       type: object
@@ -1080,7 +1063,7 @@ components:
           minLength: 3
           maxLength: 80
         profilePermission:
-          type: array
+          type: string
           nullable: false
           minLength: 3
           maxLength: 80
@@ -1102,6 +1085,15 @@ components:
         - PROFILE_NAME
         - PROFILE_PERMISSION
         - PROFILE_USER
+    ##
+    # User
+    ##
+    UserId:
+      description: todo
+      $ref: "#/components/schemas/IdAsUUID"
+      nullable: true
+
+
     PermissionId:
       description: todo
       $ref: "#/components/schemas/IdAsUUID"

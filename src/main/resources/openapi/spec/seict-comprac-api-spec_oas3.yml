@@ -57,11 +57,11 @@ paths:
     post:
       tags:
         - Security - User
-      summary: todo
-      description: todo
+      summary: Query Users
+      description: Perform a query to find users based on the given parameters.
       operationId: queryUser
       requestBody:
-        description: todo
+        description: Request body containing query parameters.
         required: true
         content:
           application/json:
@@ -102,11 +102,11 @@ paths:
     post:
       tags:
         - Security - User
-      summary: todo
-      description: todo
+      summary: Create a New User
+      description: This endpoint allows you to create a new user in the system by providing the necessary user information in the request body.
       operationId: createUser
       requestBody:
-        description: todo
+        description: Request body containing user information.
         required: true
         content:
           application/json:
@@ -138,8 +138,8 @@ paths:
     put:
       tags:
         - Security - User
-      summary: todo
-      description: todo
+      summary: Update User Information
+      description: Update the information of an existing user by specifying the user's unique identifier in the path parameter.
       operationId: updateUser
       parameters:
         - $ref: "#/components/parameters/UserIdParam"
@@ -165,8 +165,8 @@ paths:
     delete:
       tags:
         - Security - User
-      summary: todo
-      description: todo
+      summary: Delete User
+      description: Delete a user from the system by specifying the user's unique identifier in the path parameter. This action is not irreversible.
       operationId: deleteUser
       parameters:
         - $ref: "#/components/parameters/UserIdParam"
@@ -194,8 +194,8 @@ paths:
     get:
       tags:
         - Security - Manifest
-      summary: todo
-      description: todo
+      summary: Retrieve Security Manifest
+      description: Retrieve the security manifest, which provides information about the security configurations and settings in the system. This endpoint returns the security manifest in JSON format.
       operationId: getManifest
       responses:
         "200":
@@ -211,11 +211,11 @@ paths:
     post:
       tags:
         - "Back Office - Edital"
-      summary: todo
-      description: todo
+      summary: Query Edital
+      description: Query to find edital based on the given parameters.
       operationId: queryEdital
       requestBody:
-        description: todo
+        description: Request body containing query parameters.
         required: true
         content:
           application/json:
@@ -252,11 +252,11 @@ paths:
     post:
       tags:
         - "Back Office - Edital"
-      summary: todo
-      description: todo
+      summary: Create Edital
+      description: Create a new edital in the system by providing the necessary edital information in the request body.
       operationId: createEdital
       requestBody:
-        description: todo
+        description: Request body containing edital information.
         required: true
         content:
           application/json:
@@ -291,8 +291,8 @@ paths:
     get:
       tags:
         - "Back Office - Edital"
-      summary: todo
-      description: todo
+      summary: Get Edital by ID
+      description: Retrieve information about an edital by specifying its unique identifier in the path parameter.
       operationId: getEditalById
       parameters:
         - $ref: "#/components/parameters/EditalIdParam"
@@ -321,13 +321,13 @@ paths:
     put:
       tags:
         - "Back Office - Edital"
-      summary: todo
-      description: todo
+      summary: Update Edital
+      description: Update the information of an existing edital by specifying its unique identifier in the path parameter.
       operationId: updateEdital
       parameters:
         - $ref: "#/components/parameters/EditalIdParam"
       requestBody:
-        description: todo
+        description: Request body containing updated edital information.
         required: true
         content:
           application/json:
@@ -358,8 +358,8 @@ paths:
     delete:
       tags:
         - "Back Office - Edital"
-      summary: todo
-      description: todo
+      summary: Delete Edital
+      description: Delete an edital from the system by specifying its unique identifier in the path parameter. This action is not irreversible.
       operationId: deleteEdital
       parameters:
         - $ref: "#/components/parameters/EditalIdParam"
@@ -381,13 +381,13 @@ paths:
     patch:
       tags:
         - "Back Office - Edital"
-      summary: todo
-      description: todo
+      summary: Patch Edital
+      description: Update specific fields of an existing edital by specifying its unique identifier in the path parameter and providing a request body with the fields to be updated.
       operationId: patchEdital
       parameters:
         - $ref: "#/components/parameters/EditalIdParam"
       requestBody:
-        description: todo
+        description: Request body containing updated edital fields.
         required: true
         content:
           application/json:
@@ -418,8 +418,8 @@ paths:
     get:
       tags:
         - "Domain Items - Edital"
-      summary: todo
-      description: todo
+      summary: Get All Industrial Sectors
+      description: Retrieve a list of all industrial sectors.
       operationId: getIndustrialSector
       responses:
         "200":
@@ -447,8 +447,8 @@ paths:
     get:
       tags:
         - "Domain Items - Edital"
-      summary: todo
-      description: todo
+      summary: Get All Countries
+      description: Retrieve a list of all available countries in the system.
       operationId: getAllCountry
       responses:
         "200":
@@ -476,8 +476,8 @@ paths:
     get:
       tags:
         - "Domain Items - Edital"
-      summary: todo
-      description: todo
+      summary: Get All States
+      description: Retrieve a list of all available states in the system.
       operationId: getAllState
       responses:
         "200":
@@ -505,8 +505,8 @@ paths:
     get:
       tags:
         - "Domain Items - Edital"
-      summary: todo
-      description: todo
+      summary: Get All Regions
+      description: Retrieve a list of all available regions in the system.
       operationId: getAllRegion
       responses:
         "200":
@@ -534,8 +534,8 @@ paths:
     get:
       tags:
         - "Domain Items - Edital"
-      summary: todo
-      description: todo
+      summary: Get All Counties
+      description: Retrieve a list of all available counties in the system.
       operationId: getAllCounty
       responses:
         "200":
@@ -563,8 +563,8 @@ paths:
     get:
       tags:
         - "Domain Items - Edital"
-      summary: todo
-      description: todo
+      summary: Get All Distribution Criteria
+      description: Retrieve a list of all distribution criteria available in the system.
       operationId: getAllDistributionCriteria
       responses:
         "200":
@@ -594,7 +594,7 @@ components:
     # Problems
     ##
     Problem:
-      description: todo.
+      description: Represents an error or problem encountered in the API.
       type: object
       properties:
         type:
@@ -646,7 +646,7 @@ components:
     # Ids
     ##
     IdAsUUID:
-      description: todo
+      description: Represents an ID in UUID format.
       type: string
       pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
       minLength: 36
@@ -655,7 +655,7 @@ components:
     # Query
     ##
     QuerySortItem:
-      description: todo
+      description: Specifies how to sort items based on a key in ascending (ASC) or descending (DESC) order.
       properties:
         key:
           type: string
@@ -675,7 +675,7 @@ components:
     # Query Request
     ##
     QueryRequest:
-      description: todo
+      description: Defines a query request with filter, pagination, and sorting options.
       type: object
       properties:
         filter:
@@ -689,7 +689,7 @@ components:
         sort:
           $ref: "#/components/schemas/QueryRequestSort"
     QueryRequestFilterItem:
-      description: todo
+      description: Defines the key, value, and operator of a filter item.
       properties:
         key:
           type: string
@@ -711,7 +711,7 @@ components:
         - key
         - value
     QueryRequestPagination:
-      description: todo
+      description: Defines pagination settings for query requests.
       properties:
         pageNumber:
           type: integer
@@ -729,7 +729,7 @@ components:
         - pageNumber
         - pageSize
     QueryRequestSort:
-      description: todo
+      description: Defines sorting options for a query request.
       type: array
       items:
         $ref: "#/components/schemas/QuerySortItem"
@@ -739,7 +739,7 @@ components:
     # Query Response
     ##
     BaseQueryResponse:
-      description: todo
+      description: Represents a base response for query requests.
       type: object
       x-parent: abstract
       properties:
@@ -748,7 +748,7 @@ components:
       required:
         - pagination
     QueryResponsePagination:
-      description: todo
+      description: Represents pagination information in a query response.
       allOf:
         - $ref: "#/components/schemas/QueryRequestPagination"
         - type: object
@@ -772,12 +772,12 @@ components:
     # User
     ##
     UserId:
-      description: todo
+      description: Represents a user ID in UUID format.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: true
 
     Profile:
-      description: todo.
+      description: Represents user profile information.
       type: object
       properties:
         name:
@@ -794,7 +794,7 @@ components:
           maxItems: 2147483647
 
     Permission:
-      description: todo.
+      description: Represents a user permission.
       type: object
       properties:
         name:
@@ -809,7 +809,7 @@ components:
           maxLength: 64
 
     UserQueryResponse:
-      description: todo
+      description: Represents a response for user query requests.
       allOf:
         - $ref: "#/components/schemas/BaseQueryResponse"
         - type: object
@@ -825,7 +825,7 @@ components:
             - pagination
             - sort
     UserQueryResult:
-      description: todo
+      description: Represents a user query result that can be adapted to a response.
       type: object
       properties:
         id:
@@ -835,7 +835,7 @@ components:
           minimum: 1
           maximum: 9223372036854775807
     UserRequest:
-      description: todo
+      description: Represents a request to create a user.
       type: object
       properties:
         name:
@@ -855,7 +855,7 @@ components:
         - email
 
     UserResponse:
-      description: todo
+      description: Represents a response for user data transport.
       type: object
       properties:
         id:
@@ -882,13 +882,13 @@ components:
     #
 
     ApplicationEntity:
-      description: todo
+      description: Enum that represents an entity in the system.
       type: string
       enum:
         - EDITAL
 
     ApplicationOperation:
-      description: todo
+      description: Enum that represents a type of operation that can be executed by the system.
       type: string
       enum:
         - CREATE
@@ -902,7 +902,7 @@ components:
         - UPDATE_STATUS
 
     ManifestPermissionSection:
-      description: todo
+      description: Represents a section of permissions in the manifest.
       type: object
       properties:
         name:
@@ -924,7 +924,7 @@ components:
         - permissions
 
     ManifestPermission:
-      description: todo
+      description: Represents a permission in the manifest.
       type: object
       properties:
         name:
@@ -942,7 +942,7 @@ components:
         - code
 
     ManifestResponse:
-      description: todo
+      description: Represents a response for the manifest data transport.
       type: object
       properties:
         permissionSections:
@@ -959,7 +959,7 @@ components:
     # Geolocation
     ##
     Geolocation:
-      description: todo.
+      description: Represents a geolocation entity.
       type: object
       properties:
         id:
@@ -970,7 +970,7 @@ components:
         - id
         - type
     GeolocationType:
-      description: todo.
+      description: Represents the type of geolocation.
       type: string
       enum:
         - COUNTRY
@@ -978,11 +978,11 @@ components:
         - REGION
         - COUNTY
     CountryId:
-      description: todo
+      description: Represents a country ID in UUID format.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     Country:
-      description: todo.
+      description: Represents a country entity.
       type: object
       properties:
         id:
@@ -1003,11 +1003,11 @@ components:
         - name
         - states
     StateId:
-      description: todo
+      description: Represents a state ID in UUID format.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     State:
-      description: todo.
+      description: Represents a state entity.
       type: object
       properties:
         id:
@@ -1032,11 +1032,11 @@ components:
         - countryId
         - regions
     RegionId:
-      description: todo
+      description: Represents a region ID in UUID format.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     Region:
-      description: todo.
+      description: Represents a region entity.
       type: object
       properties:
         id:
@@ -1061,11 +1061,11 @@ components:
         - stateId
         - counties
     CountyId:
-      description: todo
+      description: Represents a county ID in UUID format.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     County:
-      description: todo.
+      description: Represents a county entity.
       type: object
       properties:
         id:
@@ -1082,7 +1082,7 @@ components:
         - name
         - regionId
     CountryResponse:
-      description: todo
+      description: Represents a response containing country entities.
       type: object
       properties:
         results:
@@ -1095,7 +1095,7 @@ components:
       required:
         - results
     StateResponse:
-      description: todo
+      description: Represents a response containing state entities.
       type: object
       properties:
         results:
@@ -1108,7 +1108,7 @@ components:
       required:
         - results
     RegionResponse:
-      description: todo
+      description: Represents a response containing region entities.
       type: object
       properties:
         results:
@@ -1121,7 +1121,7 @@ components:
       required:
         - results
     CountyResponse:
-      description: todo
+      description: Represents a response containing county entities.
       type: object
       properties:
         results:
@@ -1134,14 +1134,14 @@ components:
       required:
         - results
     ##
-    # Itens de domínio
+    # Domain itens
     ##
     IndustrialSectorId:
-      description: todo
+      description: Represents the ID of an industrial sector.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     IndustrialSector:
-      description: todo
+      description: Represents an industrial sector domain item.
       type: object
       properties:
         id:
@@ -1157,7 +1157,7 @@ components:
         - id
         - name
     IndustrialSectorResponse:
-      description: todo
+      description: Represents a response containing industrial sector domain items.
       type: object
       properties:
         results:
@@ -1170,11 +1170,11 @@ components:
       required:
         - results
     DistributionCriteriaId:
-      description: todo
+      description: Represents the ID of a distribution criteria.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     DistributionCriteria:
-      description: todo
+      description: Represents a distribution criteria domain item.
       type: object
       properties:
         id:
@@ -1189,7 +1189,7 @@ components:
       required:
         - description
     DistributionCriteriaResponse:
-      description: todo
+      description: Represents a response containing distribution criteria domain items.
       type: object
       properties:
         results:
@@ -1206,7 +1206,7 @@ components:
     ##
     # Edital - Enums
     EditalQueryKeys:
-      description: todo.
+      description: Represents keys for querying edital entities.
       type: string
       enum:
         - EDITAL_NUMBER
@@ -1215,19 +1215,19 @@ components:
         - EDITAL_STATUS
         - EDITAL_INDUSTRIAL_SECTOR_NAME
     EditalValueCriteriaTypes:
-      description: todo.
+      description: Represents types of value criteria for edital entities. Single indicates that the edital has only one value criteria while multiple indicates that the edital may have multiple value criterias.
       type: string
       enum:
         - SINGLE
         - MULTIPLE
     EditalLotTypes:
-      description: todo.
+      description: Represents types of lots for edital entities. Single indicates that the edital has only one lot while multiple indicates that the edital may have multiple lots.
       type: string
       enum:
         - SINGLE
         - MULTIPLE
     EditalStatus:
-      description: todo
+      description: Represents the status of an edital.
       type: string
       enum:
         - ATIVO
@@ -1236,7 +1236,7 @@ components:
         - PRORROGADO
         - NOVO
     EditalEntityKeys:
-      description: todo.
+      description: Represents keys for identifying edital entities.
       type: string
       enum:
         - EDITAL_GENERAL_INFO
@@ -1247,16 +1247,16 @@ components:
         - EDITAL_ITEMS
     # Edital - Ids
     EditalId:
-      description: todo
+      description: Represents the ID of an edital.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     EditalLotDescriptorId:
-      description: todo
+      description: Represents the ID of an edital lot descriptor.
       $ref: "#/components/schemas/IdAsUUID"
       nullable: false
     # Edital - Schemas
     EditalGeneralInformation:
-      description: todo
+      description: Represents the general information of an edital.
       type: object
       properties:
         editalNumber:
@@ -1322,7 +1322,7 @@ components:
         - valueCriteriaType
         - lotStrategy
     EditalLotDescriptor:
-      description: todo.
+      description: Represents a descriptor for an edital lot.
       type: object
       properties:
         id:
@@ -1343,7 +1343,7 @@ components:
         - number
         - description
     EditalValueCriteriaDescriptor:
-      description: todo
+      description: Represents a descriptor for value criteria in an edital.
       type: object
       properties:
         id:
@@ -1354,7 +1354,7 @@ components:
       required:
         - "geolocation"
     EditalItem:
-      description: todo
+      description: Represents an item in an edital.
       type: object
       properties:
         id:
@@ -1401,7 +1401,7 @@ components:
         - lotDescriptorId
         - valueByGeolocation
     EditalItemProposedValueByGeolocation:
-      description: todo
+      description: Represents proposed values for items in an edital by geolocation (value criteria descriptor).
       type: object
       properties:
         id:
@@ -1418,7 +1418,7 @@ components:
         - geolocation
         - proposedValue
     EditalDistributionCriteriaDescriptor:
-      description: todo
+      description: Represents a descriptor for distribution criteria in an edital.
       type: object
       properties:
         id:
@@ -1435,7 +1435,7 @@ components:
         - order
         - distributionCriteriaId
     EditalAccreditationCriteriaDescriptor:
-      description: todo
+      description: Represents a descriptor for accreditation criteria in an edital.
       type: object
       properties:
         id:
@@ -1456,7 +1456,7 @@ components:
       required:
         - name
     EditalStatusDefinition:
-      description: todo
+      description: Represents the status definition of an edital, including previous and current status. After editing the current status will become the previous status and the new status will become the current status.
       type: object
       properties:
         previous:
@@ -1470,7 +1470,7 @@ components:
         - current
     # Edital - Request - Query
     EditalQueryResponse:
-      description: todo
+      description: Represents a response for querying edital entities.
       type: object
       allOf:
         - $ref: "#/components/schemas/BaseQueryResponse"
@@ -1486,7 +1486,7 @@ components:
             - results
             - pagination
     EditalQueryResult:
-      description: todo
+      description: Represents a result item when querying edital entities. Results can be adapted to response.
       type: object
       properties:
         id:
@@ -1526,7 +1526,7 @@ components:
         - status
     # Edital - Request - Post and Put
     EditalRequest:
-      description: todo.
+      description: Represents a request for creating or updating an edital.
       type: object
       properties:
         generalInformation:
@@ -1575,7 +1575,7 @@ components:
         - distributionCriteriaDescriptors
         - accreditationCriteriaDescriptors
     EditalResponse:
-      description: todo
+      description: Represents a response containing information about a created or updated edital.
       type: object
       allOf:
         - $ref: "#/components/schemas/EditalRequest"
@@ -1585,7 +1585,7 @@ components:
               $ref: "#/components/schemas/EditalId"
     # Edital - Request - Patch
     EditalPatchRequest:
-      description: todo
+      description: Represents a request for patching (partially updating) an edital.
       type: object
       properties:
         keys:
@@ -1602,7 +1602,7 @@ components:
         - keys
         - payload
     EditalPatchResponse:
-      description: todo
+      description: Represents a response after patching (partially updating) an edital.
       type: object
       properties:
         keys:
@@ -1619,7 +1619,7 @@ components:
         - keys
         - payload
     EditalPatchTransportPayload:
-      description: todo.
+      description: Represents the payload for patching (partially updating) an edital.
       type: object
       properties:
         generalInformation:
@@ -1664,14 +1664,14 @@ components:
   parameters:
     UserIdParam:
       name: id
-      description: todo
+      description: Represents a user ID.
       in: path
       required: true
       schema:
         $ref: "#/components/schemas/UserId"
     EditalIdParam:
       name: id
-      description: todo
+      description: Represents an edital ID.
       in: path
       required: true
       schema:
@@ -1781,7 +1781,7 @@ components:
         }
     ResponseWithError401:
       summary: Client Error
-      description: todo
+      description: Example of a client error response when the user is not authenticated.
       value:
         {
           "type": "https://www.lampp-it.com.br/api/problem/security/user-not-authenticated",

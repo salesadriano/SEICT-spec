@@ -1446,7 +1446,6 @@ components:
           pattern: '^([a-zA-ZÀ-ÿ0-9#$%&@\*\(\)\[\]\{\}\-+_=\:;,\.\\\/<>\?\!\s\u00AA\u00B0\u00BA\u00A7\u002D\u2010\u2011\u2012\u2013\u2014]){0,8000}$'
           minLength: 0
           maxLength: 8000
-          default: ""
         name:
           type: string
           nullable: false

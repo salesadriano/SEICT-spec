@@ -1455,6 +1455,7 @@ components:
           maxLength: 120
       required:
         - name
+        - description
     EditalStatusDefinition:
       description: todo
       type: object
